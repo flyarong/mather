@@ -36,7 +36,7 @@
 	.toolTip{
 		position: fixed;
 		left:2px;
-		top:2px;
+		bottom:2px;
 	}
 	
 	.editorText {
@@ -47,7 +47,7 @@
 	input[type="number"]{
 		max-width: 2.6rem;
 	}
-	
+	#donaWeixin img{max-width:90%}
 }
 
 
@@ -61,9 +61,10 @@
 		max-width: 4rem;
 	}
 	.tool:hover{
-		background:yellow;
+		background:lightyellow;
 		color: black;
 	}
+	#donaWeixin img{max-width:350px}
 }
 
 @media print{
@@ -173,6 +174,12 @@ code, pre{
 	border-width:1px;
 }
 
+html.darkmode, html.darkmode img {
+    filter: invert(1) hue-rotate(180deg);
+}
+html {
+    transition: color 300ms, background-color 300ms;
+}
 body.day, .day textarea{
 	color:black;
 }
@@ -181,6 +188,9 @@ body.day, .day textarea{
 }
 body.night{
 	background-color: black;
+}
+body.night input, body.night select{
+	background-color: gainsboro;
 }
 body.day, iframe{
 	background-color:white;
@@ -213,7 +223,7 @@ body.day, iframe{
 }
 
 
-.fdetail:hover summary,.task,.taskname,.Mele:hover{
+.fdetail:hover summary,.task,.taskname,.Mele:hover, .toggler:hover{
 	color:white;
 }
 .taskname{
@@ -236,6 +246,7 @@ body.day, iframe{
 summary{
 	user-select:none;
 	padding: 5px;
+	margin:2px;
 }
 
 
@@ -244,8 +255,9 @@ summary{
 
 
 body {
-    margin: 0;
-    overflow-x: hidden;
+	margin: 0;
+	touch-action: auto;
+    overflow: auto;
 }
 body:not(.night) .bds:not(.Clear){
 	border: solid black 1px;
@@ -340,10 +352,18 @@ a:not(:visited){
     background-size: 1.3rem;
 }
 .github{
-	background: url(../img/github.svg) no-repeat;
     padding-left: 1.4rem;
-    background-size: 1.3rem;
+	background-size: 1.3rem;
+	background-repeat: no-repeat;
 }
+
+.night .github{
+	background-image: url(../img/github.svg),url(../img/logo.jpg) 
+}
+body:not(.night) .github{
+	background-image: url(../img/github.svg)
+}
+
 
 .bdt[data-mt]:before{
     content: attr(data-mt);
@@ -418,10 +438,6 @@ input[type=text],#wiki>span,.brad{
 	border-style:ridge;
 }
 
-.ground > div:not(.tasks){
-	border-radius:10px;
-}
-
 
 
 .bdtdash{
@@ -466,7 +482,7 @@ details:hover{
 	opacity:0;
 	cursor:default
 }
-#outputOpt input,#wiki>span,.scbox{
+#outputOpt input,#wiki>span,.scbox, .toolHistory{
 	margin:2px
 }
 #Topic{
@@ -614,11 +630,15 @@ input[type="file"]{
 .fixb{
 	bottom:0;
 }
-
+/*
 #oHTML{
 	position: relative;
 	overflow:auto;
-	padding:20px;
+	resize:auto;
+}
+*/
+#oHTML:not([class*=pd]){
+	padding:5px;
 }
 #oHTML > div.abs{
 	position:absolute;
@@ -680,7 +700,7 @@ summary ~ details summary{
 	width:98%;
 	z-index:-1;
 }
-.Mele{
+.Mele, .toggler{
 	padding: 1px 10px;
     margin: 2px 5px;
 	color:gray;
@@ -740,9 +760,13 @@ summary ~ details summary{
 #splash div{
 	display: inline-block;
 	border-radius: 100%;
-    padding: 20px;
+	padding: 20px;
+	-webkit-box-reflect: below 0em -webkit-gradient(linear,left top,left bottom, from(rgba(0,0,0,0)),to(rgba(255,255,255,0.1)));
 }
 
+.level,.task{
+	border-top: solid 1px;
+}
 .level,[name=tool] + span, .sechResult{
 	padding:2px 14px;
 	margin:2px 5px;
@@ -765,7 +789,7 @@ select,input:not([type="file"]), .rem13{
 	opacity:.5
 }
 
-.subhead:not(.seled):not(:hover),.subtabhead:not(.seled),.fdetail:hover summary,[name=tool]:not(:checked) +span,#toolnav{
+.subhead:not(.seled):not(:hover),.subtabhead,.fdetail:hover summary,[name=tool]:not(:checked) +span{
 	background:black;
 }
 .task:not(.seled),.taskname{
@@ -773,7 +797,7 @@ select,input:not([type="file"]), .rem13{
 }
 
 
-.sechResult, .Mele:hover{
+.sechResult, .Mele:hover, .toggler:hover, #iContent input:not(.seled):not(.Clear):not(.tool):hover{
 	background: rgba(50, 205, 50, 0.6);
 }
 
@@ -791,20 +815,7 @@ select,input:not([type="file"]), .rem13{
 }
 
 
-
-.ground:nth-of-type(3n+2) > div:not(.tasks):not(:empty){
-	border:5px outset blue;
-}
-
-.ground:nth-of-type(3n+3) > div:not(.tasks):not(:empty){
-	border:5px outset hotpink;
-}
-
-.ground:nth-of-type(3n+1) > div:not(.tasks):not(:empty){
-	border:5px outset blueviolet;
-}
-
-[name=tool]:checked + span,.subhead.seled,.subtabhead.seled, #iContent input:not(.seled):not(.Clear):not(.tool):hover{
+.subhead.seled,.subtabhead.seled, .toolHistory:hover{
 	background:limegreen;
 }
 
@@ -858,7 +869,7 @@ input:not([readonly]), select{
 #donate div {margin:10px}
 #donaQR img{width:150px}
 #donaQR img{margin:0 10px}
-#donaWeixin img{width:350px}
+
 
 #Jiaohang{margin-right:50px;}
 .pay .jiaohang{
@@ -908,11 +919,7 @@ input:not([readonly]), select{
 	text-align:center
 }
 
-.tasks{
-    background: rgba(0,0,0,.1);
-	border-radius: 5px;
-	margin: 5px;
-}
+
 img{
 	cursor: pointer;
 }
@@ -1042,16 +1049,18 @@ ol li:before {counter-increment:a;content:counters(a,".")" ";}
 }
 
 .mi.toggle, svg.toggle{
-	background:yellow;
+	background:lightyellow;
 	color: rgb(27, 24, 24);
 }
-
+.toggler.toggle{
+	background:lightcyan;
+	color: rgb(27, 24, 24);
+}
 .onbox{
-	border:solid yellow 1px;
+	border:solid lightyellow 1px;
 }
 
 #searchContent{
-	background: gainsboro;
 	max-width: 80%;
 
 }
@@ -1176,3 +1185,24 @@ input[type=checkbox]{
 .lstu3{list-style-type: upper-latin}
 .lstu4{list-style-type: upper-roman}
 .lstu5{list-style-type: urdu}
+
+
+::-webkit-scrollbar{
+	color:white;
+	background-color:white;
+	height:10px;
+    width:20px;
+	box-shadow:2px 2px 6px rgba(0,0,0,.2) inset;
+}
+
+::-webkit-scrollbar-thumb{
+    border-radius:16px;
+	background:-webkit-linear-gradient(white, limegreen 50%, white);
+	box-shadow:2px 2px 6px rgba(0,0,0,.5),inset -2px 2px 2px rgba(204,204,204,0.1),inset 2px -2px 2px rgba(0,0,0,0.2);
+}
+::-webkit-scrollbar-thumb:hover{
+	background:-webkit-linear-gradient(limegreen, white 50%, limegreen);
+}
+::-webkit-scrollbar-thumb:active{
+	background:-webkit-linear-gradient(limegreen, limegreen);
+}

@@ -6,7 +6,8 @@
 
 var showTool = [
     'IL LaTeX MD HTML',
-    'D2 D3 Canvas SVG Echarts Zdog',
+    'D2 D3 Canvas SVG RF',
+    'Echarts Zdog Rough Lego',
     'JS I18 EN YAML'
 ];
 shows = {
@@ -16,7 +17,7 @@ shows = {
         'Slide': ['Slide section'].concat(showTool),
         'Speech': [],
         'Sound': [],
-        '3D': ['D3 D2 Zdog Canvas SVG Echarts'],
+        '3D': ['D3 D2 Canvas SVG RF','Echarts Zdog Lego Rough'],
         'Image': [],
         'Video': [],
         'VR': ['VR a-scene'],
@@ -70,6 +71,7 @@ function showThen(T) {
             //accept="audio/*" capture="microphone" 
             strbtn + gM('Play') + '" class=play id=' + T + 'Play hidden />' +
             //
+            '<video id=video_camera hidden></video>'+
             strbtn + 'QR↑" class=qrScan tip="Scan QRcode" />' +
             strbtn + 'QR↓" class=qrGen tip="Generate Text QRcode" />',
 

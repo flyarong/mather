@@ -5,14 +5,14 @@
  */
 
 
-function mUp(e,Last){
+function mUp(e,Last,drawshape){
 	var et=e.type;
 	//console.log(et);
 
 	var eos=e.originalEvent.srcElement, act=eos.tagName, ect=e.originalEvent.changedTouches;
 	if(act!='CANVAS'){e.stopPropagation()}
 
-	var shp=L.drawShape, shp2=/Crop/.test(shp), shp3=/Paral|Trape|(lineangle|Triangon)[HV]|Line3YRight|cub/.test(shp), shpNid=L.drawShapeNow||'unknown', shpN=$('#'+shpNid),
+	var shp=drawshape||L.drawShape, shp2=/Crop/.test(shp), shp3=/Paral|Trape|(lineangle|Triangon)[HV]|Line3YRight|cub/.test(shp), shpNid=L.drawShapeNow||'unknown', shpN=$('#'+shpNid),
 		isSq=/Sq/.test(shp),hv=/H/.test(shp), isTri=/Tria/.test(shp), isLn=/Line/.test(shp), isln=/line/i.test(shp), isGONlike=/Rect|gon|Note|arrow/i.test(shp) && !/(rect|ellipse)Note/.test(shp),
 
 		isGON=isGONlike && !/A|Heart|QIGonRnd|(fan|Moon|Star)Note/.test(shp),
@@ -30,11 +30,259 @@ function mUp(e,Last){
 
 
 	var drawLast=function(){
-		var shpNid=L.drawShapeNow||'unknown', shpN=$('#'+shpNid);
-		if($('#Zdogon text').attr('fill')=='yellow'){
+		var shpNid=L.drawShapeNow||'unknown', shpN=$('#'+shpNid), 
+		D2on=$('#D2on text').attr('fill')=='yellow', 
+		Legoon=$('#Legoon rect').attr('stroke')=='yellow', 
+		Roughon=$('#Roughon path').attr('stroke')=='yellow', 
+		D3on=$('#Zdogon text').attr('fill')=='yellow',
+		
+		/* for rough */
+		roughS=$('#roughStyle'),roughO=roughS.parent().nextAll(), roughNums=roughO.filter(':number'), 
+		roughStyle=roughS.val(), roughness=roughS.next().val(),
+		bowing=roughNums.eq(0).val(), curfit=roughNums.eq(1).val(),
+		roughSim=roughNums.eq(2).val(), roughSeed=roughNums.eq(3).val(),
+		fillWeight=roughNums.eq(4).val(), fillGap=roughNums.eq(5).val(),
+		roughDash=roughO.filter(':text').val(), roughDashOffset=roughNums.eq(6).val(), 
+		hachureAngle=roughNums.eq(7).val(), curStepCnt=roughNums.eq(8).val(),
+		disMultiFill=roughO.find('.roughMulti').eq(0).prop('checked'), disMultiStrk=roughO.find('.roughMulti').eq(1).prop('checked')
+		
+		;
 
 
-consolelog(shp);
+
+		if(D2on){
+			chd.filter(function(){return $(this).css('display')!=='none'}).each(function(){//.filter(':visible') 不起效果
+				var $t=$(this),color=($t.attr('stroke')||'').replace('none',''),
+				color2=($t.attr('fill')||'').replace('none',''),
+				fill=$t.attr('fill')!='none',
+				markerS=$t.attr('marker-start'),markerE=$t.attr('marker-end'),// 箭头暂不实现 翻译
+				swd=$t.attr('stroke-width'), sda=$t.attr('stroke-dasharray')||'', sdo=+($t.attr('stroke-dashoffset')||0),
+				c=caps.ctx, P, ps, code='';
+
+				if($t.attr('d')){
+					ps=$t.attr('d');
+				}else if($t.attr('points')){
+					ps='M'+$t.attr('points').replace(/[\d\.]+ [\d\.]+/,'$&L')+'Z'
+				}
+
+
+				if(Legoon){
+					code=`var lg=new legra(c, ${swd});`;
+					var opt=",{"+(color2?"filled:1,color:'"+color2+"'":"color:'"+color+"'")+'}', lt0=lt/swd, tp0=tp/swd;
+					if($t.is('rect')){
+						code+=`lg.rectangle(${+$t.attr('x')+lt0},${+$t.attr('y')+tp0},${$t.attr('width')/swd},${$t.attr('height')/swd}${opt})`
+					}
+					if($t.is('ellipse')){	//circle
+						code+=`lg.ellipse(${(+$t.attr('cx')+lt)/swd}, ${(+$t.attr('cy')+tp)/swd}, ${$t.attr('rx')/swd}, ${$t.attr('ry')/swd}${opt})`
+					}
+					if($t.is('line')){
+						code+=`lg.line(${(+$t.attr('x1')+lt)/swd},${(+$t.attr('y1')+tp)/swd},${(+$t.attr('x2')+lt)/swd},${(+$t.attr('y2')+tp)/swd}${opt})`
+					}
+
+					if($t.attr('points')){
+						code+='lg.polygon(['+Arrf(function(t,i){return i%2?(+t+tp)/swd+']':'['+(+t+lt)/swd}, $t.attr('points').split(/[, +]/)).join(',')+']'+opt+')'
+					}
+
+					if($t.is('path')){
+						//code+='lg.linearPath(['+Arrf(function(t,i){return i%2?'['+t+',':t+'],'}, ps.split(/[, +]/)).join(',')+']${opt})'
+						code+=SVGPath.toLego(ps,lt,tp,WD2,HT2,swd,opt)
+					}
+
+					L.legoCode+=';'+code;
+
+
+					eval(code);
+
+					return true;
+
+				}
+
+
+				if(Roughon){
+					var rS=roughStyle.replace('rough','hachure'), opt=",{stroke:'"+color+"'"+', strokeWidth:'+swd+
+						(color2?",fill:'"+color2+"'":'')+
+						
+						(sda?', strokeLineDash:['+sda+'], strokeLineDashOffset:'+sdo:'')+
+						(roughDash?', fillLineDash:['+roughDash+'], fillLineDashOffset:'+roughDashOffset:'')+
+
+						', fillStyle:\''+rS+'\', fillWeight:'+fillWeight+
+						', bowing:'+bowing+', seed:'+roughSeed+
+						
+						(rS=='hachure'?', hachureAngle:'+hachureAngle+', hachureGap:'+fillGap:'')+
+						(rS=='dashed'?', dashOffset:'+roughDashOffset+', dashGap:'+fillGap:'')+
+						(rS=='zigzag-line'?', zigzagDashOffset:'+roughDashOffset:'')+
+
+						($t.is('ellipse,arc,circle')?', curveFitting:'+curfit+', curveStepCount:'+curStepCnt:'')+
+						
+						(disMultiFill?'disableMultiStrokeFill:true':'')+
+						(disMultiStrk?'disableMultiStroke:true':'')+
+
+						'}',
+						lt0=lt, tp0=tp;
+
+
+
+					if($t.is('rect')){
+					//	if(($t.attr('rx')||'')!='0' || ($t.attr('ry')||'')!='0' ){
+							code+=`rc.curve([[${+$t.attr('x')+lt0},${+$t.attr('y')+tp0}],[${$t.attr('width')},${$t.attr('height')}]]${opt})`
+							//code+="rc.path('"++"')"
+					//	}else{
+
+							code+=`rc.rectangle(${+$t.attr('x')+lt0},${+$t.attr('y')+tp0},${$t.attr('width')},${$t.attr('height')}${opt})`
+					//	}
+						
+					}
+					if($t.is('ellipse')){
+						code+=`rc.ellipse(${(+$t.attr('cx')+lt)}, ${(+$t.attr('cy')+tp)}, ${+$t.attr('rx')*2}, ${+$t.attr('ry')*2}${opt})`
+					}
+					if($t.is('circle')){
+						code+=`rc.circle(${(+$t.attr('cx')+lt)}, ${(+$t.attr('cy')+tp)}, ${+$t.attr('r')*2}${opt})`
+					}
+
+					if($t.is('line')){
+						code+=`rc.line(${(+$t.attr('x1')+lt)},${(+$t.attr('y1')+tp)},${(+$t.attr('x2')+lt)},${(+$t.attr('y2')+tp)}${opt})`
+					}
+
+					if($t.attr('points')){
+						code+='rc.'+($t.is('polygon')?'polygon':'linearPath')+'(['+Arrf(function(t,i){return i%2?(+t+tp)+']':'['+(+t+lt)}, $t.attr('points').split(/[, +]/)).join(',')+']'+opt+')'
+					}
+
+					if($t.is('path')){
+						code+="rc.path('"+SVGPath.toFull(ps,lt,tp)+"'"+opt+")"
+					}
+
+					if(code){
+						code="var rc=rough.canvas($('#caps')[0]);"+code;
+						L.roughCode+=';'+code;
+
+
+						eval(code);
+
+					}
+
+
+					return true;
+
+				}
+
+
+				if(ps){
+					P=new Path2D(ps);	// Path2D 传递SVG path命令，或者 canvas某个path命令
+					code=`var P=new Path2D('${ps}');`;
+
+				}else{
+					P=new Path2D();
+					code=`var P=new Path2D();`;
+					if($t.is('rect')){
+						var x=+$t.attr('x'),y=+$t.attr('y'), rx=+$t.attr('rx'),ry=+$t.attr('ry'),w=+$t.attr('width'),h=+$t.attr('height');
+						if(rx||ry){
+							P.moveTo(x+rx,y);
+							P.lineTo(x+w-rx,y);
+
+							P.arcTo(x+w,y,x+w,y+ry,rx);
+							P.lineTo(x+w,y+h-ry);
+
+							P.arcTo(x+w,y+h,x+w-rx,y+h,ry);
+							P.lineTo(x+rx,y+h);
+
+							P.arcTo(x,y+h,x,y+h-ry,rx);
+							P.lineTo(x,y+ry);
+
+							P.arcTo(x,y,x+rx,y,ry);
+
+							code+=`
+							P.moveTo(${x+rx},${y});
+							P.lineTo(${x+w-rx},${y});
+
+							P.arcTo(${x+w},${y},${x+w},${y+ry},${rx});
+							P.lineTo(${x+w},${y+h-ry});
+
+							P.arcTo(${x+w},${y+h},${x+w-rx},${y+h},${ry});
+							P.lineTo(${x+rx},${y+h});
+
+							P.arcTo(${x},${y+h},${x},${y+h-ry},${rx});
+							P.lineTo(${x},${y+ry});
+
+							P.arcTo(${x},${y},${x+rx},${y},${ry});`
+
+						}else{
+							P.rect(x,y,w,h);
+							code+=`P.rect(${x},${y},${w},${h});`
+						}
+					}
+
+					if($t.is('ellipse')){
+						P.ellipse(+$t.attr('cx'), +$t.attr('cy'), +$t.attr('rx'), +$t.attr('ry'),0,Math.PI*2,0);//, rotation, startAngle, endAngle, anticlockwise
+						code+=`P.ellipse(${$t.attr('cx')}, ${$t.attr('cy')}, ${$t.attr('rx')}, ${$t.attr('ry')},0,Math.PI*2,0);`
+					}
+
+					if($t.is('line')){
+						P.moveTo(+$t.attr('x1'), +$t.attr('y1'));
+						P.lineTo(+$t.attr('x2'), +$t.attr('y2'));
+						code+=`P.moveTo(${$t.attr('x1')}, ${$t.attr('y1')});P.lineTo(${$t.attr('x2')}, ${$t.attr('y2')});`
+					}
+
+
+				}
+				
+			//	console.log(this.tagName, color,color2,chdmd,chdmp,ps);
+				if(P){
+					
+					c.save();
+					c.translate(lt,tp);
+					c.beginPath();
+					c.lineWidth=+chdm.attr('stroke-width');
+					c.lineCap=chdm.attr('stroke-linecap')||'butt';		//	butt|round|square
+					c.lineJoin=chdm.attr('stroke-linejoin')||'miter';	//	miter|round|bevel
+					//c.miterLimit=10.0		//chdm.attr('stroke-miterlimit');
+					var dashA=chdm.attr('stroke-dasharray');
+					if(dashA){
+						c.setLineDash(Arrf(Number,dashA.split(',')));
+						c.lineDashOffset=+chdm.attr('stroke-dashoffset')||0;
+					}else{
+						c.setLineDash([])
+					}
+					if(color){
+						c.strokeStyle=color;
+						c.stroke(P);
+					}
+					
+					if(color2){
+						c.fillStyle=color2;
+						c.fill(P);
+					}
+					c.restore();
+
+					code+=`
+					c.save();
+					c.translate(${lt},${tp});
+					c.beginPath();
+					c.lineWidth=${c.lineWidth};
+					c.lineCap='${c.lineCap}';		
+					c.lineJoin='${c.lineJoin}';
+	
+					c.setLineDash([${dashA?dashA:''}]);
+					${dashA?'c.lineDashOffset('+c.lineDashOffset+')':''}
+					${color?'c.strokeStyle=\''+color+'\';c.stroke(P);':''}
+					${color2?'c.fillStyle=\''+color2+'\';c.fill(P);':''}
+					c.restore();
+					`;
+					L.canvasCode+=code;
+
+				}
+	
+
+			});
+			if(!D3on){
+				shpN.remove()
+			}
+
+		}
+
+		if(D3on){
+
+
+//consolelog(shp);
 var color=(chdm.attr('stroke')||'').replace('none',''),
 	color2=(chdm.attr('fill')||'').replace('none',''),
 	fill=chdm.attr('fill')!='none', 
@@ -219,10 +467,10 @@ s0=s0.replace('pathstr',function(){
 	
 	if(chdmp){
 		//console.log('points=',chdmp);
-		return SVGPath2Zdog(chdmp,WD2,HT2,1)
+		return SVGPath.toZdog(chdmp,WD2,HT2,1)
 	}
 	if(chdmd){
-		return SVGPath2Zdog(chdmd,WD2,HT2)
+		return SVGPath.toZdog(chdmd,WD2,HT2)
 	}
 
 	if(chdm.filter('line').length){
@@ -279,18 +527,21 @@ var rotatexyz=/cylinderoidV|conoid[IO]V/.test(shp)?'x':'y';
 // console.log(s0);
 var s=zdogs(WD+sw,HT+sw,s0,rotatexyz);
 
-			var id='Zdog_'+shpNid;//+'_'+Time.now5()+(Math.random()+'').substr(2);
-			Z=Z||2001;
-		//	console.log(Z+6);
-			s1='<span data-code="'+s+'" class=zdog'+idStyle(id,[lt-sw,tp-sw,WD+sw*2,HT+sw*2],'',Z+6,1)+'">'+s+sc;
+var id='Zdog_'+shpNid;//+'_'+Time.now5()+(Math.random()+'').substr(2);
+Z=Z||2001;
+//	console.log(Z+6);
+s1='<span data-code="'+s+'" class=zdog'+idStyle(id,[lt-sw,tp-sw,WD+sw*2,HT+sw*2],'',Z+6,1)+'">'+s+sc;
 
 
-			shpN.after(s1);
-			all2html('zdog','','#'+id);
+shpN.after(s1);
+all2html('zdog','','#'+id);
 
-			return
+if(D2on){
+	shpN.remove()
+}
+return
 
-		}
+}
 		
 		if(oOn('SymmetryAxis')){
 			var m1='M'+sw+' '+sw+'H'+(WD+40), m2='M'+sw+' '+sw+'V'+(HT+40), m3='M'+sw+' '+sw+'L'+(WD+40)+' '+(HT+40)+'M'+sw+' '+(HT+40)+'L'+(WD+40)+' '+sw,
@@ -509,7 +760,87 @@ var s=zdogs(WD+sw,HT+sw,s0,rotatexyz);
 		}		
 		
 
+		if(!D2on && !D3on && roughStyle!='rough'){
+			var rc=rough.svg(shpN[0]);
 
+			chd.filter(function(){return $(this).css('display')!=='none'}).each(function(){//.filter(':visible') 不起效果
+				var $t=$(this),color=($t.attr('stroke')||'').replace('none',''),
+				color2=($t.attr('fill')||'').replace('none',''),
+				fill=$t.attr('fill')!='none',
+				markerS=$t.attr('marker-start'),markerE=$t.attr('marker-end'),// 箭头暂不实现 翻译
+				swd=$t.attr('stroke-width'), sda=$t.attr('stroke-dasharray')||'', sdo=+($t.attr('stroke-dashoffset')||0),
+				P, ps, code='';
+
+				if($t.attr('d')){
+					ps=$t.attr('d');
+				}else if($t.attr('points')){
+					ps='M'+$t.attr('points').replace(/[\d\.]+ [\d\.]+/,'$&L')+'Z'
+				}
+
+
+				var rS=roughStyle,opt=",{stroke:'"+color+"'"+', strokeWidth:'+swd+
+					(color2?",fill:'"+color2+"'":'')+
+
+					(sda?', strokeLineDash:['+sda+'], strokeLineDashOffset:'+sdo:'')+
+					(roughDash?', fillLineDash:['+roughDash+'], fillLineDashOffset:'+roughDashOffset:'')+
+
+					", fillStyle:'"+rS+"', fillWeight:"+fillWeight+
+					', bowing:'+bowing+', seed:'+roughSeed+', simplification:'+roughSim+
+					
+					(rS=='hachure'?', hachureAngle:'+hachureAngle+', hachureGap:'+fillGap:'')+
+					(rS=='dashed'?', dashOffset:'+roughDashOffset+', dashGap:'+fillGap:'')+
+					(rS=='zigzag-line'?', zigzagDashOffset:'+roughDashOffset:'')+
+
+					($t.is('ellipse,arc,circle')?', curveFitting:'+curfit+', curveStepCount:'+curStepCnt:'')+
+					
+					(disMultiFill?'disableMultiStrokeFill:true':'')+
+					(disMultiStrk?'disableMultiStroke:true':'')+
+
+					'}';
+
+
+
+				if($t.is('rect')){
+				//	if(($t.attr('rx')||'')!='0' || ($t.attr('ry')||'')!='0' ){
+						//code+=`rc.curve([[${+$t.attr('x')},${+$t.attr('y')}],[${$t.attr('width')},${$t.attr('height')}]]${opt})`
+						//code+="rc.path('"++"')"
+				//	}else{
+
+						code+=`rc.rectangle(${+$t.attr('x')},${+$t.attr('y')},${$t.attr('width')},${$t.attr('height')}${opt})`
+				//	}
+					
+				}
+				if($t.is('ellipse')){
+					code+=`rc.ellipse(${(+$t.attr('cx'))}, ${(+$t.attr('cy'))}, ${+$t.attr('rx')*2}, ${+$t.attr('ry')*2}${opt})`
+				}
+				if($t.is('circle')){
+					code+=`rc.circle(${(+$t.attr('cx'))}, ${(+$t.attr('cy'))}, ${+$t.attr('r')*2}${opt})`
+				}
+
+				if($t.is('line')){
+					code+=`rc.line(${(+$t.attr('x1'))},${(+$t.attr('y1'))},${(+$t.attr('x2'))},${(+$t.attr('y2'))}${opt})`
+				}
+
+				if($t.attr('points')){
+					code+='rc.'+($t.is('polygon')?'polygon':'linearPath')+'(['+Arrf(function(t,i){return i%2?(+t)+']':'['+(+t)}, $t.attr('points').split(/[, +]/)).join(',')+']'+opt+')'
+				}
+
+				if($t.is('path')){
+					code+="rc.path('"+SVGPath.toFull(ps)+"'"+opt+")"
+				}
+
+				if(code){
+
+					var svgChild=eval(code);
+					//console.log(code,svgChild);
+	
+					shpN[0].appendChild(svgChild);
+				}
+			});
+
+			shpN.children('g').eq(0).prevAll().remove();
+			//shpN.remove();
+		}
 		L.cap1=getcap0();
 	};
 	
@@ -720,154 +1051,267 @@ var s=zdogs(WD+sw,HT+sw,s0,rotatexyz);
 }
 
 
+var SVGPath={
+	toFull:function(x, lt, tp){// 可选偏移量 lt, tp，用于计算最终绝对坐标
+		var xs=x.toUpperCase();// SVG Path中的小写字母的命令是相对偏移，这里为简化起见，不考虑支持
+		/*
+		while(/L( *[\d\.]+ +[\d\.]+){2,}/.test(xs)){
+			xs=xs.replace(/L *([\d\.]+ +[\d\.]+) +([\d\.]+ +[\d\.]+)/g,'L$1 L$2')
+		}
+		*/
+	// 对连续命令，显示完整
+		while(/L *([-\d\.]+ +){3,}/.test(xs)){
+			xs=xs.replace(/L *(([-\d\.]+ +){2})([-\d\.])/g,'L$1 L$3')
+		}
+	
+		while(/T *([-\d\.]+ +){3,}/.test(xs)){
+			//xs=xs.replace(/T *([\d\.]+ +[\d\.]+) +([\d\.]+ +[\d\.]+)/g,'T$1 T$2')
+			//xs=xs.replace(/T *([\d\.]+ +){2}([\d\.])/g,'T$1 T$2')
+			xs=xs.replace(/T *(([-\d\.]+ +){2})([-\d\.])/g,'T$1 T$3')
+		}
+	
+		while(/S *([-\d\.]+ +){5,}/.test(xs)){
+			xs=xs.replace(/S *(([-\d\.]+ +){4})([-\d\.])/g,'S$1 S$3')
+		}
+	
+		while(/Q *([-\d\.]+ +){5,}/.test(xs)){
+			xs=xs.replace(/Q *(([-\d\.]+ +){4})([-\d\.])/g,'Q$1 Q$3')
+		}
+	
+	
+		while(/C *([-\d\.]+ +){7,}/.test(xs)){
+			xs=xs.replace(/C *(([-\d\.]+ +){6})([-\d\.])/g,'C$1 C$3')
+		}
+	
+		while(/A *([-\d\.]+ +){8,}/.test(xs)){
+			xs=xs.replace(/A *(([-\d\.]+ +){7})([-\d\.])/g,'A$1 A$3')
+		}
+		if(lt || tp){
 
-function SVGPath2Zdog(x,WD2,HT2,ispoints){
+			xs=xs.replace(/([LMT]) *([-\d\.]+) +([-\d\.]+)/g,'$1'+lt+'+$2 '+tp+'+$3')
+			.replace(/C *([-\d\.]+) +([-\d\.]+) +([-\d\.]+) +([-\d\.]+) +([-\d\.]+) +([-\d\.]+)/g,'C'+lt+'+$1 '+tp+'+$2 '+lt+'+$3 '+tp+'+$4 '+lt+'+$5 '+tp+'+$6 ')
+			.replace(/([QS]) *([-\d\.]+) +([-\d\.]+) +([-\d\.]+) +([-\d\.]+)/g,'$1'+lt+'+$2 '+tp+'+$3 '+lt+'+$4 '+tp+'+$5')
+			//贝塞尔函数，控制点平移后，失真，有误
+			.replace(/(A *([-\d\.]+ +){5})([-\d\.]+) +([-\d\.]+)/g,'$1'+lt+'+$3 '+tp+'+$4')
+			.replace(/H *([-\d\.]+)/g,'H'+lt+'+$1')
+			.replace(/V *([-\d\.]+)/g,'V'+tp+'+$1')
+			.replace(/[-\d\.]+\+[-\d\.]+/g, function(xy){var ab=xy.split('+');return +ab[0]+(+ab[1])})
+
+
+		}
+
+		return xs
+	},
+
+
+	toLego:function(x,lt,tp,WD2,HT2,swd,opt){
+		/*注意，Lego坐标系（同Canvas），
+			path 转成 legra命令
+		*/
+
+		
+		var xs=SVGPath.toFull(x);
+	//console.log('d=',xs);
+
+		var cs=split(xs, /[A-Z]/g), cs0=cs[0],
+			cs1=[Arrf(Number,cs[1][0].replace(/M/,'').trim().split(/[ ,]+/))],
+			s='', lastP=Arrf(function(t,j){return j%2?(+t+tp)/swd:(+t+lt)/swd},cs1[0]);
+
+			//console.log(cs[1],lastP,cs1);
+		Arrf(function(y,i){
+			var p=y.trim().split(/[ ,]+/);
+	//console.log(i,cs1[i-1]);
+			if(cs0[i]=='H'){
+				p=[p[0], cs1[i].slice(-1)[0]];
+			}
+			if(cs0[i]=='V'){
+				p=[cs1[i].slice(-2)[0], p[0]];
+			}
+			if(cs0[i]=='Z'){
+				p=cs1[0];
+				
+			}
+
+			if(cs0[i]=='S'){//三次贝塞尔（对称控制点）
+				var p0=Arrf(Number,cs1[i].slice(-4));
+				p=[p0[2]*2-p0[0], p0[3]*2-p0[1]].concat(p)
+			}
+			if(cs0[i]=='Q'){//二次贝塞尔，两个控制点合二为一
+				p=p.slice(0,2).concat(p)
+			}
+			if(cs0[i]=='T'){//二次贝塞尔（对称控制点）
+				var p0=Arrf(Number,cs1[i].slice(-4));
+				p=[p0[2]*2-p0[0], p0[3]*2-p0[1],p0[2]*2-p0[0], p0[3]*2-p0[1]].concat(p)
+			}
+
+
+			
+			var dp=Arrf(function(t,j){return j%2?(+t+tp)/swd:(+t+lt)/swd},  cs0[i]=='A'?p.slice(-2):p);// A命令参数个数是奇数，这里需截取坐标信息，以防错位
+
+	//console.log(p.join(' _ '));
+			cs1.push(p);
+			
+	//console.log(cs1.join(' ; '));
+
+			if(/[LHVZ]/.test(cs0[i])){	//直线
+	//console.log(dp.join(' , '));
+				//s+='{x:'+dp.join(', y:')+'},'
+				//s+='lg.linearPath(['
+				s+=`lg.line(${lastP},${dp+opt});`
+			}
+
+			
+			if(/[CSQT]/.test(cs0[i])){	//贝塞尔
+				s+=`lg.bezierCurve(${lastP},${dp+opt});`
+			}
+
+
+			if(cs0[i]=='A'){	/*弧线		注意：SVG path中A是连接两点的弧
+					A rx ry x-axis-rotation large-arc-flag[0,1] sweep-flag[↻1|↺0] x y
+
+					而Lego中 arc(xc, yc, a, b, start, stop, closed [, options])
+					先指定圆心，按起始弧度
+
+					这里只实现 横平竖直的圆角弧（不考虑倾斜的弧，忽略x-axis-rotation参数）
+
+				*/
+				var rx=+p[0], ry=+p[1],p0=Arrf(Number,cs1[i].slice(-2)),
+					dx=dp[0]-lastP[0], dy=dp[1]-lastP[1], dxy=(p[4]=='1') ^ (dx*dy<0);// 
+
+				
+				s+=`lg.arc(${dxy?dp[0]+','+lastP[1]:lastP[0]+','+dp[1]},${Math.abs(dx)},${Math.abs(dy)},
+					Math.PI*${dxy?Math.sign(dy)/2:+(dx>0)},
+					Math.PI*${dxy?+(dx<0):-Math.sign(dy)/2},
+					0,${opt});`
+
+
+			}
+//console.log(i,cs0[i], dp);
+			//if(cs0[i]=='M'){
+				lastP=dp;
+				//s+='{move:{x:'+dp.join(', y:')+'}},'
+			//}
+
+		}, cs[1].slice(1));
+		return s
+
+	},
+
+	toZdog:function(x,WD2,HT2,ispoints){
 	/*注意，Zdog坐标系（左-右+上-下+，原点在Canvas中心），
 		类似于SVG坐标系（左-右+上-下+，原点在Canvas左上角），
 		都不同于数学中的笛卡儿坐标系（左-右+上+下-，原点在Canvas中心）
 	*/
 
-	if(ispoints){
-		return Arrf(function(t,i){return i%2?',y:'+(+t-HT2)+'},':'{x:'+(+t-WD2)}, x.split(/[, +]/)).join('')
-	}
-	
-	var xs=x.toUpperCase();// SVG Path中的小写字母的命令是相对偏移，这里为简化起见，不考虑支持
-	/*
-	while(/L( *[\d\.]+ +[\d\.]+){2,}/.test(xs)){
-		xs=xs.replace(/L *([\d\.]+ +[\d\.]+) +([\d\.]+ +[\d\.]+)/g,'L$1 L$2')
-	}
-	*/
-// 对连续命令，显示完整
-	while(/L *([-\d\.]+ +){3,}/.test(xs)){
-		xs=xs.replace(/L *(([-\d\.]+ +){2})([-\d\.])/g,'L$1 L$3')
-	}
-
-	while(/T *([-\d\.]+ +){3,}/.test(xs)){
-		//xs=xs.replace(/T *([\d\.]+ +[\d\.]+) +([\d\.]+ +[\d\.]+)/g,'T$1 T$2')
-		//xs=xs.replace(/T *([\d\.]+ +){2}([\d\.])/g,'T$1 T$2')
-		xs=xs.replace(/T *(([-\d\.]+ +){2})([-\d\.])/g,'T$1 T$3')
-	}
-
-	while(/S *([-\d\.]+ +){5,}/.test(xs)){
-		xs=xs.replace(/S *(([-\d\.]+ +){4})([-\d\.])/g,'S$1 S$3')
-	}
-
-	while(/Q *([-\d\.]+ +){5,}/.test(xs)){
-		xs=xs.replace(/Q *(([-\d\.]+ +){4})([-\d\.])/g,'Q$1 Q$3')
-	}
-
-
-	while(/C *([-\d\.]+ +){7,}/.test(xs)){
-		xs=xs.replace(/C *(([-\d\.]+ +){6})([-\d\.])/g,'C$1 C$3')
-	}
-
-	while(/A *([-\d\.]+ +){8,}/.test(xs)){
-		xs=xs.replace(/C *(([-\d\.]+ +){7})([-\d\.])/g,'C$1 C$3')
-	}
-
-//console.log('d=',xs);
-
-	var cs=split(xs, /[A-Z]/g), cs0=cs[0],
-		cs1=[Arrf(Number,cs[1][0].replace(/M/,'').trim().split(/[ ,]+/))],
-		s='{x:'+(cs1[0][0]-WD2)+', y:'+(cs1[0][1]-HT2)+'},';
-	Arrf(function(y,i){
-		var p=y.trim().split(/[ ,]+/);
-//console.log(i,cs1[i-1]);
-		if(cs0[i]=='H'){
-			p=[p[0], cs1[i].slice(-1)[0]];
+		if(ispoints){
+			return Arrf(function(t,i){return i%2?',y:'+(+t-HT2)+'},':'{x:'+(+t-WD2)}, x.split(/[, +]/)).join('')
 		}
-		if(cs0[i]=='V'){
-			p=[cs1[i].slice(-2)[0], p[0]];
-		}
-		if(cs0[i]=='Z'){
-			p=cs1[0];
-			
-		}
-
-		if(cs0[i]=='S'){//三次贝塞尔（对称控制点）
-			var p0=Arrf(Number,cs1[i].slice(-4));
-			p=[p0[2]*2-p0[0], p0[3]*2-p0[1]].concat(p)
-		}
-		if(cs0[i]=='Q'){//二次贝塞尔，两个控制点合二为一
-			p=p.slice(0,2).concat(p)
-		}
-		if(cs0[i]=='T'){//二次贝塞尔（对称控制点）
-			var p0=Arrf(Number,cs1[i].slice(-4));
-			p=[p0[2]*2-p0[0], p0[3]*2-p0[1],p0[2]*2-p0[0], p0[3]*2-p0[1]].concat(p)
-		}
-
-
 		
-		var dp=Arrf(function(t,j){return j%2?+t-HT2:+t-WD2},  cs0[i]=='A'?p.slice(-2):p);// A命令参数个数是奇数，这里需截取坐标信息，以防错位
+		var xs=SVGPath.toFull(x);
+	//console.log('d=',xs);
 
-//console.log(p.join(' _ '));
-		cs1.push(p);
-		
-//console.log(cs1.join(' ; '));
-		if(cs0[i]=='M'){
-			s+='{move:{x:'+dp.join(', y:')+'}},'
-		}
-		if(/[LHVZ]/.test(cs0[i])){	//直线
-//console.log(dp.join(' , '));
-			s+='{x:'+dp.join(', y:')+'},'
-		}
-
-		
-		if(/[CSQT]/.test(cs0[i])){	//贝塞尔
-			s+='{bezier:['+Arrf(function(t,j){return j%2?',y:'+t+'},':'{x:'+t}, dp).join('')+']},'
-		}
-
-
-		if(cs0[i]=='A'){	/*弧线		注意：SVG path中A是指定椭圆半径（弧线不一定占1/4椭圆），
-				而Zdog中arc是指定前点，Corner点，终点，构成的矩形的内切椭圆（弧线占1/4椭圆）
-				因此，Zdog中的Corner点，不在弧线上，而在弧线外，即弧的两条切线的交点（且交角为直角）。
-
+		var cs=split(xs, /[A-Z]/g), cs0=cs[0],
+			cs1=[Arrf(Number,cs[1][0].replace(/M/,'').trim().split(/[ ,]+/))],
+			s='{x:'+(cs1[0][0]-WD2)+', y:'+(cs1[0][1]-HT2)+'},';
+		Arrf(function(y,i){
+			var p=y.trim().split(/[ ,]+/);
+	//console.log(i,cs1[i-1]);
+			if(cs0[i]=='H'){
+				p=[p[0], cs1[i].slice(-1)[0]];
+			}
+			if(cs0[i]=='V'){
+				p=[cs1[i].slice(-2)[0], p[0]];
+			}
+			if(cs0[i]=='Z'){
+				p=cs1[0];
 				
-
-			*/
-			var rx=+p[0], ry=+p[1],p0=Arrf(Number,cs1[i].slice(-2)),
-				dx=dp[0]-(p0[0]-WD2), dy=dp[1]-(p0[1]-HT2);// Zdog使用Corner点（方角），而SVG Path中A命令不是
-	
-			if(dx==0){//竖直两端点之间的弧线，只考虑劣弧
-/*
-Corner点横坐标选取原则：
-			本横坐标-dw：顺时针 下上dy<0  逆时针上下		
-			本横坐标+dw：顺时针 上下dy>0  逆时针下上	即： 顺 ^ 下上- (异或)
-*/	
-				var dw=rx-Math.sqrt(rx*rx-Math.pow(dy/2,2));
-				dw*=2.4; //粗略近似处理
-				s+='{arc:[{x:'+[fixed4(dp[0]+dw*(((p[4]=='1') ^ (dy<0))?1:-1)), fixed4((p0[1]-HT2+dp[1])/2)].join(', y:')+
-				'},{x:'+dp[0]+', y:'+dp[1]+'}]},'
-
-
-			}else if(dy==0){//水平两端点之间的弧线，只考虑劣弧
-/*
-Corner点纵坐标选取原则：
-			本纵坐标-dh：顺时针 左右dx>0  逆时针右左		
-			本纵坐标+dh：顺时针 右左dx<0  逆时针左右	即： 顺 ^ 左右+ (异或)
-*/	
-				var dh=ry-Math.sqrt(ry*ry-Math.pow(dx/2,2));
-				dh*=2.4; //粗略近似处理
-			//	console.log('dh=',dh,'dx=',dx,'半径',ry,'勾股高',Math.sqrt(ry*ry-Math.pow(dx/2,2)));
-				s+='{arc:[{x:'+[fixed4((p0[0]-WD2+dp[0])/2), fixed4(dp[1]+dh*(((p[4]=='1') ^ (dx>0))?1:-1))].join(', y:')+
-				'},{x:'+dp[0]+', y:'+dp[1]+'}]},'
-	
-
-
-			}else{
-/*
-Corner点坐标选取原则：
-			本横坐标，上一个点纵坐标：顺时针 左下 右上（异号dx*dy<0 && 顺时针1）   逆时针左上 右下（同号dx*dy>0 && 逆时针0）	异顺 || 同逆   即： 同 ^ 顺 (异或)
-			上一个点横坐标，本纵坐标：顺时针 左上 右下（同号dx*dy>0 && 顺时针1）   逆时针右上 左下（异号dx*dy<0 && 逆时针0）	同顺 || 异逆   即： 同 ^ 逆 (异或)
-*/		
-				s+='{arc:[{x:'+((dx*dy>0) ^ (p[4]=='1')?[p0[0]-WD2,dp[1]]:[dp[0],p0[1]-HT2]).join(', y:')+
-				'},{x:'+dp[0]+', y:'+dp[1]+'}]},'
 			}
 
-		}
+			if(cs0[i]=='S'){//三次贝塞尔（对称控制点）
+				var p0=Arrf(Number,cs1[i].slice(-4));
+				p=[p0[2]*2-p0[0], p0[3]*2-p0[1]].concat(p)
+			}
+			if(cs0[i]=='Q'){//二次贝塞尔，两个控制点合二为一
+				p=p.slice(0,2).concat(p)
+			}
+			if(cs0[i]=='T'){//二次贝塞尔（对称控制点）
+				var p0=Arrf(Number,cs1[i].slice(-4));
+				p=[p0[2]*2-p0[0], p0[3]*2-p0[1],p0[2]*2-p0[0], p0[3]*2-p0[1]].concat(p)
+			}
 
 
-	}, cs[1].slice(1));
-	return s
+			
+			var dp=Arrf(function(t,j){return j%2?+t-HT2:+t-WD2},  cs0[i]=='A'?p.slice(-2):p);// A命令参数个数是奇数，这里需截取坐标信息，以防错位
 
-}
+	//console.log(p.join(' _ '));
+			cs1.push(p);
+			
+	//console.log(cs1.join(' ; '));
+			if(cs0[i]=='M'){
+				s+='{move:{x:'+dp.join(', y:')+'}},'
+			}
+			if(/[LHVZ]/.test(cs0[i])){	//直线
+	//console.log(dp.join(' , '));
+				s+='{x:'+dp.join(', y:')+'},'
+			}
+
+			
+			if(/[CSQT]/.test(cs0[i])){	//贝塞尔
+				s+='{bezier:['+Arrf(function(t,j){return j%2?',y:'+t+'},':'{x:'+t}, dp).join('')+']},'
+			}
+
+
+			if(cs0[i]=='A'){	/*弧线		注意：SVG path中A是指定椭圆半径（弧线不一定占1/4椭圆），
+					而Zdog中arc是指定前点，Corner点，终点，构成的矩形的内切椭圆（弧线占1/4椭圆）
+					因此，Zdog中的Corner点，不在弧线上，而在弧线外，即弧的两条切线的交点（且交角为直角）。
+
+					
+
+				*/
+				var rx=+p[0], ry=+p[1],p0=Arrf(Number,cs1[i].slice(-2)),
+					dx=dp[0]-(p0[0]-WD2), dy=dp[1]-(p0[1]-HT2);// Zdog使用Corner点（方角），而SVG Path中A命令不是
+		
+				if(dx==0){//竖直两端点之间的弧线，只考虑劣弧
+	/*
+	Corner点横坐标选取原则：
+				本横坐标-dw：顺时针 下上dy<0  逆时针上下		
+				本横坐标+dw：顺时针 上下dy>0  逆时针下上	即： 顺 ^ 下上- (异或)
+	*/	
+					var dw=rx-Math.sqrt(rx*rx-Math.pow(dy/2,2));
+					dw*=2.4; //粗略近似处理
+					s+='{arc:[{x:'+[fixed4(dp[0]+dw*(((p[4]=='1') ^ (dy<0))?1:-1)), fixed4((p0[1]-HT2+dp[1])/2)].join(', y:')+
+					'},{x:'+dp[0]+', y:'+dp[1]+'}]},'
+
+
+				}else if(dy==0){//水平两端点之间的弧线，只考虑劣弧
+	/*
+	Corner点纵坐标选取原则：
+				本纵坐标-dh：顺时针 左右dx>0  逆时针右左		
+				本纵坐标+dh：顺时针 右左dx<0  逆时针左右	即： 顺 ^ 左右+ (异或)
+	*/	
+					var dh=ry-Math.sqrt(ry*ry-Math.pow(dx/2,2));
+					dh*=2.4; //粗略近似处理
+				//	console.log('dh=',dh,'dx=',dx,'半径',ry,'勾股高',Math.sqrt(ry*ry-Math.pow(dx/2,2)));
+					s+='{arc:[{x:'+[fixed4((p0[0]-WD2+dp[0])/2), fixed4(dp[1]+dh*(((p[4]=='1') ^ (dx>0))?1:-1))].join(', y:')+
+					'},{x:'+dp[0]+', y:'+dp[1]+'}]},'
+		
+
+
+				}else{
+	/*
+	Corner点坐标选取原则：
+				本横坐标，上一个点纵坐标：顺时针 左下 右上（异号dx*dy<0 && 顺时针1）   逆时针左上 右下（同号dx*dy>0 && 逆时针0）	异顺 || 同逆   即： 同 ^ 顺 (异或)
+				上一个点横坐标，本纵坐标：顺时针 左上 右下（同号dx*dy>0 && 顺时针1）   逆时针右上 左下（异号dx*dy<0 && 逆时针0）	同顺 || 异逆   即： 同 ^ 逆 (异或)
+	*/		
+					s+='{arc:[{x:'+((dx*dy>0) ^ (p[4]=='1')?[p0[0]-WD2,dp[1]]:[dp[0],p0[1]-HT2]).join(', y:')+
+					'},{x:'+dp[0]+', y:'+dp[1]+'}]},'
+				}
+
+			}
+
+
+		}, cs[1].slice(1));
+		return s
+
+	}
+};

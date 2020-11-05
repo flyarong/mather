@@ -8,238 +8,241 @@ $.each({
 	'SVG': [
 		href(Hs + 'developer.mozilla.org/zh-CN/docs/Web/SVG/Tutorial', 'SVG API'),
 
-		detail('SVG', [
-			sceg2('viewBox="0 0 100 100"', 8),
+		detail(gM('Basic'),[
+			detail('SVG', [
+				sceg2('viewBox="0 0 100 100"', 8),
 
 
-		].join(br)),
-
-
-		detail(gM('Shape'), [
-			gM('Rectangle') + scegc('rect x=10 y=10 width=30 height=30 stroke=green fill=none', 4),
-			gM('Round Corner') + scegc('rect x=50 y=10 rx=10 ry=10 width=30 height=30 fill=green', 4),
-			gM('Circle') + scegc('circle cx=60 cy=60 r=50 stroke=green fill=none', 6),
-			gM('Ellipse') + scegc('ellipse cx=110 cy=60 rx=100 ry=50 stroke=green fill=none', 7),
-			gM('Line') + scegc('line x1=0 y1=80 x2=100 y2=20 stroke=red', 4),
-			gM('Polyline') + scegc('polyline points="100,100 150,25 150,75 200,0" fill=none stroke=black', 8),
-			gM('Polygon') + scegc('polygon points="10 100, 150 25 ,250 100" stroke=red fill=none', 7),
-
-		].join(br)),
-
-		detail(gM('Simple Path'), [
-			scegc('path d="M10 20 L20 30" stroke=red fill=none', 4),
-			gM('Closed') + ' Z(z)' + sceg2('Z'),
-			gM('Move') + ' M x y | m dx dy' + sceg2('M10 20') + sceg2('m10 20'),
-			gM('Line') + ' L x y | l dx dy' + sceg2('L20 30') + sceg2('l20 30'),
-			gM('Horizontal Line') + ' H x | h dx' + sceg2('H30') + sceg2('h30'),
-			gM('Vertical Line') + ' V y | v dy' + sceg2('V50') + sceg2('v50'),
-
-			detail(gM('Method'), [
-				href(Hs + 'developer.mozilla.org/zh-CN/docs/Web/API/SVGPathElement', 'JavaScript API'),
-				'getTotalLength()',
-				'getPointAtLength(float)',
-			].join(br))
-		].join(br)),
-
-		detail(gM('Bezier'), [
-			gM('Cubic') + 'C x1 y1, x2 y2, x y | c dx1 dy1, dx2 dy2, dx dy',
-			scegc('path d="M10 10 C 20 20, 40 20, 50 10" fill=none stroke=red', 4),
-
-			gM('Symmetric Cubic') + 'S x2 y2, x y | s dx2 dy2, dx dy',
-			'其中省略的第1个控制点，是前一个C或S命令中第2个控制点，关于(前)终点的对称点（即终点是两控制点的中点）',
-			scegc('path d="M10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80" stroke=black fill=transparent', 4),
-
-			gM('Quadratic') + 'Q x1 y1, x y | q dx1 dy1, dx dy',
-			scegc('path d="M10 80 Q 95 10 180 80" fill=none stroke=red', 4),
-
-			gM('Symmetric Quadratic') + 'T x y | t dx dy',
-			'其中省略的第1个控制点，是前一个Q或T命令中的控制点，关于(前)终点的对称点（即终点是两控制点的中点）',
-			scegc('path d="M10 80 Q 52.5 10, 95 80 T 180 80" stroke=black fill=transparent', 4),
-
-
-		].join(br)),
-
-		detail(gM('Arc'), [
-			'A rx ry x-axis-rotation large-arc-flag[0,1] sweep-flag[↻1|↺0] x y',
-			'a rx ry x-axis-rotation large-arc-flag[0,1] sweep-flag[↻1|↺0] dx dy',
-			scegc('path d="M80 50A 45 45, 0, 0, 0, 125 95V50 Z" fill=green', 4),
-			scegc('path d="M80 50A 45 45, 0, 1, 0, 125 95V50 Z" fill=red', 4),
-			scegc('path d="M80 50A 45 45, 0, 0, 1, 125 95V50 Z" fill=purple', 4),
-			scegc('path d="M80 50A 45 45, 0, 1, 1, 125 95V50 Z" fill=blue', 4),
-
-		].join(br)),
-
-		detail(gM('Text'), [
-			sceg('<text>&&&&</text>', 5), sceg('<text x=10 y=20 font-weight=bold>' + gM('Text') + '</text>', 5),
-			Arrf(sceg2, ZLR('x=10 y=20 dx=10 dy=20 rotate=45 textLength=')).join(''),
-			[sceg2('text-anchor=start'), sceg2('text-anchor=middle', -6), sceg2('text-anchor=end', -3)].join('|'),
-			[sceg2('lengthAdjust=spacing'), sceg2('lengthAdjust=spacingAndGlyphs', -16)].join('|'),
-			detail(gM('Text Attribute'), Arrf(sceg2,
-				zlrA2(ZLR('font-family font-style font-weight font-variant font-stretch font-size font-size-adjust kerning letter-spacing word-spacing text-decoration'), '=')).join(br)
-			),
-
-
-			detail(gM('Child'), [
-				sceg('<tspan font-weight=bold fill=red>Hello World!</tspan>', 6),
-				sceg('<textPath xlink:href=#path0>1234</textPath>', 9),
 			].join(br)),
 
 
+			detail(gM('Shape'), [
+				gM('Rectangle') + scegc('rect x=10 y=10 width=30 height=30 stroke=green fill=none', 4),
+				gM('Round Corner') + scegc('rect x=50 y=10 rx=10 ry=10 width=30 height=30 fill=green', 4),
+				gM('Circle') + scegc('circle cx=60 cy=60 r=50 stroke=green fill=none', 6),
+				gM('Ellipse') + scegc('ellipse cx=110 cy=60 rx=100 ry=50 stroke=green fill=none', 7),
+				gM('Line.0') + scegc('line x1=0 y1=80 x2=100 y2=20 stroke=red', 4),
+				gM('Polyline') + scegc('polyline points="100,100 150,25 150,75 200,0" fill=none stroke=black', 8),
+				gM('Polygon') + scegc('polygon points="10 100, 150 25 ,250 100" stroke=red fill=none', 7),
 
-
-		].join(br)),
-
-
-		detail(gM('Structure'), [
-			gM('group') + sceg('<g fill=white stroke=green>&&&&</g>&&', 2),
-
-		].join(br)),
-
-
-		detail(gM('Style'), [
-			detail(gM('Stroke'), [
-				sceg2('stroke=red'),
-				sceg2('stroke-opacity=0.8'),
-				[sceg2('stroke-linecap=butt'), sceg2('stroke-linecap=square', -6), sceg2('stroke-linecap=round', -5)].join('|'),
-				[sceg2('stroke-linejoin=miter'), sceg2('stroke-linejoin=bevel', -5), sceg2('stroke-linejoin=round', -5)].join('|'),
-				sceg2('stroke-dasharray="5,10,5"') + sceg2('stroke-dashoffset=3'),
-				sceg2('stroke-miterlimit='),
 			].join(br)),
 
-			detail(gM('Fill'), [
-				sceg2('fill=green') + sceg2('fill="url(#Pattern0)"'),
-				sceg2('fill-opacity=0.8'),
-				sceg2('fill-rule=')
+			detail(gM('Simple Path'), [
+				scegc('path d="M10 20 L20 30" stroke=red fill=none', 4),
+				gM('Closed') + ' Z(z)' + sceg2('Z'),
+				gM('Move') + ' M x y | m dx dy' + sceg2('M10 20') + sceg2('m10 20'),
+				gM('Line.0') + ' L x y | l dx dy' + sceg2('L20 30') + sceg2('l20 30'),
+				gM('Horizontal Line') + ' H x | h dx' + sceg2('H30') + sceg2('h30'),
+				gM('Vertical Line') + ' V y | v dy' + sceg2('V50') + sceg2('v50'),
+
+				detail(gM('Method'), [
+					href(Hs + 'developer.mozilla.org/zh-CN/docs/Web/API/SVGPathElement', 'JavaScript API'),
+					'getTotalLength()',
+					'getPointAtLength(float)',
+				].join(br))
 			].join(br)),
 
+			detail(gM('Bezier'), [
+				gM('Cubic') + 'C x1 y1, x2 y2, x y | c dx1 dy1, dx2 dy2, dx dy',
+				scegc('path d="M10 10 C 20 20, 40 20, 50 10" fill=none stroke=red', 4),
 
-			detail(gM('Definition'), sceg('<defs>&&&&</defs>&&', 6)),
-			detail('CSS', sceg('<style type="text/css">&&&&</style>&&', 6)),
+				gM('Symmetric Cubic') + 'S x2 y2, x y | s dx2 dy2, dx dy',
+				'其中省略的第1个控制点，是前一个C或S命令中第2个控制点，关于(前)终点的对称点（即终点是两控制点的中点）',
+				scegc('path d="M10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80" stroke=black fill=transparent', 4),
 
+				gM('Quadratic') + 'Q x1 y1, x y | q dx1 dy1, dx dy',
+				scegc('path d="M10 80 Q 95 10 180 80" fill=none stroke=red', 4),
 
-			detail(gM('Gradient'), [
-				scegc('stop offset="50%" stop-color=green stop-opacity=0.5', 4),
-				sceg(concat('<stop offset="', [0, 50, 100], '%" stop-color=', ZLR('red yellow blue'), ' stop-opacity=0.5></stop>').join('&&'), 6),
-				detail('Linear', [
-					sceg('<linearGradient>&&&&</linearGradient>', 16) + ' > stop',
-					'x1 x2 y1 y2 ' + sceg('<linearGradient x1=0 x2=0 y1=0 y2=1>&&&&</linearGradient>', 16)
-
-				].join(br)
-				),
-
-				detail('Radial', [
-					sceg('<radialGradient>&&&&</radialGradient>', 16) + ' > stop',
-
-					'cx cy r ' + sceg('<radialGradient cx=0.5 cy=0.5 r=0.25>&&&&</radialGradient>', 16),
-					'cx cy r fx fy ' + sceg('<radialGradient cx=0.5 cy=0.5 r=0.25 fx=0.25 fy=0.25>&&&&</radialGradient>', 16)
+				gM('Symmetric Quadratic') + 'T x y | t dx dy',
+				'其中省略的第1个控制点，是前一个Q或T命令中的控制点，关于(前)终点的对称点（即终点是两控制点的中点）',
+				scegc('path d="M10 80 Q 52.5 10, 95 80 T 180 80" stroke=black fill=transparent', 4),
 
 
-				].join(br)
+			].join(br)),
+
+			detail(gM('Arc'), [
+				'A rx ry x-axis-rotation large-arc-flag[0,1] sweep-flag[↻1|↺0] x y',
+				'a rx ry x-axis-rotation large-arc-flag[0,1] sweep-flag[↻1|↺0] dx dy',
+				scegc('path d="M80 50A 45 45, 0, 0, 0, 125 95V50 Z" fill=green', 4),
+				scegc('path d="M80 50A 45 45, 0, 1, 0, 125 95V50 Z" fill=red', 4),
+				scegc('path d="M80 50A 45 45, 0, 0, 1, 125 95V50 Z" fill=purple', 4),
+				scegc('path d="M80 50A 45 45, 0, 1, 1, 125 95V50 Z" fill=blue', 4),
+
+			].join(br)),
+
+			detail(gM('Text'), [
+				sceg('<text>&&&&</text>', 5), sceg('<text x=10 y=20 font-weight=bold>' + gM('Text') + '</text>', 5),
+				Arrf(sceg2, ZLR('x=10 y=20 dx=10 dy=20 rotate=45 textLength=')).join(''),
+				[sceg2('text-anchor=start'), sceg2('text-anchor=middle', -6), sceg2('text-anchor=end', -3)].join('|'),
+				[sceg2('lengthAdjust=spacing'), sceg2('lengthAdjust=spacingAndGlyphs', -16)].join('|'),
+				detail(gM('Text Attribute'), Arrf(sceg2,
+					zlrA2(ZLR('font-family font-style font-weight font-variant font-stretch font-size font-size-adjust kerning letter-spacing word-spacing text-decoration'), '=')).join(br)
 				),
 
 
+				detail(gM('Child'), [
+					sceg('<tspan font-weight=bold fill=red>Hello World!</tspan>', 6),
+					sceg('<textPath xlink:href=#path0>1234</textPath>', 9),
+				].join(br)),
 
-				[sceg2('spreadMethod=pad'), sceg2('spreadMethod=reflect', -7), sceg2('spreadMethod=repeat', -6)].join('|'),
 
-				[sceg2('gradientUnits=objectBoundingBox'), sceg2('gradientUnits=userSpaceOnUse', -14)].join('|'),
 
-				sceg2('gradientTransform='),
-
-			].join(br)),
-
-			detail(gM('Pattern.v'), [
-				sceg('<pattern id=Pattern0 width=.25 height=.25>&&&&</pattern>', 8),
-				sceg('<pattern id=Pattern1 x=10 y=10 width=50 height=50 patternUnits=userSpaceOnUse>&&&&</pattern>', 8),
-				[sceg2('patternUnits=objectBoundingBox'), sceg2('patternUnits=userSpaceOnUse', -14)].join('|'),
-				[sceg2('patternContentUnits=objectBoundingBox'), sceg2('patternContentUnits=userSpaceOnUse', -14)].join('|'),
 
 			].join(br)),
 
-		].join(br)),
 
+			detail(gM('Structure'), [
+				gM('group') + sceg('<g fill=white stroke=green>&&&&</g>&&', 2),
 
-
-		detail(gM('Transform'), [
-			sceg('transform=') + 'translate|rotate|scale|skew',
-
-			'translate(x, y)',
-			sceg2('translate(100,100)'),
-
-			'rotate(deg)',
-			sceg2('rotate(45)'),
-
-			'skewX(x) skewY(y)',
-			sceg2('skewX(45)') + sceg2('skewY(45)'),
-
-			'scale(x,y)',
-			sceg2('scale(1.2,0.5)'),
-
-
-			detail(gM('Matrix'), [
-				'matrix(scaleX, skewX, skewY, scaleY, dx, dy)',
-				'setTransform(scaleX, skewX, skewY,scaleY, dx, dy)',
-				gM('Transformation Matrix') + zx("$zmtrx([['scaleX','skewY','dx'],['skewX','scaleY','dy',[0,0,1]]])$"),
-				sceg2('matrix(1, 0, 0, 1, 0, 0)'),
 			].join(br)),
-		].join(br)),
 
 
-		detail(gM('Clip'), [
-			sceg('<clipPath id=cp1>&&&&</clipPath>', 9),
-			sceg('clip-path="url(#cp1)"'),
+			detail(gM('Style'), [
+				detail(gM('Stroke'), [
+					sceg2('stroke=red'),
+					sceg2('stroke-opacity=0.8'),
+					[sceg2('stroke-linecap=butt'), sceg2('stroke-linecap=square', -6), sceg2('stroke-linecap=round', -5)].join('|'),
+					[sceg2('stroke-linejoin=miter'), sceg2('stroke-linejoin=bevel', -5), sceg2('stroke-linejoin=round', -5)].join('|'),
+					sceg2('stroke-dasharray="5,10,5"') + sceg2('stroke-dashoffset=3'),
+					sceg2('stroke-miterlimit='),
+				].join(br)),
 
-		].join(br)),
-
-		detail(gM('Mask'), [
-			sceg('<mask id=ms1>&&&&</mask>', 9),
-			sceg('mask="url(#ms1)"'),
-
-
-
-		].join(br)),
-
-		detail(gM('Filter.v'), [
-			sceg('<filter x=0 y=0 width=100 height=100 filterRes=>&&&&</filter>', 7),
-
-			[sceg2('filterUnits=objectBoundingBox'), sceg2('filterUnits=userSpaceOnUse', -14)].join('|'),
-			[sceg2('primitiveUnits=objectBoundingBox'), sceg2('primitiveUnits=userSpaceOnUse', -14)].join('|'),
-
-		].join(br)),
+				detail(gM('Fill'), [
+					sceg2('fill=green') + sceg2('fill="url(#Pattern0)"'),
+					sceg2('fill-opacity=0.8'),
+					sceg2('fill-rule=')
+				].join(br)),
 
 
-		detail(gM('Image'), [
-			scegc('image xlink:href="img/ZIL.png" x=0 y=0 height=50px width=50px', 5),
+				detail(gM('Definition'), sceg('<defs>&&&&</defs>&&', 6)),
+				detail('CSS', sceg('<style type="text/css">&&&&</style>&&', 6)),
 
 
-		].join(br)),
+				detail(gM('Gradient'), [
+					scegc('stop offset="50%" stop-color=green stop-opacity=0.5', 4),
+					sceg(concat('<stop offset="', [0, 50, 100], '%" stop-color=', ZLR('red yellow blue'), ' stop-opacity=0.5></stop>').join('&&'), 6),
+					detail('Linear', [
+						sceg('<linearGradient>&&&&</linearGradient>', 16) + ' > stop',
+						'x1 x2 y1 y2 ' + sceg('<linearGradient x1=0 x2=0 y1=0 y2=1>&&&&</linearGradient>', 16)
+
+					].join(br)
+					),
+
+					detail('Radial', [
+						sceg('<radialGradient>&&&&</radialGradient>', 16) + ' > stop',
+
+						'cx cy r ' + sceg('<radialGradient cx=0.5 cy=0.5 r=0.25>&&&&</radialGradient>', 16),
+						'cx cy r fx fy ' + sceg('<radialGradient cx=0.5 cy=0.5 r=0.25 fx=0.25 fy=0.25>&&&&</radialGradient>', 16)
 
 
-		detail('XHTML', [
-			sceg('<foreignObject x=20 y=20 width=200 height=200>&&&&</foreignObject>', 14),
-
-
-		].join(br)),
-
-
-		detail(gM('Animation'), [
-			scegc('animate attributeType=XML attributeName=x from=-100 to=120 dur=10s repeatCount=indefinite', 7),
-
-			scegc('animateTransform attributeName=transform attributeType=XML type=rotate from="0 60 70" to="360 60 70" dur=10s repeatCount=indefinite', 7),
-
-			sceg('<animateMotion dur=6s repeatCount=indefinite rotate=auto keyPoints=0;0.5;1 keyTimes=0;0.15;1 calcMode=linear>&&&&</animateMotion>', 14) + ' > mpath',
+					].join(br)
+					),
 
 
 
-			[sceg2('calcMode=linear', -6), sceg2('calcMode=discrete'), sceg2('calcMode=paced', -5), sceg2('calcMode=spline', -6)].join('|'),
+					[sceg2('spreadMethod=pad'), sceg2('spreadMethod=reflect', -7), sceg2('spreadMethod=repeat', -6)].join('|'),
 
-			sceg2('path='),
+					[sceg2('gradientUnits=objectBoundingBox'), sceg2('gradientUnits=userSpaceOnUse', -14)].join('|'),
 
-			scegc('mpath xlink:href=#path1', 5),
+					sceg2('gradientTransform='),
 
-			scegc('set to=', 3),
+				].join(br)),
 
-			scegc('discard begin=', 7),
-		].join(br)),
+				detail(gM('Pattern.v'), [
+					sceg('<pattern id=Pattern0 width=.25 height=.25>&&&&</pattern>', 8),
+					sceg('<pattern id=Pattern1 x=10 y=10 width=50 height=50 patternUnits=userSpaceOnUse>&&&&</pattern>', 8),
+					[sceg2('patternUnits=objectBoundingBox'), sceg2('patternUnits=userSpaceOnUse', -14)].join('|'),
+					[sceg2('patternContentUnits=objectBoundingBox'), sceg2('patternContentUnits=userSpaceOnUse', -14)].join('|'),
+
+				].join(br)),
+
+			].join(br)),
+
+
+
+			detail(gM('Transform'), [
+				sceg('transform=') + 'translate|rotate|scale|skew',
+
+				'translate(x, y)',
+				sceg2('translate(100,100)'),
+
+				'rotate(deg)',
+				sceg2('rotate(45)'),
+
+				'skewX(x) skewY(y)',
+				sceg2('skewX(45)') + sceg2('skewY(45)'),
+
+				'scale(x,y)',
+				sceg2('scale(1.2,0.5)'),
+
+
+				detail(gM('Matrix'), [
+					'matrix(scaleX, skewX, skewY, scaleY, dx, dy)',
+					'setTransform(scaleX, skewX, skewY,scaleY, dx, dy)',
+					gM('Transformation Matrix') + zx("$zmtrx([['scaleX','skewY','dx'],['skewX','scaleY','dy',[0,0,1]]])$"),
+					sceg2('matrix(1, 0, 0, 1, 0, 0)'),
+				].join(br)),
+			].join(br)),
+
+
+			detail(gM('Clip'), [
+				sceg('<clipPath id=cp1>&&&&</clipPath>', 9),
+				sceg('clip-path="url(#cp1)"'),
+
+			].join(br)),
+
+			detail(gM('Mask'), [
+				sceg('<mask id=ms1>&&&&</mask>', 9),
+				sceg('mask="url(#ms1)"'),
+
+
+
+			].join(br)),
+
+			detail(gM('Filter.v'), [
+				sceg('<filter x=0 y=0 width=100 height=100 filterRes=>&&&&</filter>', 7),
+
+				[sceg2('filterUnits=objectBoundingBox'), sceg2('filterUnits=userSpaceOnUse', -14)].join('|'),
+				[sceg2('primitiveUnits=objectBoundingBox'), sceg2('primitiveUnits=userSpaceOnUse', -14)].join('|'),
+
+			].join(br)),
+
+
+			detail(gM('Image'), [
+				scegc('image xlink:href="img/ZIL.png" x=0 y=0 height=50px width=50px', 5),
+
+
+			].join(br)),
+
+
+			detail('XHTML', [
+				sceg('<foreignObject x=20 y=20 width=200 height=200>&&&&</foreignObject>', 14),
+
+
+			].join(br)),
+
+
+			detail(gM('Animation'), [
+				scegc('animate attributeType=XML attributeName=x from=-100 to=120 dur=10s repeatCount=indefinite', 7),
+
+				scegc('animateTransform attributeName=transform attributeType=XML type=rotate from="0 60 70" to="360 60 70" dur=10s repeatCount=indefinite', 7),
+
+				sceg('<animateMotion dur=6s repeatCount=indefinite rotate=auto keyPoints=0;0.5;1 keyTimes=0;0.15;1 calcMode=linear>&&&&</animateMotion>', 14) + ' > mpath',
+
+
+
+				[sceg2('calcMode=linear', -6), sceg2('calcMode=discrete'), sceg2('calcMode=paced', -5), sceg2('calcMode=spline', -6)].join('|'),
+
+				sceg2('path='),
+
+				scegc('mpath xlink:href=#path1', 5),
+
+				scegc('set to=', 3),
+
+				scegc('discard begin=', 7),
+			].join(br)),
+		].join('')),
+		'rough.js '+github('rough-stuff/rough/wiki'),
 	].join(''),
 
 	//canvas
@@ -388,7 +391,7 @@ $.each({
 			
 			detail(gM('Path Shape'),[
 
-				gM('Line')+' lineTo(x,y)'+scegj('c.lineTo(155,150)',9),
+				gM('Line.0')+' lineTo(x,y)'+scegj('c.lineTo(155,150)',9),
 				
 				
 				gM('Rectangle')+' rect(x,y,width,height)',
@@ -590,6 +593,10 @@ $.each({
 		
 		
 		].join('')),
+
+
+		'rough.js '+github('rough-stuff/rough/wiki'),
+
 	].join(''),
 
 
@@ -834,7 +841,7 @@ let dt = new Zdog.Shape({
 	color: '#636',
 })`,0),
 
-				gM('Line')+scegj(`
+				gM('Line.0')+scegj(`
 let ln = new Zdog.Shape({
 	addTo: zo,
 	path: [
@@ -1166,11 +1173,199 @@ var v=new Zdog.Vector({ x: 1, z: 2, y: Zdog.TAU/4 })`,0),
 
 
 
+		
+	'Rough':[
+
+		'rough.js '+github('rough-stuff/rough/wiki'),
+		detail(gM('Initialize'),[
+			'rough.canvas(canvas);',
+			'svg.appendChild(rough.svg(svg).method);',
+			scegj(`var rc=rough.canvas(C)`,0)+scegj(`var rc=rough.svg(C)`,0)+scegj(`C.appendChild(rc.line)`,0)
+		].join(br)),
+
+		detail(gM('Property'),[
+			'generator '+scegj(`var rc2=rc.generator; rc2.rectangle(10, 10, 100, 100);`,10),
+		].join(br)),
+
+		detail(gM('Option'),[
+			sceg2(`,{seed:11}`),
+			sceg2(`,{strokeWidth:2}`),
+			sceg2(`,{curveStepCount:9}`),
+
+
+			'[0,1]',
+			sceg2(`,{roughness:0}`),
+			sceg2(`,{bowing:0}`),
+			sceg2(`,{curveFitting:0.95}`),
+
+			detail('SVG (Only)',[
+				sceg2(`,{simplification:0.5}`),
+
+			].join(br)),
+
+			gM('Boolean'),
+			sceg2(`,{disableMultiStroke:true}`),
+			sceg2(`,{disableMultiStrokeFill:true}`),
+
+			gM('Dash Offset'),
+			sceg2(`,{strokeLineDash:[1,3]}`),
+			sceg2(`,{fillLineDash:[1,3]}`),
+			sceg2(`,{strokeLineDashOffset:3}`),
+			sceg2(`,{fillLineDashOffset:3}`),
+
+
+			detail(gM('Fill Style'),[
+				sceg2(`,{fillStyle:'hachure',fillWeight:3, hachureAngle:60, hachureGap:3}`),
+				sceg2(`,{fillStyle:'solid'}`),
+				sceg2(`,{fillStyle:'zigzag'}`),
+				sceg2(`,{fillStyle:'cross-hatch'}`),
+				sceg2(`,{fillStyle:'dots', fillWeight:3}`),
+				sceg2(`,{fillStyle:'dashed', dashOffset:2, dashGap:3}`),
+				sceg2(`,{fillStyle:'zigzag-line', zigzagOffset:2}`),
+			].join(br),1),
+
+
+
+			gM('Color'),
+			sceg2(`,{stroke: 'blue', fill: 'red'}`)
+
+
+		].join(br)),
+
+		gM('Shape'),
+		'line (x1, y1, x2, y2 [, options])',
+		scegj(`rc.line(60, 60, 190, 60)`),
+
+		'rectangle (x, y, width, height [, options])',
+		scegj(`rc.rectangle(10, 10, 100, 100)`),
+
+		'ellipse (x, y, width, height [, options])',
+		scegj(`rc.ellipse(30, 50, 150, 80)`),
+
+		'circle (x, y, diameter [, options])',
+		scegj(`rc.circle(80, 50, 80)`),
+
+		'linearPath (points [, options])',
+		scegj(`rc.linearPath([[60, 10], [70, 20], [75, 30], [69, 50]])`),
+
+		'polygon (vertices [, options])',
+		scegj(`rc.polygon([[60, 10], [90, 40], [50, 20], [20, 50]])`),
+
+
+		'arc (x, y, width, height, start, stop, closed [, options])',
+		scegj(`rc.arc(50, 30, 200, 180, Math.PI, Math.PI * 1.6, true)`),
+
+		'curve (points [, options])',
+		scegj(`rc.curve([[60, 30], [70, 40], [90, 20]])`),
+
+		'path (d [, options])',
+		scegj(`rc.path('M37,17v15H14V17z M50,0H0v50h50z')`),
+
+	].join(br),
+
+
+		
+	'Lego':[
+
+		href(Hs+'legrajs.com','Legra (Lego brick Graphics)'),
+		detail(gM('Initialize'),[
+			'new legra(ctx[, size, options])',
+			scegj(`C.width=400;C.height=300;
+var lg = new legra(c)`,0)
+		].join(br)),
+
+		detail(gM('Setting'),[
+			scegj(`,{filled:true}`),
+			scegj(`,{color:'blue'}`),
+			scegj(`,{filled:true, color: 'blue'}`,0)
+		].join(br)),
+
+		detail(gM('Line.0'),[
+			'line(x1, y1, x2, y2 [, options])',
+			scegj(`lg.line(3, 1, 10, 1)`),
+			scegj(`lg.line(11, 11, 1, 1, { color: 'red' })`,0)
+		].join(br)),
+
+		detail(gM('Rectangle'),[
+			'rectangle(x, y, width, height [, options])',
+			scegj(`lg.rectangle(12, 2, 8, 8)`,0),
+		].join(br)),
+
+		detail(gM('Linear Path'),[
+			'linearPath(points [, options])',
+			scegj(`
+lg.linearPath([
+	[1, 1],
+	[10, 1],
+	[1, 10],
+	[10, 10]
+])`,0),
+		].join(br)),
+
+
+		detail(gM('Circle'),[
+			'circle(xc, yc, radius [, options])',
+			scegj(`lg.circle(6, 6, 4)`,0),
+		].join(br)),
+
+
+
+		detail(gM('Ellipse'),[
+			'ellipse(xc, yc, a, b, [, options])',
+			scegj(`lg.ellipse(15, 15, 10, 6, { filled: true, color: 'green' })`,0),
+		].join(br)),
+
+
+		detail(gM('Polygon'),[
+			'polygon(vertices [, options])',
+	scegj(`
+lg.polygon([
+	[3, 10],
+	[22, 18],
+	[30, 1],
+	[14, 10],
+	[8, 2]
+], { filled: true, color: 'orange' })`,0),
+		].join(br)),
 
 
 
 
+		detail(gM('Arc'),[
+			'arc(xc, yc, a, b, start, stop, closed [, options])',
+			scegj(`lg.arc(15, 15, 10, 10, Math.PI, Math.PI * 1.5, true)`),
+			scegj(`lg.arc(15, 15, 10, 10, 0, Math.PI * .5, true, { 
+	filled: true, 
+	color: 'orange' 
+})`,0),
+			scegj(`lg.arc(15, 15, 15, 15, -Math.PI * 0.5, Math.PI * 0.5, false, { 
+				color: 'red' 
+			})`,0),
+		].join(br)),
 
+		detail(gM('Bézier Curve'),[
+			'bezierCurve(x1, y1, cp1x, cp1y, cp2x, cp2y, x2, y2 [, options])',
+			scegj(`lg.bezierCurve(3, 3, 8, 30, 18, 1, 22, 14)`)
+		].join(br)),
+
+
+		detail(gM('Quadratic Curve'),[
+			'quadraticCurve(x1, y1, cpx, cpy, x2, y2 [, options])',
+			scegj(`lg.quadraticCurve(3, 3, 8, 30, 18, 1, 22, 14)`)
+		].join(br)),
+
+		detail(gM('Draw Image'),[
+			'drawImage(image, dstPoint [, dstSize, srcPoint, srcSize])',
+			scegj(`var img=new Image();
+img.onload = function () {lg.drawImage(img, [0, 0])};
+img.src='img/ZIL.png'`,0),
+			scegj(`lg.drawImage(image, [0, 0])`,0)
+		].join(br)),
+
+
+
+
+	].join(''),
 
 
 },function(k,v){

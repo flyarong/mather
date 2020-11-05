@@ -16,14 +16,14 @@
 			[
 				detail(gM('Encode | Decode'.split(' ')).join(' '),
 					ul(Arrf(gitjs,
-						ZLR('base64 jquery qrcode qrcode-decoder zlr js-yaml terrain webslides'))),1),
+						ZLR('base64 jquery qrcode qrcode-decoder zmather_zlr zmather_io js-yaml terrain webslides'))),1),
 				detail(gM('Media | Graphic'.split(' ')).join(' '),
 					ul(Arrf(gitjs,
-						ZLR('katex echarts echarts-gl effects aframe aframe-ar zdog d3 geogebra desmos'))),1),
+						ZLR('katex echarts echarts-gl effects aframe aframe-ar zdog d3 geogebra desmos rough ztext'))),1),
 
 				detail(gM('Math'),
-					ul(Arrf(gitjs,
-						ZLR('math algebra'))),1),
+					ul(Arrf(github,
+						ZLR('josdejong/mathjs '+zlr3('infusion/','Polynomial Fraction Complex Quaternion','.js')))),1),
 
 				href('./css/fonts','Fonts'),
 				detail('Icon Font',
@@ -31,6 +31,7 @@
 
 			
 			].join(br)
+
 		,1);
 
 	}else{

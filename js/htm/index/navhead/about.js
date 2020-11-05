@@ -18,15 +18,15 @@ $(function(){
 		subtabs(gM(['Version','Setting','Hotkey','Whitepaper','Project Progress','Licence','Donate','About zzllrr']),[
 			
 			//version
-			fieldseth('V2019.12.13',
+			fieldseth('V2020.11.2',
 				DCtv('alignc',
-					DCtv('floatl','<h1 class=logo>zzllrr Mather</h1>'+
+					DCtv('floatl','<h1 class=logo data-z data-z-event="pointer">zzllrr Mather</h1>'+
 						imgSRC+'logo.jpg" width=150 />'+
 						'<span id=ZMatherQR>'+sc+
 						DCtv('alignl',
-							'Demo '+href(HOM.ZMATHER)+br+
-							'Gitee '+href(HOM.ZMATHERcn)+br+
-							'Github '+href(HOM.ZMather)
+							href(HOM.ZMATHERcn)+br+
+							github('zzllrr/mather')+' | '+
+							github('zzllrr','mather')
 						)
 					)+
 					DCtv('Summarytip',
@@ -229,19 +229,19 @@ Table('',[
 						[gM('Wiki'),meter(20),
 							'#'+gM(ZLR('Compact Structural Semantical')).join(', #')],
 					
-						[gM('Teaching'),meter(1),
+						[gM('Teaching'),meter(10),
 							'#'+gM(ZLR('Reusable Hierarchical Functional')).join(', #')],
 					
-						[gM('Academic'),meter(4),
+						[gM('Academic'),meter(8),
 							'#'+gM(ZLR('Flexible Intelligent l10n')).join(', #')],
 							
-						[gM('Technology'),meter(2),
+						[gM('Technology'),meter(20),
 							'#'+gM(ZLR('Extendable Customizable Efficient')).join(', #')],
 
-						[gM('Science'),meter(1),
+						[gM('Science'),meter(10),
 							'#'+gM(ZLR('Structural Unambiguous Inspiring')).join(', #')],
 							
-						[gM('Culture'),meter(2),
+						[gM('Culture'),meter(15),
 							'#'+gM(ZLR('Systematized Interpretable Inspiring')).join(', #')],
 							
 
@@ -358,7 +358,7 @@ Table('',[
 				href(Hs+'www.douban.com/group/excel-vba/','Excel宏VBA')+' (豆瓣小组) 组长',
 				href(HOM.ZIG,'小乐图客zzllrr Imager')+'（Google Chrome Extension）作者',
 				href(HOM.ZRL,'小乐阅读zzllrr RSS Reader')+'（Google Chrome APP）作者',
-				href(HOM.ZMATHER,'小乐数学zzllrr Mather')+'（Open Source Software）开源发起者',
+				href(HOM.ZMATHER,'小乐数学zzllrr Mather')+'（Open Source Software）作者',
 				gM('Contact')+': '+href(GMAIL,'zzllrr@gmail.com'),
 				
 			])+DCtv('alignc pd10',gM('WeChat')+'<div id=weixinZQR>'+dc),

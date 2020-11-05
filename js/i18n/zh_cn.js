@@ -17,8 +17,7 @@ lang['zh_cn'] = {
 	'fonT': '字体',
 	'bW': '边宽',
 	'Bw': '边宽',
-	'W': '宽',
-	'H': '高',
+
 	'H1': '一级标题',
 	'Fgc': '前景色',
 	'bg': '背景',
@@ -51,7 +50,18 @@ lang['zh_cn'] = {
 
 
 	'Launch': '在新窗口运行',
-	'Lang': '语言',
+
+	'English':'英语',
+	'Chinese':'中文',
+	'Egyptian':'埃及',
+	'Arabic':'阿拉伯',
+	'Babylonian':'巴比伦',
+
+	'The':' ',
+	'the First Kind':'第一类',
+	'the Second Kind':'第二类',
+	'the Third Kind':'第三类',
+
 	'Del': '删除',
 
 	'Linebreak': '换行',
@@ -82,12 +92,13 @@ lang['zh_cn'] = {
 	'resetAlert': '确定重置吗？',
 
 
-	'Five-year research plan': '未来五年主要工作计划',
+
 	'International Standard Open-Sourced Math Tool Program by Experts': '国际通用标准的专家级开源数学工具项目',
 	'Customized Math Tool Program based on Mather by zzllrr': '小乐基于Mather个性化开发的数学工具项目',
 	'Customized Math Tool Program based on Mather by someone': '某人基于Mather个性化开发的数学工具项目',
 	'Unless Otherwise Stated': '如无特殊说明',
 	'Standing on the shoulders of giants!':'站在巨人的肩膀上！',
+
 	// standard 
 
 
@@ -97,10 +108,14 @@ lang['zh_cn'] = {
 	'Person': '人物',
 	'User': '用户',
 
-
+	'Officer':'军官',
 	'Student': '学生',
 	'Parent': '父母',
 	'Teacher': '老师',
+	'Schoolgirl':'女生',
+	'Schoolboy':'男生',
+	'Baby':'婴儿',
+'Neighborhood':'邻居',
 	'Enthusiast': '爱好者',
 	'Geek': '极客',
 	'Author':'作者',
@@ -119,6 +134,7 @@ lang['zh_cn'] = {
 	'Legal Worker': '法律工作者',
 
 	'Amateur': '业余者',
+	'Barber':'理发师',
 
 	'Participant': '参与者',
 
@@ -146,17 +162,24 @@ lang['zh_cn'] = {
 	'WeChat': '微信公众号',
 
 	'Other':'其他',
+	'Tip':'提示',
+	'Syntax':'句法',
+
+
 	// 百科
 
 	'Dictionary':'辞典',
 	'Wiki': '百科',
 	'Enclyclopedia':'百科全书',
 	
+
 	'Concept': '概念',
 	'Name': '名称',
 	'Notation': '记法',
+	'Define':'定义',
 	'Definition': '定义',
 	'Summary': '简介',
+	'Details':'详情',
 	'Description': '描述',
 	'Property': '性质',
 
@@ -166,35 +189,69 @@ lang['zh_cn'] = {
 	'Monograph':'专著',
 	
 	'Theorem': '定理',
+	'Aureum Theorema':'黄金定理',
 	'Axiom': '公理',
+	'Axiomatic':'公理',
 	'Lemma': '引理',
 	'Principle':'原理',
-	'Law.Math':'定律',
+	'Principal':'主',
+	'Auxiliary':'辅助',
+
+	'Criteria':'准则',
+	'Criterion':'准则',
 
 	'Conjecture':'猜想',
+	'Conjectures':'猜想',
+
 	'Hypothesis': '假设',
+	'Hypotheses': '假设',
 	'Suppose': '假设',
+	'Postulate': '假设',
 
 	'Antinomy':'悖论',
 	'Paradox':'矛盾',
-	'Error':'错误',
-	'Impossibility':'不可能性',
+	'Error':'误差;错误',
+	'Deviation':'偏差',
+	'Possibility':'可能性',
+	'Posteriori':'后验',
+	'Priori':'先验',
 
+	'Denial':'否定',
+	'Deny':'否定',
+	
 	'Proof': '证明',
 	'Prove': '证明',
+	'Prover':'证明机',
+	'Proved':'已证明',
+	'Disproved':'已否定',
+
+	'such that':'满足',
+
 	'Inference': '推断',
 	'Corollary':'推论',
+	'Statement':'陈述',
 
+	'Restriction':'限制',
+	'Admissible':'可接受',
 
 	'Calculate': '计算',
 	'Computation': '计算',
 	'Calculation': '计算',
-	'Estimate':'估算',
+	'Estimate':'估计',
 
+	'Extension':'扩张;扩展',
+	'Extensionality':'外延',
+
+	'Category':'范畴',
 
 	'Method': '方法',
+	'Methodology': '方法论',
 
-	
+	'Revenge':'复仇',
+	'Recurrence':'复现',
+
+	'Orbit':'轨道',
+
 	'Formula': '公式',
 	'Formulae': '公式',
 	'Formulas': '公式',
@@ -217,14 +274,30 @@ lang['zh_cn'] = {
 	
 	'Holographic':'全息',
 	'Conservation':'守恒',
-	'Periodicity':'周期',
+
+	'Entropy':'熵',
 	'Period':'周期',
+	'Periodic':'周期',
+	'Periodicity':'周期',
+	'Aperiodic':'反周期',
+
 	'Comprehensive':'综合',
+	'Complete':'完全',
+	'Incomplete':'不完全',
+
 	'Holistic':'整体性',
+
+	'Predict':'预测',
 
 	'Uniq':'去重',
 	'Unique':'唯一',
 	'Repeat':'重复',
+
+	'Same':'相同',
+	'Distinct':'不同',
+	'Different':'不同',
+
+	'Given':'给定',
 
 	'Ergodic':'遍历',
 	'Ergodicity':'遍历',
@@ -237,11 +310,15 @@ lang['zh_cn'] = {
 
 	'Divergent':'发散',
 
+	'Generalise':'推广',
 	'Generalize':'推广',
 	'Generalising':'推广',
+	'Generalized':'广义',
 
 	'Integrate':'整合',
 	'Reduction to Absurdity':'归谬',
+
+	'Illusion':'幻觉',
 
 	'Dialectical':'辩证的',
 	'Dialectic':'辩证',
@@ -249,6 +326,7 @@ lang['zh_cn'] = {
 	'Experiment':'实验',
 	'Deduce':'演绎',
 	'Deductive':'演绎',
+	'Deduction':'推理',
 
 	'Counterpose':'对立',
 	'Penetrate':'穿透',
@@ -257,8 +335,7 @@ lang['zh_cn'] = {
 
 	'Reasoning': '推理',
 
-	'Pattern': '模式',
-	'Pattern.v': '图案',
+	'Pattern': '模式;图案',
 	'Paradigm':'范式',
 
 
@@ -267,6 +344,8 @@ lang['zh_cn'] = {
 	'Topic': '课题',
 	'Foldable':'可折叠',
 	'Folding':'折叠',
+
+
 
 
 	//教学
@@ -278,6 +357,8 @@ lang['zh_cn'] = {
 	'Curricula':'全部课程',
 	'Pedagogy':'教学法',
 	'Test Question Library':'试题库',
+
+	'Test':'检验;测验',
 	'Drill': '练习',
 	'Assign':'布置',
 	'Assignment':'作业',
@@ -292,6 +373,8 @@ lang['zh_cn'] = {
 	'Online':'在线',
 
 	'Vote':'投票',
+
+	'Ballot':'投票',
 	'Poll':'民测投票',
 	'Survey':'调查',
 	'Investigation':'调查研究',
@@ -337,6 +420,17 @@ lang['zh_cn'] = {
 	'Triennial':'三年一次',
 	'Quadrennial':'四年一次',
 	'Annals':'年鉴',
+	'Year':'年',
+	'Month':'月',
+	'Date':'日',
+	'Minute':'分',
+
+	'Arc Second':'弧秒',
+	'Arcsecond':'秒',
+
+	'Now':'现在',
+	'Tomorrow':'明天',
+	'Yesterday':'昨天',
 
 	'Reference': '引用',
 	'Newsletter':'新闻通讯',
@@ -350,6 +444,7 @@ lang['zh_cn'] = {
 	'Academic':'学术',
 	'Seminar':'研讨会',
 	'Webinar':'网络研讨会',
+	'Symposium':'专题研讨会',
 	'Workshop':'讲习',
 	'Conference':'会议',
 	'Lecture':'讲座',
@@ -415,6 +510,7 @@ lang['zh_cn'] = {
 	'Programming': '编程',
 	'Programmatic': '程序化',
 	'Algorithm':'算法',
+	'Algorithmic':'算法',
 
 	'Standard':'标准',
 	'Software': '软件',
@@ -426,9 +522,14 @@ lang['zh_cn'] = {
 	'Feature':'特征',
 	'Features':'特色',
 
-
-
-
+	'Texture':'纹理',
+	'Rough':'粗糙',
+	'Roughness':'粗糙度',
+	'Hachure':'蓑状线',
+	'Simplification':'简化',
+	'Disable':'停用',
+	'Enable':'启用',
+	'Plan':'计划',
 
 	//科学
 
@@ -436,7 +537,7 @@ lang['zh_cn'] = {
 	'Scientific':'科学',
 	'Fiction':'幻想',
 	'Science Fiction':'科幻',
-	'Pseudoscience':'伪科学',
+
 	'Potential Science':'潜科学',
 	'Religion':'宗教',
 	'Superstition':'迷信',
@@ -451,21 +552,26 @@ lang['zh_cn'] = {
 	'Environmental Protection':'环保',
 	'Eco-Friendly': '环保的',
 
+	'Astronomy':'天文',
+	'Geography':'地理',
 	'Physics':'物理',
 	'Chemistry':'化学',
 	'Biology':'生物',
+	'Geographic':'地理',
+
 	'Medicine':'药物',
 	'AI': '人工智能',
 	'Intelligent': '智能',
 	'Intelligence': '智能',
 	'Psychology':'心理',
 
+	'Geodesic':'测地',
 
 
 	//文化
 
 	'Culture':'文化',
-	'Subculture':'亚文化',
+
 	'Humanism':'人文主义',
 	'Humanity':'人性',
 	'Innumeracy':'数盲',
@@ -477,6 +583,7 @@ lang['zh_cn'] = {
 	'Business':'商业',
 	'Politics':'政治',
 	'Economy':'经济',
+	'Sports':'体育',
 	'Game': '游戏',
 	'Toy':'玩具',
 	'Literature':'文学',
@@ -485,7 +592,8 @@ lang['zh_cn'] = {
 	'Video Game':'电玩',
 	'Simulation':'模拟',
 
-
+	'Backgammon':'双陆棋',
+	'Billiard':'台球',
 	'Recreational':'消遣',
 	'Maze':'迷宫',
 	'Paper Cutting':'剪纸',
@@ -496,7 +604,11 @@ lang['zh_cn'] = {
 	'Sudoku':'数独',
 	'Tangram':'七巧板',
 	'Tessellation':'镶嵌',
-	'Knot':'绳结',
+	'Tiling':'镶嵌',
+	'Knot':'纽结',
+
+	'Unknot':'解纽',
+
 	'Plasticine':'橡皮泥',
 	'Tetris':'俄罗斯方块',
 	'Puzzle':'解谜',
@@ -553,6 +665,8 @@ lang['zh_cn'] = {
 	'Museum':'博物馆',
 	'Camp':'营',
 
+	'Fair':'公平',
+	'Happy':'开心',
 	// 工程	
 
 	'Making':'制作',
@@ -565,17 +679,32 @@ lang['zh_cn'] = {
 	'Tool':'工具',
 	'Toolset':'工具箱',
 	'File': '文件',
+	'Folder':'文件夹',
 	'Engine': '引擎',
-	'Subproject': '子项目',
+	'Favourite':'最爱',
+	'Like':'喜欢',
+
+	'Design':'设计',
 	'Application': '应用',
 	'by-product': '副产品',
 	'Goal': '目标',
 
+	'Virtual':'虚拟',
+	'Virtual Machine':'虚拟机',
+	'Machine':'机器',
 	'Web': '网络',
+	'Network': '网络',
+
+	'Pursuit':'追及',
+
+	'Balance':'平衡',
+	'Balanced':'平衡',
+
 	'Webpage': '网页',
 	'Home': '首页',
 	'Homepage': '主页',
 
+	'Window':'窗口',
 	'Interface': '界面',
 	'Night': '夜间',
 	'Help': '帮助',
@@ -584,17 +713,43 @@ lang['zh_cn'] = {
 	'Preview': '预览',
 
 
+
 	'Ubiquitous':'普遍存在的',
 
 	'Scope': '范围',
 	'Textarea': '文本框',
 	'Computer': '计算机',
 
-
+	'Stack':'栈',
 	'Pitfall': '陷阱',
 	'Todo': '待办',
 
-	'Statistics': '统计',
+	'Statistic': '统计',
+	'Population':'总体',//统计学中
+	'Sample':'样本',
+	'Mean':'平均',
+	'Average':'平均',
+	'Seek':'寻找',
+	'See':'参见',
+
+	'Intermediate':'中',
+	'Correlation':'相关系数',
+	'Covariance':'协方差',
+	'Coefficient':'系数',
+	'Variance':'方差',
+	'Variation':'变分',
+	'Variational Calculus':'变分法',
+	'Surely':'肯定',
+
+	'Prune':'剪枝',
+	'Amalgamate':'合并',
+
+	'Alphabet':'字母表',
+	'Variety':'簇',
+
+	'Convolution':'卷积',
+	'Distribution':'分布',
+	'Distributed':'分布',
 
 
 	'Lottery': '彩票',
@@ -610,23 +765,32 @@ lang['zh_cn'] = {
 	'Container': '容器',
 	'Box': '盒子',
 	'Node': '节点',
+	'Acnode':'孤立点',
+
 	'Dash': '虚线',
-	'Arrow': '箭头',
+	'Dashed': '虚线',
+	'Dots': '点',
+	'Hatch':'孵化',
+	'Zigzag':'Z字形',
+
+	'Arrow': '箭头;阿罗',
+	'Arrowhead':'箭头',
 	'Round Corner': '圆角',
 	'Rounded': '圆角',
 
-	'White':'白',
-	'Black':'黑',
+	'White':'白;怀特',
+	'Black':'黑;布莱克',
 	'Gray':'灰',
 	'Gold':'金',
+	'Golden':'黄金',
 	'Silver':'银',
 	'Bronze':'铜',
 	'Iron':'铁',
-	'Brown':'棕',
+	'Brown':'棕;布朗',
 	'Red':'红',
 	'Orange':'橙',
 	'Yellow':'黄',
-	'Green':'绿',
+	'Green':'绿;格林',
 	'Blue':'蓝',
 	'Indigo':'靛',
 	'Violet':'紫',
@@ -635,7 +799,9 @@ lang['zh_cn'] = {
 
 	'Borderless': '无框',
 	'Visible':'可见',
+	'Visibility':'可视',
 
+	
 	'Pie': '饼',
 	'Bar': '条形',
 	'Flowchart': '流程',
@@ -649,6 +815,8 @@ lang['zh_cn'] = {
 	'Canvas': '画布',
 	'Graphic': '作图',
 	'Graphics': '图形',
+
+	'Flatten':'扁平化',
 
 	'Chart':'图形',
 	'Charts':'制图',
@@ -680,6 +848,7 @@ lang['zh_cn'] = {
 	'Speech': '语音',
 	'Voice': '嗓音',
 	'Music': '音乐',
+	'Chord':'和弦',
 	'Noise': '噪音',
 	'Usage': '使用量',
 	'Cache': '缓存',
@@ -688,11 +857,13 @@ lang['zh_cn'] = {
 	'Browser': '浏览器',
 	'Share': '分享',
 	'Check':'检查',
+	'Necklace':'项链',
 
 	'Effects': '特效',
 	'Action': '动作',
 	'Scene': '场景',
 	'Scenario':'场合',
+	'Aside':'旁白',
 
 	'Gadget': '部件',
 	'Widget':'部件',
@@ -703,12 +874,13 @@ lang['zh_cn'] = {
 	'Synthesis': '合成',
 	'Note': '注释',
 	'Notes':'笔记',
+	'Sticky Notes':'便笺',
 	'Notebook':'笔记本',
 	'Essay':'散文',
 	'Brainstorm':'头脑风暴',
 	'Brainstorming':'集思',
 
-
+	'Bucket':'水桶',
 
 	'Result': '结果',
 	'Title': '标题',
@@ -721,6 +893,7 @@ lang['zh_cn'] = {
 	'Layer': '层',
 	'Layers': '层数',
 	'Pointer': '指针',
+	'Erase':'擦除',
 	'Eraser': '橡皮擦',
 	'Tab': '制表符',
 	'Indent': '缩进',
@@ -729,22 +902,43 @@ lang['zh_cn'] = {
 	'Ordered': '有序',
 	'Unordered': '无序',
 
+	'Well Order':'良序',
+	'Well-Defined':'良定',
+
 	'Superscript': '上标',
 	'Subscript': '下标',
 	'Prefix': '前缀',
 	'Suffix': '后缀',
 	'Infix': '中缀',
+	'Affix':'缀',
 
+	'Gate':'门',
+	'Aggregate':'总数',
+
+	'Converse':'反命题',
+	
 	// 助词	或 词根
+	'if':'如果',
+	'iif':'当且仅当',
+	'when':'当',
+	'And': '与',
 	'and': '和',
 	'or': '或',
+	
+
+
 	'About': '关于',
 	'Anti': '反',
 	'Non':'非',
-	'Co': '互',
+	'Un':'不',
+	'Co': '互;共;同;协;余',
+
+	
+
 	'By': '按',
-	'From': '从',
-	'From.1':'于',
+	'For':'为了;因为;至于',
+
+	'From': '从;于',
 
 	'To': '到',
 	'Semi': '半',
@@ -752,12 +946,23 @@ lang['zh_cn'] = {
 	'Hemi': '半',
 	'Per': '每',
 
+	'Super':'超',
+	'Hyper':'超',
+	'Ultra':'超',
+	'Ultimate':'终极',
+
 	'Sub': '子',
 	'Quasi': '准',
+	'Pseudo':'伪',
+	'Pseudoprime':'伪素数',
 	'Multi': '多',
 	'Except': '除了',
 
 	'With': '以',
+
+	'Alternant':'交错',
+	'Alternate':'交错;交替',
+
 	// measure
 
 	// 空间
@@ -780,6 +985,12 @@ lang['zh_cn'] = {
 	'Color': '颜色',
 	'Colors': '颜色',
 	'Colorful':'彩色',
+
+	'Colouring':'着色',
+	'Coloring':'着色',
+
+	'Packing':'装填;填充',
+
 	'Hue':'色调',
 	'Gradient': '渐变',
 	'Contrast': '对比度',
@@ -789,9 +1000,13 @@ lang['zh_cn'] = {
 	'Sepia': '色偏',
 	'Invert': '反相',
 	'DropShadow':'投影',
+	'Projection':'投影',
 
 	// 时间		
 	'Time': '时间',
+	'Times': '次数',
+	'Frequency':'频率',
+	'Count':'计数',
 	'Speed': '速度',
 
 	// 抽象属性
@@ -801,11 +1016,15 @@ lang['zh_cn'] = {
 	'Type': '类型',
 	'Classification': '分类',
 	'Parameter': '参数',
+	'Argument':'参数',
+
 	'Structure': '结构',
 	'Hotkey': '快捷键',
 
 	'Unit': '单位',
 	'Value': '值',
+	'Values': '值',
+
 	'Information': '信息',
 	'Font': '字体',
 	'Padding':'内边距',
@@ -813,9 +1032,7 @@ lang['zh_cn'] = {
 
 	'Difficulty': '困难',
 	'Eagerness': '热切程度',
-	'Step': '步',
-
-	'Step.1':'步长',
+	'Step': '步;步长',
 
 	'Event': '事件',
 	'Reusability': '复用性',
@@ -825,11 +1042,14 @@ lang['zh_cn'] = {
 
 
 	'Glossary': '词汇表',
+	'Lexicon':'词汇表',
 	'Corpus': '语料',
 	'Grammar': '语法',
 	'Context': '语境',
 	'Linguistics': '语言学',
 
+	'Tautology':'重言式', // 永真式
+	'Contradiction':'矛盾',
 
 	'Expression': '表达式',
 
@@ -851,6 +1071,8 @@ lang['zh_cn'] = {
 	'Presentation Markup': '表现型标记',
 	'Content Markup': '内容型标记',
 	'Markup': '标记',
+	'Mark': '标记',
+	'Readonly':'只读',
 
 	'Object': '对象',
 	'Entity': '实体',
@@ -883,11 +1105,19 @@ lang['zh_cn'] = {
 
 	'Consensus': '共识',
 	'Cooperation': '合作',
+	'Reciprocity':'互惠',
 	'Condition': '条件',
+
+	'Absorb':'吸收',
+	'Tangle':'缠结',
 
 	// adj.	prep.
 
 	'Discrete':'离散',
+	'Continuous':'连续',
+	'Continuation':'延拓',
+	'Continued':'连',
+
 	'Big': '大',
 	'Small': '小',
 	'Double': '双',
@@ -907,7 +1137,8 @@ lang['zh_cn'] = {
 	'Static': '静态',
 	'Dynamic': '动态',
 
-	'Universal': '普适',
+	'Accident':'意外',
+	'Universal': '全称;普适',
 	'Typical': '典型',
 	'Elementary': '初等',
 	'Key': '关键',
@@ -919,11 +1150,16 @@ lang['zh_cn'] = {
 	'Inner': '内',
 	'Outer': '外',
 	'Symmetric': '对称',
+	'Asymmetric': '反对称',
+	'Antisymmetric':'反对称',
+	'Symmetry': '对称',
 
 	'Unsolved': '未解',
 	'Solved':'已解决',
 	'Open': '开放',
 	'Compatible': '相容',
+
+	'Comparison':'比较',
 
 	'High': '高',
 	'Low': '低',
@@ -934,14 +1170,20 @@ lang['zh_cn'] = {
 	'Down': '下',
 	'Left': '左',
 	'Right': '右',
+	'Backward':'后向;向后',
+	'Forward':'前向;向前',
+
+
+	'Upper':'上',
+	'Lower':'下',
+
+	'Half':'半',
 
 	'Clockwise': '顺时针',
 	'Anticlockwise': '逆时针',
 
 	'Rad': '弧度',
-	'Degree': '度',
-
-	'Degree.': '程度',
+	'Degree': '度;程度',
 
 	'Bold': '加粗',
 	'Italic': '斜体',
@@ -951,6 +1193,7 @@ lang['zh_cn'] = {
 
 	'ul': '无序列表',
 	'ol': '有序列表',
+	'dl': '定义列表',
 	'Block': '块',
 	'Inline': '行内',
 	'Quote': '引用',
@@ -959,7 +1202,10 @@ lang['zh_cn'] = {
 
 	'Checkbox': '勾选框',
 
+	'Almost':'几乎',
 	'All': '全部',
+	'Everywhere':'处处',
+
 	'Summarize': '概括',
 
 	'Systematized': '系统化',
@@ -967,21 +1213,25 @@ lang['zh_cn'] = {
 	'Structural': '结构化',
 	'Organized': '组织化',
 
-	'Organic': '有机的',
+	'Organic': '有机',
 	'Self-improvement': '自我完善的',
 	'Self-consistent': '自洽的',
 
 	'Legal': '合法的',
 
 	'Stable': '稳定的',
+	'Stability':'稳定性',
+
 	'Portable': '便携的',
 
 	'Efficient': '高效的',
-
-	'Automatic': '自动化',
+	
+	'Auto':'自',
+	'Automate': '自动',
 	'Flexible': '灵活的',
 	'Agile': '敏捷的',
-	'Compact': '紧凑的',
+	'Compact': '紧',
+	'Noncompact':'非紧',
 	'Extend':'扩展',
 	'Extendable': '可扩展',
 	'Enumeration':'枚举',
@@ -989,7 +1239,8 @@ lang['zh_cn'] = {
 	'Convenient': '方便的',
 	'Handy': '便利的',
 	'Easy': '容易的',
-	'Free': '免费的',
+	'Free': '自由的;免费',
+
 	'Layered': '分层的',
 	'Hierarchical': '等级的',
 	'Practical': '实用的',
@@ -1000,13 +1251,15 @@ lang['zh_cn'] = {
 	'Detailed': '详细的',
 	'Stepwise': '提供步骤的',
 	'Interpretable': '可解释的',
-	'Multipath': '多途径的',
+
 	'Timely': '及时',
 	'Non-discriminatory': '无歧视',
 	'Kind': '友善的',
 	'Pally': '亲密的',
 	'Peace-loving': '爱好和平的',
 
+	'On':'关于;开',
+	'Off':'关',
 	'Only':'只',
 	'Smooth': '平滑',
 	'Offline': '离线',
@@ -1016,7 +1269,12 @@ lang['zh_cn'] = {
 	'Energy Consumption Minimization': '能耗最小化',
 	'Open Access': '开放获取',
 
-	'Symbolic': '符号',
+	'Symbol': '符号',
+
+	'if':'如果',
+	'iff':'当且仅当',
+
+
 	'Numeral': '数值',
 	'Numerical': '数值',
 	'String': '字符串',
@@ -1026,16 +1284,22 @@ lang['zh_cn'] = {
 	'Data Base':'数据库',
 	'Opacity': '透明度',
 
+	'Edge':'边',
+	'Band':'带',
+	'Bandwidth':'带宽',
 	'Width': '宽',
 	'Height': '高',
+	'Depth':'深度',
 	'Shadow': '阴影',
 	'Direction': '方向',
 	'Directional': '方向',
 	'Grad':'梯度',
 	'Partial':'偏',
+	'Total':'全',
 	'Basic':'基本',
 	'Option': '选项',
 
+	'Branch':'分支',
 	'Attribute': '属性',
 	// action
 	'Append': '添加',
@@ -1050,8 +1314,7 @@ lang['zh_cn'] = {
 
 	'Need': '需要',
 	'Ignore': '忽略',
-	'Filter': '过滤',
-	'Filter.v': '滤镜',
+	'Filter': '过滤;滤镜',
 	'Measure': '测量',
 	'Get': '获取',
 	'Create': '创建',
@@ -1062,7 +1325,9 @@ lang['zh_cn'] = {
 	'Drag': '拖拽',
 	'Download': '下载',
 	'Upload': '上传',
-	'New': '新建',
+	'New': '新',
+
+	'Old': '旧',
 
 	'TOC': '目录',
 	'Generate': '生成',
@@ -1076,6 +1341,17 @@ lang['zh_cn'] = {
 
 	'More':'更多',
 	'Less':'更少',
+
+	'More than':'多于',
+
+	'Greater than':'大于',
+	'Less than':'小于;少于',
+
+	'Earlier than':'先于',
+	'Later than':'晚于',
+
+	'At Least':'至少',
+	'At Most':'至多',
 
 	'Solve': '解题',
 	'Question Type': '题型',
@@ -1096,6 +1372,8 @@ lang['zh_cn'] = {
 	'Functionalize':'函数化',
 	'Functionalization': '函数化',
 
+	'Aural':'听觉',
+	'Visual':'视觉',
 	'Visualize':'可视化',
 	'Visualization': '可视化',
 	'Decentralization': '去中心化',
@@ -1115,6 +1393,7 @@ lang['zh_cn'] = {
 	'Exhaust':'穷举',
 	'Concretize':'具体化',
 	'Counter-example':'反例',
+	'Counterexample':'反例',
 	'Search': '搜索',
 	'Not Found':'未找到',
 	'Index':'索引',
@@ -1134,8 +1413,9 @@ lang['zh_cn'] = {
 	'Offset': '偏移',
 	'Scale': '缩放',
 	'Skew': '扭曲',
-	'Translate': '翻译',
-	'Translate.Math': '平移',
+	'Translate': '平移;翻译',
+	'Transitive':'传递',
+
 	'Rotate': '旋转',
 	'Display': '显示',
 	'Toggle': '切换',
@@ -1166,6 +1446,7 @@ lang['zh_cn'] = {
 	'Replace': '替换',
 	'Copy': '复制',
 	'Clone': '克隆',
+	'Duplicate':'复制',
 	'Cut': '剪切',
 	'Delete': '删除',
 	'Clear': '清除',
@@ -1180,10 +1461,17 @@ lang['zh_cn'] = {
 	'Save': '保存',
 	'SaveAs': '另存',
 
+	'Initial':'始',
+	'Terminal':'终',
+	'Incidence':'入射',
+
 	'Input': '输入',
 	'Output': '输出',
 	'Refer': '参考',
 	'Reference':'参考资料',
+
+	'Reflect':'反射',
+	'Reflexive':'自反',
 
 	'Link': '链',
 	'href': '超链接',
@@ -1193,6 +1481,9 @@ lang['zh_cn'] = {
 	'l10n': '本土化',	//Localization 
 	'Misc':'杂项',
 	'Miscellaneous':'杂项',
+
+	'Nationality':'国籍',
+	'Nation':'国家',
 
 	'Avatar':'头像',
 	'Card':'卡片',
@@ -1214,12 +1505,63 @@ lang['zh_cn'] = {
 
 	'Deprecated':'不推荐',
 
+	'Available':'可用',
+	'Jargon':'行话',
+	'Parlance':'术语',
+	'Metaphor':'隐喻',
+	'Ansatz':'拟设',
+
+	'Word':'词',
+	'Communicate':'交流',
+
+
+	//自然事物 0000
+
+	'Arch':'拱',
+	'Atlas':'地图册',
+	'Atom':'原子',
+	
+	'Banana':'香蕉',
+
+	'Barbell':'杠铃',
+	'Bean':'豆',
+	'Beast':'野兽',
+	'Bee':'蜜蜂',
+	'Beetle':'甲虫',
+	'Bridge':'桥',
+
+	'Cattle':'牛',
+
+	'Fern':'蕨',
+	'Gallery':'画廊',
+
+
+
+	'Island':'岛',
+
+	
+	'Pistol':'手枪',
+	'Propeller':'螺旋桨',
+
+
+	'Sieve':'筛',
+	'Tortoise':'乌龟',
+
+	'Tree':'树',
+
+	'Wave':'波',
+
+	'Wheel':'车轮',
+	'Worm':'蠕虫',
+
+
 	//Math concept
 
 	// noun
 
 	// structure entity
 
+	'Zero':'零',
 	'One':'一',
 	'Two':'二',
 	'Three':'三',
@@ -1243,7 +1585,7 @@ lang['zh_cn'] = {
 
 
 	'First':'第一',
-	'Second':'第二',
+	'Second':'第二;秒',
 	'Third':'第三',
 	'Fourth':'第四',
 	'Fifth':'第五',
@@ -1263,6 +1605,17 @@ lang['zh_cn'] = {
 	'Nineteenth':'第十九',
 	'Twentyth':'第二十',
 
+	'One-Third':'三分之一',
+	'Two-Thirds':'三分之二',
+
+	'Twice':'两次',
+	'Thrice':'三次',
+
+	'Twin':'孪生',
+	'Twin Prime':'孪生素数',
+	'Pairwise Coprime':'两两互素',
+	'Zeros':'零点',
+
 	'Sort':'排序',
 	'Ascending':'升序',
 	'Descending':'降序',
@@ -1274,10 +1627,15 @@ lang['zh_cn'] = {
 	'Semicolon':'分号',
 
 	'Prime Mersenne Number': '梅森素数',
-	'Amicable Numbers': '亲和数',
+	'Amicable':'亲和',
 
-	'Form': '型',
+	'Form': '型;形式',
 	'Normal Form': '标准型',
+
+	'Abnormal':'反常',
+	'Anomalous':'异常',
+	'Anomaly':'异常',
+	'Cancellation':'消去',
 
 	'Array': '数组',
 	'Integer': '整数',
@@ -1289,22 +1647,62 @@ lang['zh_cn'] = {
 
 	'Reducible':'可约',
 	'Irreducible':'既约',
+	'Irreducibility':'不可约',
 
+	'Persistent':'持续',
 	'Sign':'符号',
+	'Asterisk':'星号',
+
 	'Digits':'位数',
 	'Quantity':'数量',
+	'Constant':'常数',
+	'Variable':'变量',
+	'Variant':'变量',
+	'Invariant':'不变量',
+	'Equivariant':'等变',
+
+	'Variate':'变量',
+	'Spline':'样条',
+	'Monster':'魔',
+
 	'Pure':'纯',
 	'Decimal': '小数',
 	'Sequence': '数列',
+	'Sequences': '数列',
+
+	'Aliquot':'因数和余',
+
+	'Poly':'多',
+	'Uni':'单',
+	'Bi':'二',
+	'Tri':'三',
+	'Tetra':'四',
+	'Penta':'五',
+	'Hexa':'六',
+
+	'Octa':'八',
+	'Hendeca':'十一',
+	'Dodeca':'十二',
+	'Icosa':'二十',
+
+	'Grand':'大',
+
+	'Partite':'分',
+	'Bipartite':'二分',
+	'Partition':'分割',
+
+	'Nomial': '项式',
 	'Polynomial': '多项式',
 	'Power': '幂',
 	'Series': '级数',
+	'Logarithm':'对数',
 
 	'Equation': '方程',
 	'Equations': '方程组',
 	'Equation Array': '方程组',
 	'Inequation': '不等式',
-	'Analytic': '解析式',
+	'Analysis': '分析',
+	'Analytic': '解析',
 	'Limit': '极限',
 
 	'Encompass':'包含',
@@ -1313,61 +1711,147 @@ lang['zh_cn'] = {
 	'Derivative': '导数',
 	'Partial Derivative': '偏导数',
 
+	'Ideal':'理想',
+	'Cohomology':'上同调',
+	'Homology':'同调',
+	'Homologous':'同调',
+	'Homological':'同调',
+	'Homography':'单应性',
+
+	'Congruent':'全等',
+	'Congruence':'同余式',
+	'mod':'模',
+	'Mod':'模',
+
+	'Separate':'分隔',
+	'Connectivity':'连通性',
+
 	'Vector': '向量',
 	'Tensor': '张量',
 	'Matrix': '矩阵',
+	'Matroid':'拟阵',
 	'Identity Matrix': '单位矩阵',
 	'Square Matrix': '方阵',
 
-	'Space': '空格',
-	'Space.1': '空间',
+	'Potential':'势',
+	'Vector Field':'向量场',
+	'Vector Space':'向量空间',
+
+	'Space': '空间;空格',
+
+	'Backslash':'反斜杠',
+
 	'Kernel': '核',
+	'Pair':'对',
+
+
+	'Spectral':'谱',
+	'Actuarial':'精算',
 
 	'Permutation': '置换',
+	'Substitution':'替换',
+	'Substitute':'替换',
 	'Relation': '关系',
 	'Function': '函数',
 	'Proposition': '命题',
 
 	'Logic': '逻辑',
 	'Algebra': '代数',
+	'Algebroidal':'代数体',
+
+	'Ausdehnungslehre':'扩张论',//德语
+
+	'Axonometry':'轴侧图',
+
+	'Azimuth':'方位角',
+	'Azimuthal':'方位角',
+
+	'Aztec':'阿兹特克',
+
 	'Geometry': '几何',
 	'Straight-edge':'直尺',
 	'Compass':'圆规',
 	'Graph': '图',
+	'Diagram':'图',
 	'Graphing': '作图',
+	'Digraph':'有向图',
 
-	'Set': '集合',
-	'Group.Math': '群',
-	'Group': '群组',
+	'Set': '集;集合',
+	'Subset':'子集',
+
+	'Empty':'空',
+
+
+
+	'Group': '群;群组',
+
+	'Monoid':'幺半群;独异点',
+
+	'Monodromy':'单值',
+
+	'Unicity':'单一性',
+	'Multiplicity':'多重性',
 
 	'Ring': '环',
 	'Field': '域',
 	'Lattice': '格',
 
+	'Arbitrary':'任意',
+	'Approximate':'近似',
+	'Approximately':'约',
+	'Approximation':'逼近',
+	'Approximable':'逼近',
+
+	'Equal':'等',
+	'Equals':'等于',
+	'Equal To':'等于',
 	'Equality': '等式',
 	'Non-equality': '不等式',
+	'Inequality':'不等式',
+	'Inequalities':'不等式',
 
 	'Equivalence': '等价关系',
 	'Partial Order': '偏序',
+	'Total Order': '全序',
+
+	'Poset':'偏序集',
 	'Cover': '覆盖',
 	'Chain': '链',
 	'Inversion': '逆序',
 
+	
+	'Connect':'连接',
+
 	'Dot': '点',
 
-	'System.Math': '系',
-	'System': '系统',
-	// 几何
+	'System': '系;系统',
+
+
+
+	'Sine':'正弦',
+	'Cosine':'余弦',
+	'Tangent':'正切',
+	'Cotangent':'余切',
+	'Secant':'正割',
+	'Cosecant':'余割',
+
+	// 几何相关
 
 	'Point': '点',
 	'Vertex': '顶点',
+	'Vertices': '顶点',
 	'Origin': '原点',
 	'Centroid': '质心',
+	'Barycentric':'重心',
 	'Orthocenter': '垂心',
 	'Incenter': '内心',
 	'Circumcenter': '外心',
+	'Parallel':'平行',
+	'Perpendicular':'垂直',
 	'Perpendicular Foot': '垂足',
 	'Foci': '焦点',
+
+	'Horned':'有角',
 
 	'Quadrant':'象限',
 	'Over': '上',
@@ -1375,25 +1859,42 @@ lang['zh_cn'] = {
 
 	'Coordinate': '坐标',
 	'Centroid Coordinate': '中心坐标',
+	'Abscissa':'横坐标',
+	'Ordinate':'纵坐标',
 
 	'Axis': '轴',
+	'Axial':'轴',
 	'Tick': '刻度',
 	'Grid': '网格',
 
 
-	'Line': '线',
-	
-	'Line.1': '行',
+	'Line': '线;行;直线',
 
 	'Line Segment': '线段',
 
 	'Angle': '角',
 	'Rt': '直角',
 
+	'Angle of Attack':'攻角',//迎角
+	'Angle-Preserving':'保角',
+	'Length-Preserving':'保长',
+	'Sphere-Preserving':'保球面',
+	'Area-Preserving':'保积',
+	'Measure-Preserving':'保测',
+	'Orientation-Preserving':'保向',
+	'Orientation-Reversing':'逆向',
 
-	'Polygon': '多边形',
+	'Distance':'距离',
+	'Velocity':'速度',
+
+	'gon': '边形',
+	'Polygon':'多边形',
 	'Regular Polygon': '正多边形',
+
+
+	'Polyiamond':'三角面多边形',
 	'Triangle': '三角形',
+	'Angular':'角',
 	'Right Triangle': '直角三角形',
 	'Outer Napoleon Triangle':'第一拿破仑三角形',
 	'Inner Napoleon Triangle':'第二拿破仑三角形',
@@ -1402,24 +1903,31 @@ lang['zh_cn'] = {
 	'Medial':'中位',
 	'Median Triangle':'中线三角形',
 	'Oblique':'斜',
+	'Acute':'锐',
+	'Acute Triangle':'锐角三角形',
 
-	'Square': '正方形',
-	'Square.Alge':'平方',
+	'Square': '正方形;平方',
+	'Squarefree':'无平方',
 	
-	'Rectangle': '矩形',
-	'Rectangle.1': '长方形',
+	'Rectangle': '矩形;长方形',
 
+	'Lateral':'边',
 	'Quadrilateral': '四边形',
 	'Parallelogram': '平行四边形',
 	'Rhombus': '菱形',
 	'Trapezoid': '梯形',
 
+	'Pentagon':'五边形',
+	'Hexagon':'六边形',
+	'Hex':'六边形',
 	'Enneagon':'九边形',
 	'Nonagon':'九边形',
 
+	'Sextic':'六次',
 	'Fish Bladder':'鱼鳔形',
 	'Parabola': '抛物线',
 	'Hyperbola': '双曲线',
+
 
 	'Circle': '圆',
 	'Ellipse': '椭圆',
@@ -1427,15 +1935,21 @@ lang['zh_cn'] = {
 	'Circumcircle':'外接圆',
 	'Excircle':'外切圆',
 	'Escribed':'旁切',
+	"Elliptic": "椭圆型",
 
+	"Parabolic": "抛物型",
 
-
+	'Ellipsoid':'椭球',
 	'Cone': '圆锥',
 	'Cylinder': '圆柱',
 
 	'Curve': '曲线',
+	'Section':'等分',
 	'Conic Section': '圆锥曲线',
-	'Arc': '弧',
+	'Catacaustic':'回光',
+
+
+	'Arc': '弧;反',
 	'Polyline': '折线',
 	'lineHV': '横竖线',
 	'Vertex Line': '顶点连线',
@@ -1444,17 +1958,28 @@ lang['zh_cn'] = {
 	'Median': '中位数',
 	'Median Line': '中线',
 	'Altitude': '高',
+	'Latitude':'纬度',
+	'Longitude':'经度',
+	'Amplitude':'振幅',
+
+	'Magnitude':'大小',
+	'Midpoint': '中点',
 	'MidPoint Line': '中点连线',
 	'Opposite Mid Point Line': '对边中点连线',
 	'Perpendicular Foot Line': '垂足连线',
 
+	'Bowing':'弯度',
+	'Weight':'重量',
+	'Seed':'种子',
+	'Gap':'空隙',
+	'Fitting':'贴合',
 
 	'Surface': '表面',
 	'Curved Surface': '曲面',
 	'Plane': '平面',
 	'Sphere': '球面',
 
-
+	'Volume':'体',
 	'Solid': '立体',
 	'Solids': '多面体',
 
@@ -1463,20 +1988,30 @@ lang['zh_cn'] = {
 
 
 	'Polytope':'多胞形',
+	'Hedron':'面体',
 	'Polyhedron':'多面体',
 	'Polyhedra':'多面体',
 	'Regular Polyhedron':'正多面体',
 	'Uniform Polyhedron':'正多边形多面体',
 	'Noble polyhedron':'正直多面体',
 
+	'Polychoron':'四维多胞体',
 
 	'Tetrahedron':'四面体',
 	'Octahedron':'八面体',
+	'Hendecahedron':'十一面体',
 	'Dodecahedron':'十二面体',
 	'Icosahedron':'二十面体',
-	'Stellating':'星形',
-	'Prismatoid':'拟柱体',
+	'Rhombohedron':'菱面体;斜方六面体',
+	'Parallelepiped':'平行六面体',
 
+	'Stellating':'星形',
+	'Stellation':'星形',
+	'Astroid':'星状',
+	'Prismatoid':'拟柱体',
+	'Diamond':'钻石',
+
+	'Broken':'坏',
 	'Prism':'棱柱',
 	'Pyramid':'棱锥',
 
@@ -1488,48 +2023,100 @@ lang['zh_cn'] = {
 
 	'Coaxal':'共轴',
 
-
-
-
+	'Special':'特殊',
+	'Equi':'等',
+	'Isosceles': '等腰',
 	'Isogonal':'等角',
 	'Isotoxal':'等边',
 	'Isohedral':'等面',
+	'Isotopy':'合痕',
+
+	'Anisohedral':'非等面',
+
+	'Authalic':'等积',
+	'Equidistant':'等距',
+
+	'Identical':'恒等',
+
+	'Reduced':'简化',
 
 	'Kepler–Poinsot':'正星形',
 
 
-	'Cube':'正方体',
-	'Cube.Alge':'立方',
+	'Cube':'正方体;立方',
 
 
 	'Cuboid':'长方体',
 
+
+	'Manifold':'流形',
+
+
+	'Persistence':'持久性',
+	'Adequate':'足够',
+	'Adiabatic':'绝热',
 
 	// measure
 	//代数
 	'Domain': '定义域',
 	'Range': '值域',
 
-	'Factorization': '分解',
-	'Factorize': '分解',
-	'Expansion': '展开',
+
 	'Sum': '求和',
 	'Prod': '求积',
-	'Harmonic': '调和',
+	'Direct Sum':'直和',
+	'Direct Product':'直积',
+
+	'Add':'添加',
+	'Addition':'加法',
+	'Additive':'加性',
+	'Addend':'加数',
+	'Adjunct':'附加',
+	'Ambient':'连带',
+	'Admittance':'导纳',
+
+	'Subtraction':'减法',
+	'Multiplication':'乘法',
+	'Harmonic': '调和;和谐',
+	'Anharmonic':'不和谐',
+	'Law':'法则;定律;法律',
+
+	'Anonymous':'匿名',
 
 	'Combination': '组合',
 	'Combination Number':'组合数',
 	'Permutation Number':'排列数',
+
+	'Combinatorial': '组合',
+	'Permanent':'积和式',
+	'Immanant':'',
+
+	'Exponential':'指数',
+
+	'Arrangement':'排列',
+
+	'Factorization': '分解',
+	'Factorize': '分解',
+	'Expansion': '展开',
 	'Factorial': '阶乘',
 	'Factorial Base': '阶乘进制',
 	'Factoriadic': '阶乘进制',
 
+	'Divisor':'因子',
+	'Factor':'因子',
+
 	'Greatest Common Divisor': '最大公约数',
 	'Least Common Multiple': '最小公倍数',
 	'Division': '除法',
+	'Aliquant':'除不尽',
 
+	'Fiber':'纤维',
+	'Bundle':'丛',
+	'Cluster':'聚类;集群',
 
 	'Base': '基',
+	'Basis':'基',
+
 	'Product': '积',
 	'Cross Product': '叉积',
 	'Digit': '数位',
@@ -1537,12 +2124,16 @@ lang['zh_cn'] = {
 	'Block': '分块',
 	'Rank': '秩',
 	'Trace': '迹',
-	'Order': '阶',
+	'Order': '阶;序',
 	'Piece': '分段',
 
 	'Det': '行列式',
 	'Determinant': '行列式',
+	'Determined':'定',
 
+	'Unexpected':'意外',
+	'Unfinished':'未完成',
+	'Underdamped':'欠阻尼',
 	'Norm': '模',
 	'Inverse': '逆',
 	'Cofactor': '余子式',
@@ -1550,22 +2141,51 @@ lang['zh_cn'] = {
 
 	'Leading Principle Minor': '顺序主子式',
 
+	'Dependent':'相关',
+	'Independent':'无关',
+	'Independence':'独立',
+	'Max':'最大',
+	'Min':'最小',
+	'Extremum':'极值',
+	'Extreme':'极',
+
+	'Maximum':'最大值',
+	'Minimum':'最小值',
+
+	'Maximal':'最大',
+	'Minimal':'最小',
+
+	'Moment':'矩',
+	'Involution':'对合;内卷',
+	'Monotone':'单调',
+
+	'Interpolation':'插值',
+	'Extrapolation':'外推',
+
 	'Binom': '二项式',
 	'Subsup': '上下标',
 
-	'Dimension': '维度',
+	'Dimension': '维',
+	'Phenomenon':'现象',
 	// 几何
 
 	'Diameter': '直径',
 	'Radii': '半径',
+	'Side':'边',
 	'Sides': '边数',
 	'Side Length': '边长',
+	'Hypotenuse':'斜边',
 	'Perimeter':'周长',
 	'Area':'面积',
 	'Surface Area':'表面积',
 	'Similar':'相似',
 
+	'Density':'密度',
+	'Fixed':'不动',
+
 	'Contour':'等高线',
+	'Adjacent':'邻',
+
 
 	// verb
 
@@ -1573,12 +2193,17 @@ lang['zh_cn'] = {
 
 	'Convert': '转换',
 	'Express': '表示',
+	'Representation':'表示',
 	'Simplify': '化简',
+
+	'Simply':'简单',
+	'Simplicial':'单',
 
 	'Divide': '整除',
 
 	'Transpose': '转置',
 	'Normalize': '单位化',
+	'Orthogonal':'正交',
 	'Orthogonalize': '正交化',
 	'Gram-Schmidt': '正交单位化',
 	'Enumerate': '枚举',
@@ -1586,16 +2211,24 @@ lang['zh_cn'] = {
 
 	// 几何
 
-	'Transform': '变形',
+	'Transform': '变换',
 	'Transformation': '变换',
 
-	'Map': '地图',
-	'Bridge':'桥',
+	'Map': '映射;地图',
 	'Mapping': '映射',
 
 
 
+
+	'Wavelet':'小波',
+
 	// adj
+	'Strong':'强',
+	'Weak':'弱',
+
+	'Perfect':'完全',
+	'Antipode':'对跖',
+	'Antipodal':'对跖',
 
 	//代数
 	'Absolute': '绝对',
@@ -1603,48 +2236,109 @@ lang['zh_cn'] = {
 	'Negative': '负',
 	'Natural': '自然',
 	'Prime': '质',
+	'Primality':'素性',
+
+	'Primitive':'原;本原',
+
+	'Totient':'与因子互素数',
+
+	'Palindrome':'回文',
+
+	'Thrackle':'单满交线',
+
 	'Rational': '有理',
 	'Irrational': '无理',
+	'Rationalize':'有理化',
+	
 	'Radical': '根式',
 	'Root': '根',
+	'Roots': '根',
+	'Solution':'解',
+
+	'Ratio':'比例',
+	'Rate':'比',
+	//'Ratio':'比率',
+	'Account for':'占',
 
 	'Transcendental': '超越',
 	'Real': '实',
 	'Imaginary': '虚',
 	'Complex': '复',
 
+	'Complexity':'复杂度',
+	'Implicit':'隐',
+	'Cycle':'循环',
+
+	'Cyclic':'周期',
+	'Acyclic':'非周期',
+
+	'Iterative':'迭代',
+	'Iterate':'迭代',
+
 	'Regular': '正则',
+	'Regularized':'正则化',
+
+
 	'Singular': '奇异',
 	'Linear': '线性',
 
 	'Eigen': '特征',
-	'Adjoint': '伴随',
+	'Adjoint': '伴随',	//伴随变换，共轭变换，共轭转置矩阵A^H
+	'Adjugate': '伴随',	 //伴随矩阵，代数余子式矩阵转置
+	'Conjugate': '共轭',
 	'Augmented': '增广',
+	'Augmentation': '增广',
 	'Diagonal': '对角',
 	'Hermitian': '共轭转置',
+
 	'Coprime': '互素',
 	'Recursive': '递归',
 	'Cross': '交叉',
 
 	'Commutative':'交换',
 	'Associative':'结合',
+	'Associated':'相伴',
 
 	'Parentheses': '括号',
 	'Nest': '嵌套',
 	'Symmetry': '对称',
+	'Asymptotic':'渐进',
+	'Asymptote':'渐近线',
+	'Asymptosy':'渐近线',
 
 	'Primary': '主',
 	'Secondary': '次',
+
+	'Symplectic':'辛',
 
 	'Simple': '简单',
 	'Closed': '闭合',
 	'Clockwise': '顺时针',
 	'Counterclockwise': '逆时针',
 
-	'Infinite': '无限',
+
+	'Infinite': '无穷;无限',
 	'Finite':'有限',
+	'Infinity':'无限',
 
+	'Cell':'胞',
+	
+	'Cellular':'元胞',
+	'Automaton':'自动机',
+	'Automata':'自动机',
+	'Automorphy':'自守',
+	'Automorphism':'自同构',
+	'Morphism':'态射',
+	'Diffeomorphism':'微分同胚',
+	'Homeomorphism':'同胚',
+	'Homomorphism':'同态',
+	'Isomorphism':'同构',
 
+	'Holomorphic':'全纯',
+
+	'Reconstruction':'重构',
+
+	'Quantum':'量子',
 
 	'Unary': '一元',
 	'Binary': '二元',
@@ -1655,7 +2349,20 @@ lang['zh_cn'] = {
 	'Quadric': '二次',
 	'Cubic': '三次',
 
+	'Quintic':'五次',
+	'Sextic':'六次',
+
+	'Triplet':'三元',
+	'Quadruple':'四元',
+	'Quaternion':'四元数',
+	'Octonion':'八元数',
+	'Sedenion':'十六元数',
+
+	'Regress':'回归',
+	'Regressive':'回归',
 	'Regression':'回归',
+
+
 
 	//几何
 
@@ -1663,7 +2370,7 @@ lang['zh_cn'] = {
 	'Convex': '凸',
 	'Concave': '凹',
 	'Circum': '外接',
-	'Isosceles': '等腰',
+
 
 	'Equilateral':'等边',
 	'Scalene':'不等边',
@@ -1673,48 +2380,1988 @@ lang['zh_cn'] = {
 	'Radial': '径向',
 	'Straight': '直',
 
-	'Polar': '极',
+	'Pole':'极',
+	'Polar': '极坐标',
+	'Cartesian':'笛卡尔',
+	'Affine':'仿射',
+	'Affine Hull':'仿射包',
+
+	'Agonic':'无偏',
 
 	'Cylindrical': '柱面',
 	'Spherical': '球面',
 
+	'Truncate':'截短;缩短',
+	
+	'Sphenocorona':'球形屋根',
+
+	'Curvature':'曲率',
+	'Torsion':'挠率',
+
+	'Gasket':'垫圈',
 
 
 	//of Math subject
 	'Arithmetic': '算术',
 	'Algebraic': '代数',
+	'Algebraically':'代数',
+
 	'Geometric': '几何',
 	'Trigonometric': '三角',
 	'Hyperbolic': '双曲',
-	'Analytical': '分析',
-	'Logistical': '逻辑',
+
+	'Logistic': '逻辑',
 	'Probabilistic': '概率',
 	'Probability':'概率',
-	'Statistical': '统计',
-	'Topological': '拓扑',
+
+	'Topology': '拓扑',
+	'Anchor Ring':'环面',
+	'Annulus':'圆环',
+	'Torus':'环面',
+
+
+
 	'Spreadsheet':'表格',
 
+	'Operator':'算子',
+	'Functor':'函子',
+	'Attractor':'吸引子',
+	'Commutator':'交换子',
+
+	'Attract':'吸引',
+
+	'Scheme':'概形',
+	'Schema':'模式',
+
 	'Formal': '形式',
+	'Conformal':'共形',
 	'Differential': '微分',
+	'Differentiable':'可微',
+
+	'Difference':'差分;区别',
+
 	'Integral': '积分',
+	'Integrable':'可积',
+
+	'Contour Integral': '围线积分',
+
+
+	'Uniform':'一致;统一',
+	'Convergence':'收敛',
+	'Uniform Convergence':'一致收敛',
+
+	'Uniformization':'单值化',
+	'Unimodal':'单峰',
+	'Unimodular':'幺模',
+	'Modular':'模',
+
+	'Module':'模',
+	'modulo':'模',
+
+	'Moduli':'模',
+
+	'Union':'并',
+	'Unitary':'酉',
+
+	'Complemented':'补',
+	'Complementary':'余',
+	'Supplementary':'补',
+
+	'Ant':'蚂蚁',
+	'Ant Colony':'蚁群',
+	'Percolation':'渗流',
+
+	'Abacus':'算盘',
+
+	'Abundancy':'丰度',
+	'Abundance':'丰富性',
+	'Abundant':'盈',
+	
+	'Braid':'辫',
+	'Spiral':'螺旋',
+	'Helix':'螺旋线',
+
+	
+	'Magnetic':'磁',
+	'Ferromagnetic':'铁磁',
+	
+
+	'Accelerate':'加速',
+	'Accuracy':'精度',
+	'Precision':'精度',
+
+	'Accumulate':'积累',
+	'Accrete':'堆积',
+	'Advect':'平流',
+
 	'Boolean': '布尔',
 
 	'Indefinite': '不定',
 	'Definite': '定',
 
 	'Theory':'理论',
+
+	'Set Theory':'集合论',
 	// 人名
 
-	'Euler': '欧拉',
-	'Bezier': '贝塞尔',
-	'Bernoulli':'伯努利',
-	'Fermat': '费马',
-	'Cartesian': '笛卡尔',
-	'Diophantus':'丢番图',
-	'Diophantine':'丢番图',
-	'Platonic':'柏拉图',
-	'Archimedean':'阿基米德',
-	'Napoleon':'拿破仑',
+
+'von':'冯·',//⋅
+'van':'范·',
+'der':'德',
+
+'Abelian':'阿贝尔',
+'Abelianization':'阿贝尔化',
+
+'Apollonian':'阿波罗',
+'Archimedean':'阿基米德',
+'Artinian':'阿廷',
+'Aurifeuillian':'奥利菲力',
+
+
+'Bayesian':'贝叶斯',
+
+'Diophantine':'丢番图',
+
+'Hamiltonian':'哈密顿',
+
+'Jacobian':'雅可比',
+
+'Laplacian':'拉普拉斯',
+
+'Noetherian':'诺特',
+
+'Platonic':'柏拉图',
+
+
+
+'Abel':'阿贝尔',
+'Achilles':'阿基里斯;阿喀琉斯',
+'Ackermann':'阿克曼',
+
+'Adams':'亚当斯',
+'Adelard':'阿德拉德',
+'Adèle':'阿黛尔',
+
+
+'Adleman':'阿德勒曼',
+'Ado':'阿朵',
+'Adomian':'阿朵米安',
+
+'Agnesi':'阿涅西',
+"Agnesi's Witch":'箕舌线',	//意大利语versoria 与女巫versiera 类似
+'Agnésienne':'箕舌线',
+
+'Agoh':'艾构',
+'Agrawal':'阿格拉瓦尔',
+
+'Ahlfors':'阿尔福斯',
+'Ahmed':'阿麦德',
+
+'Aida Yasuaki':'会田安明',
+'Airy':'艾里',
+'Aitken':'艾特肯',
+'Aiyar':'艾亚尔',
+'Ajima':'阿吉玛',
+'Ajima Naonobu':'安岛直圆',
+
+
+'Akhmim':'艾赫米姆',
+
+'Akinetor':'广义张量',
+
+
+'Alaoglu':'阿劳格鲁',
+
+'Albanese':'阿尔巴内塞',
+'Albers':'阿尔伯斯',
+'Albert':'阿尔伯特',
+'Alberti':'阿尔贝蒂',
+
+'Alcuin':'阿尔昆',
+
+
+'Alhazen':'阿尔哈曾',
+'Al-haytham':'海什木',
+
+'Al-karaji':'卡拉吉',
+'Al-kashi':'卡西',
+'Al-khwarizmi':'花拉子米',
+'Al-khowarizmi':'花拉子米',
+
+'Allendoerfer':'艾伦多弗',
+
+
+
+'Alexander':'亚历山大',
+'Alexandrov':'亚历山德罗夫',
+'Aleksandrov':'亚历山德罗夫',
+
+
+'Alon':'阿隆',
+
+'Alvero':'阿弗罗',
+
+'Anaxagoras':'安纳萨格拉斯',
+'Anderson':'安德森',
+
+'Andrásfai':'安德拉法',
+'André':'安德烈',
+'Andreini':'安德尼',
+'Andrew':'安德鲁',
+'Andrews':'安德鲁斯',
+
+'Andrica':'安德里克',
+
+'Anger':'安格尔',
+
+'Anosov':'阿诺索夫',
+
+'Anthonisz':'安托尼兹',
+'Antiphon':'安蒂丰',
+
+'Antoine':'安托万',
+
+'Apéry':'阿佩里',
+'Apollonius':'阿波罗尼奥斯',
+
+'Appell':'阿佩尔',
+
+
+'Arakelov':'阿拉克洛夫',
+
+'Araya':'阿拉亚',
+
+
+'Archimedes':'阿基米德',
+'Archytas':'阿契塔斯',
+
+'Argand':'阿尔冈',
+
+'Aristotle':'亚里士多德',
+
+'Armanios':'阿玛尼奥斯',
+'Armstrong':'阿姆斯特朗',
+
+'Arnauld':'阿尔诺',
+
+'Arnold':'阿诺德',
+
+
+'Aronhold':'阿龙霍尔德',
+
+'Aronson':'阿伦森',
+
+
+
+
+
+'Artin':'阿廷',
+'Aryabhata':'阿耶波多',
+
+
+'Aschbacher':'阿什巴赫',
+
+'Atiyah':'阿蒂亚',
+
+'Aubel':'奥布尔',
+
+'Aurifeuille':'奥利菲力',
+
+'Babbage':'巴贝奇',
+
+'Bachelier':'巴舍利耶',
+'Bachet':'巴谢',
+
+'Backhouse':'巴克豪斯',
+
+'Backus':'巴克斯',
+
+'Bader':'巴德',
+'Baer':'巴尔',
+'Bahadur':'巴哈杜尔',
+
+'Bailey':'拜莱',
+
+'Baillie':'贝里',
+
+'Baire':'拜尔',
+
+'Bairstow':'巴尔斯托',
+
+
+'Baker':'贝克',
+
+'Bakos':'巴科斯',
+
+'Balaban':'巴拉班',
+
+'Ballantine':'巴兰坦',
+
+'Ballieu':'巴留',
+
+
+'Balthasart':'巴萨萨特',
+
+
+'Banach':'巴拿赫',
+'Bang':'邦',
+'Bankoff':'班科夫',
+'Banzhaf':'班扎夫',
+
+
+'Baranyai':'鲍劳尼奥伊',
+
+'Barban':'巴班',
+'Barbier':'巴比尔',
+
+'Bargmann':'巴格曼',
+
+'Barlow':'巴洛',
+
+'Barnes':'巴恩斯',
+'Barnette':'巴尼特',
+'Barnsley':'巴恩斯利',
+'Barrow':'巴罗',
+'Bartlett':'巴特利特',
+
+'Bashforth':'巴什福思',
+'Bateman':'贝特曼',
+'Batman':'蝙蝠侠',
+
+'Baudet':'鲍德特',
+'Bauer':'鲍尔',
+
+'Baum':'鲍姆',
+'Baxter':'巴克斯特',
+'Bayes':'贝叶斯',
+
+'Bays':'拜斯',
+
+
+'Beal':'毕尔',
+
+'Beauzamy':'毕优扎米',
+
+'Beda':'比德',
+
+
+
+'Beelphegor':'贝尔菲戈尔',
+
+'Beineke':'贝因克',
+
+'Beilinson':'贝林松',
+
+'Belphegor':'贝尔菲戈尔',
+'Behrmann':'贝尔曼',
+
+'Bell':'贝尔',
+'Bellman':'贝尔曼',
+'Beltrami':'贝尔特拉米',
+
+'Bendixson':'本迪克松',
+
+'Benford':'本福特',
+
+'Benham':'贝纳姆',
+
+'Benjamin':'本杰明',
+
+'Bennequin':'贝内坎',
+
+'Benney':'本尼',
+
+'Benson':'本森',
+
+
+'Beraha':'贝拉哈',
+
+'Berezin':'别列津',
+
+'Berge':'宝捷',
+
+'Berger':'伯格',
+
+'Bergman':'伯格曼',
+'Berkeley':'伯克莱',
+
+'Berlekamp':'伯利坎普',
+'Bernays':'贝尔奈斯',
+'Bernoulli':'伯努利',
+
+'Bernstein':'伯恩斯坦',
+
+
+'Berry':'贝利',
+
+'Bers':'贝尔斯',
+'Bertrand':'伯特兰德',
+
+'Bessaga':'贝沙加',
+'Bessel':'贝塞尔',
+
+'Betti':'贝蒂',
+'Bézier':'贝塞尔',
+'Bezier':'贝塞尔',
+
+'Bézout':'贝祖',
+
+'Bhaskara':'婆什伽罗',
+
+'Bhattacharyya':'巴塔恰里亚',
+'Bianchi':'比安基',
+'Bieberbach':'比伯巴赫',
+'Binet':'比内',
+'Bing':'宾',
+'Biot':'比奥',
+'Birch':'伯奇',
+'Birkhoff':'伯克霍夫',
+'Bitsadze':'比察捷',
+'Bjerknes':'比耶克内斯',
+
+'Blackwell':'布莱克威尔',
+
+'Blaschke':'布拉施克',
+
+'Bloch':'布洛赫',
+
+'Bluementhal':'布卢门塔尔',
+'Bochner':'博赫纳',
+'Boethius':'博伊西斯',
+'Bogolyubov':'博戈柳博夫',
+'Bogorelov':'波格列洛夫',
+'Bohr':'波尔',
+'Bolibruch':'鲍里布鲁克',
+
+'Boltzmann':'玻尔兹曼',
+
+
+'Bolyai':'波尔约',
+'Bolza':'博尔扎',
+'Bolzano':'波尔扎诺',
+'Bombelli':'邦贝利',
+'Bombieri':'邦别里',
+
+'Bona':'博纳',
+
+'Bonnet':'博内',
+
+'Boole':'布尔',
+'Borcherds':'博切尔兹',
+'Borel':'博雷尔',
+'Born':'博恩',
+
+'Borwein':'博温',
+
+
+'Bosák':'博萨克',
+
+'Bosse':'博斯',
+
+'Bost':'博斯特',
+
+'Bott':'博特',
+'Bourbaki':'布尔巴基',
+'Bourgain':'布尔盖恩',
+'Boussinesq':'布西内斯克',
+
+'Box':'博克斯',
+'Boyer':'博耶',
+
+'Bradwardine':'布拉德沃丁',
+
+
+
+'Brahmagupta':'婆罗摩及多',
+
+
+'Branges':'布朗斯',
+
+'Brauer':'布饶尔',
+'Bravais':'布拉维',
+
+'Brennan':'布伦南',
+
+'Brianchon':'布里昂雄',
+'Briggs':'布里格斯',
+
+'Brillouin':'布里渊',
+
+
+'Brocard':'布洛卡',
+
+'Brouncker':'布隆克尔',
+
+'Brouwer':'布劳威尔',
+'Browder':'布劳德',
+'Bruhat':'布吕阿',
+
+
+'Bruijn':'布鲁因',
+
+'Brumer':'布鲁默',
+
+'Brun':'布伦',
+
+'Bryan':'布莱恩',
+'Bryson':'布里松',
+'Bucy':'布西',
+
+
+'Buffon':'蒲丰',
+
+
+'Bunyakovski':'布尼亚科夫斯基',
+'Bunyakovsky':'布尼亚科夫斯基',
+
+'Burali':'布拉里',
+
+'Burgi':'比尔吉',
+
+'Burnside':'伯恩赛德',
+'Busemann':'布斯曼',
+'Byron':'拜伦',
+
+
+'Cajory':'卡约里',
+'Calabi':'卡拉比',
+'Caldron':'卡尔德龙',
+'Campanus':'坎帕努斯',
+'Campbell':'坎贝尔',
+
+
+
+'Cantor':'康托尔',
+
+'Carathéodory':'卡拉赛多利',
+
+'Cardano':'卡丹诺',
+'Carleman':'卡莱曼',
+
+'Carleson':'卡勒松',
+'Carlson':'卡尔松',
+
+
+'Carmichael':'卡迈克尔',
+
+'Carnot':'卡诺',
+
+
+'Carroll':'卡罗尔',
+
+'Cartan':'嘉当',
+'Cartier':'卡吉耶',
+
+'Casas':'卡萨斯',
+'Cassels':'卡塞尔斯',
+
+'Catalan':'卡塔兰',
+
+
+
+
+
+'Cauchy':'柯西',
+'Cavalieri':'卡瓦列里',
+'Cayley':'凯莱',
+
+'Čech':'切赫',
+
+'Cesaro':'切萨罗',
+'Chan-chan Tsoo':'姜立夫',
+'Chandra':'钱德拉',
+'Chang Sun-Yung':'张圣蓉',
+'Chaplygin':'恰普雷金',
+
+'Chapman':'查普曼',
+'Charpit':'沙比',
+
+'Chasles':'沙勒',
+'Chebyshev':'切比雪夫',
+'Chen Ching-Jun':'陈景润',
+'Chen Kien-Kwong':'陈建功',
+'Chen Shiing-Shen':'陈省身',
+
+'Chevalley':'谢瓦莱',
+'Chiang L.F.':'姜立夫',
+'Chou Wei-Liang':'周炜良',
+
+'Chowla':'周拉',
+
+'Christoffel':'克里斯托费尔',
+
+'Chun Kai-Lai':'钟开莱',
+
+'Chuquet':'许凯',
+'Church':'丘奇',
+
+'Civita':'齐维塔',
+'Clairaut':'克莱罗',
+
+'Clavius':'克拉维乌斯',
+'Clliford':'克利福德',
+
+'Cohen':'科恩',
+'Cohn-Vossen':'康福森',
+
+'Collatz':'卡拉兹',
+'Cole':'科尔',
+'Condorcet':'孔多塞',
+'Connes':'孔涅',
+
+
+
+'Conway':'康威',
+
+'Cooper':'库珀',
+
+
+
+'Copernicus':'哥白尼',
+
+'Cormack':'科马克',
+
+'Cornu':'考纽',
+
+'Corput':'科普',
+
+'Cotes':'科茨',
+'Courant':'库朗',
+'Cousin':'库赞',
+'Coxeter':'考克斯特',
+'Cramer':'卡莱姆',
+'Cramér':'克拉默',
+'Crelle':'克雷尔',
+'Cremona':'克雷莫纳',
+'Curtis':'柯蒂斯',
+
+
+
+"d'Alembert":'达朗贝尔',
+'da Vinci':'达芬奇',
+'Daniel':'丹尼尔',
+'Dantzig':'丹齐格',
+'Darboux':'达布',
+
+'Darling':'达令',
+'Darwin':'达尔文',
+'Davenport':'达文波特',
+'Davis':'戴维斯',
+
+
+
+'de':'德',
+'De':'德',
+'De-moivre':'棣莫弗',
+
+
+'Deacartes':'笛卡尔',
+
+'Debreu':'德布鲁',
+'Debye':'德拜',
+'Dedekind':'戴德金',
+
+'Dégot':'德固特',
+
+'Dehn':'德恩',
+'Deligne':'德利涅',
+'Delone':'杰洛涅',
+
+'Democritus':'德谟克利特',
+
+'Denjoy':'当茹瓦',
+
+'Der':'德',
+'Desargues':'德萨格',
+'Descartes':'笛卡尔',
+
+'Deuflhard':'杜甫哈特',
+'Deuring':'多伊林',
+
+'Dickson':'狄克森',
+'Dieudonne':'迪厄多内',
+
+'Dini':'迪尼',
+
+'Dinostratus':'狄诺斯特拉托斯',
+'Diophantus':'丢番图',
+
+'Dirac':'狄拉克',
+'Dirichlet':'狄利克雷',
+
+
+'Dittert':'迪特尔特',
+
+'Donaldson':'唐纳森',
+'Doob':'杜布',
+'Douglas':'道格拉斯',
+"Drinfel'd":'德林费尔德',
+
+'du':'杜',
+'Du Bois-Reymond':'杜布瓦雷蒙',
+
+'Duhamel':'杜阿梅尔',
+'Dunford':'邓福德',
+'Dupin':'迪潘',
+
+'Dyer':'戴尔',
+'Dynkin':'邓肯',
+
+'Efimov':'叶菲莫夫',
+'Egorov':'叶戈罗夫',
+'Ehresmann':'埃雷斯曼',
+'Eilenberg':'艾伦伯格',
+
+
+
+'Einstein':'爱因斯坦',
+'Eisenhart':'艾森哈特',
+'Eisenstein':'艾森斯坦',
+
+'Elliott':'艾略特',
+
+'Elon':'埃隆',
+
+'Emmy':'艾米',
+'Engquist':'恩奎斯特',
+'Enskog':'恩斯库格',
+
+
+'Eratosthenes':'埃拉托色尼',
+'Erdos':'厄多斯',
+'Erdős':'厄多斯',
+'Escher':'艾舍尔',
+'Euclid':'欧几里得',
+'Eudemus':'欧德莫斯',
+'Eudoxus':'欧多克索斯',
+'Euler':'欧拉',
+
+'Faber':'法布尔',
+'Faddeev':'法捷耶夫',
+'Fagnano':'法尼亚诺',
+'Faltings':'法尔廷斯',
+'Fano':'法诺',
+
+'Farey':'法里',
+'Farkas':'法卡斯',
+
+'Farrell':'法雷尔',
+
+'Fatou':'法图',
+'Federer':'费德雷尔',
+'Fefferman':'费弗曼',
+'Feit':'费特',
+'Feller':'费勒',
+'Fermat':'费马',
+'Ferrari':'费拉里',
+'Ferro':'费罗',
+'Fibonacci':'斐波那契',
+'Fields':'菲尔兹',
+"Fikhtengol'tz":'菲赫金戈尔兹',
+'Filon':'菲隆',
+
+'Fine':'范因',
+'Fink':'芬克',
+'Finsler':'芬斯勒',
+'Fior':'费奥尔',
+
+'Firoozbakht':'费如巴赫特',
+'Fischer':'费舍尔',
+'Fisher':'费希尔',
+'Fitting':'菲廷',
+
+'Fock':'福克',
+'Fourier':'傅里叶',
+
+
+'Ford':'福特',
+'Forti':'福蒂',
+
+'Fortune':'福特纳',
+
+'Fraenkel':'弗伦克尔',
+'Frank':'弗兰克',
+
+'Frankl':'弗兰克尔',
+'Frechet':'弗雷歇',
+'Fredholm':'弗雷德霍姆',
+'Freedman':'弗里德曼',
+'Frege':'弗雷格',
+'Fresnel':'菲涅尔',
+'Freudenthal':'弗罗伊登塔尔',
+'Friedrichs':'弗里德里希斯',
+'Frisch':'弗里施',
+'Frobenius':'弗罗贝尼乌斯',
+'Frohlich':'弗勒利希',
+'Fubini':'富比尼',
+'Fuchs':'富克斯',
+'Furstenberg':'弗斯腾伯格',
+
+'Galileo':'伽利略',
+'Galle':'加勒',
+
+'Galois':'伽罗瓦',
+'Galton':'高尔顿',
+
+'Ganea':'加内亚',
+
+'Gauss':'高斯',
+'Gegenbauer':'盖根鲍尔',
+'Gelfand':'盖尔范德',
+'Gelfond':'盖尔丰德',
+'Gentzen':'根岑',
+'Gerard':'杰拉德',
+'Gerbert':'热尔贝',
+'Gergonne':'热尔岗',
+
+'Germain':'热尔曼',
+'Gevrey':'热夫雷',
+'Gibbs':'吉布斯',
+
+'Gilbert':'吉尔伯特',
+
+
+'Gilbreath':'吉尔布雷斯',
+
+'Girard':'吉拉尔',
+'Givens':'吉文斯',
+
+
+'Giorgi':'乔治',
+
+
+'Giuga':'吉伽',
+
+'Gleason':'格利森',
+'Glimm':'格利姆',
+'Gnedenko':'格涅坚科',
+
+'Godel':'哥德尔',
+'Gödel':'哥德尔',
+'Godunov':'戈杜诺夫',
+'Goldbach':'哥德巴赫',
+
+'Goldberg':'戈德堡',
+
+'Goldstein':'戈尔德施泰因',
+'Golubev':'戈卢别夫',
+'Gomory':'戈莫里',
+
+
+'Goormaghtigh':'郭茂基',
+'Gordan':'戈丹',
+'Gorden':'戈登',
+'Gordon':'戈登',
+
+'Gosset':'戈塞特',
+'Goursat':'古尔萨',
+'Gowers':'高尔斯',
+'Gram':'格拉姆',
+'Grandi':'格兰迪',
+
+'Granville':'格兰威尔',
+'Grassmann':'格拉斯曼',
+'Gregory':'格雷戈里',
+'Griess':'格里斯',
+'Griffiths':'格里菲斯',
+
+
+'Grimm':'格里姆',
+'Grinstead':'格林斯蒂德',
+
+'Gromov':'格罗莫夫',
+'Gronwall':'格朗沃尔',
+'Grossmann':'格罗斯曼',
+
+'Grothendieck':'格罗滕迪克',
+'Gudermann':'古德曼',
+
+'Gyárfás':'吉亚法斯',
+
+
+'Haar':'哈尔',
+'Hadamard':'阿达马',
+'Haefliger':'黑夫利格尔',
+
+'Halberstam':'哈尔伯斯坦',
+'Hall':'霍尔',
+'Halley':'哈雷',
+'Halmos':'哈尔莫斯',
+'Hamel':'哈梅尔',
+'Hamilton':'哈密尔顿;哈密顿',
+'Hammerstein':'哈默斯坦',
+'Hamming':'汉明',
+'Hankel':'汉克尔',
+'Hardy':'哈代',
+'Harish':'哈里希',
+
+'Harnack':'哈纳克',
+'Hasse':'哈塞',
+
+
+'Hausdorff':'豪斯道夫',
+'Hawking':'霍金',
+
+'Hayashi Tsuruichi':'林鹤一',
+'Hayman':'海曼',
+
+
+'Haytham':'海塞姆',
+
+'Heath':'希思',
+'Heaviside':'赫维赛德',
+'Heawood':'希伍德',
+'Hecke':'赫克',
+'Heegaard':'赫戈',
+
+'Heilbronn':'海尔布伦',
+'Heine':'海涅',
+'Heisenberg':'海森伯',
+'Hellinger':'黑林格',
+'Helmert':'赫尔默特',
+'Helmholtz':'亥姆赫兹',
+'Hensel':'亨泽尔',
+'Hermite':'埃尔米特',
+'Heron':'海伦',
+'Heyting':'海廷',
+
+'Hickerson':'希克森',
+'Higman':'希格曼',
+
+'Hilbert':'希尔伯特',
+'Hill':'希尔',
+'Hipparchus':'希帕科斯',
+'Hippias':'希比阿斯',
+'Hippocrates':'希波克拉底',
+'Hire':'伊尔',
+'Hironaka Heisuke':'广中平佑',
+
+'Hirzebruch':'希策布鲁赫',
+'Hobbes':'霍布斯',
+'Hochschild':'霍赫希尔德',
+'Hodge':'霍奇',
+
+
+'Holmgren':'霍姆格伦',
+
+'Holowinsky':'霍洛温斯基',
+
+'Hopf':'霍普夫',
+'Hopkins':'霍普金斯',
+'Horn':'霍恩;号角',
+'Horner':'霍纳',
+'Hotelling':'霍特林',
+'Householder':'豪斯霍尔德',
+'Hsiang':'项',
+'Hsiang Wu Yi':'项武义',
+
+'Hsu Pao Lu':'许宝騄',
+'Hua Loo Keng':'华罗庚',
+'Hudde':'许德',
+'Hukuhara Masuo':'福原满洲雄',
+'Hunt':'亨特',
+'Huntington':'亨廷顿',
+'Hurewitz':'胡尔维奇',
+'Hurwitz':'赫尔维茨',
+'Huygens':'惠更斯',
+
+
+
+'Hypatia':'希帕蒂娅',
+
+
+'Ibn':'伊本',
+'Ince':'英斯',
+
+'Infeld':'因费尔德',
+
+'Iwasawa':'岩泽',
+
+'Iyanaga Shokichi':'弥永昌吉',
+
+
+
+'Jacob':'雅克布',
+'Jacobi':'雅可比',
+'Jacobson':'雅各布森',
+
+'James':'詹姆斯',
+
+'Janko':'扬科',
+
+'Jevons':'杰文斯',
+
+'Jiushao':'秦九韶',
+
+'John':'约翰',
+'Johnson':'约翰逊',
+
+'Jones':'琼斯',
+'Jordan':'若尔当',
+'Julia':'茹利亚',
+
+
+'Kac':'卡茨',
+
+'Kadison':'卡迪生',
+
+'Kakeya':'挂谷',
+'Kakutani Shizuo':'角谷静夫',
+'Kalman':'卡尔曼',
+'Kamke':'卡姆克',
+
+'Kampen':'坎彭',
+
+
+'Kannan':'坎楠',
+'Kant':'康德',
+
+'Kantorovich':'康托洛维奇',
+
+'Kaplansky':'卡普兰斯基',
+'Karlin':'卡林',
+'Karpinsky':'卡尔平斯基',
+
+'Kato':'加藤',
+
+
+
+
+'Katz':'卡茨',
+
+'Kawada Yukiyoshi':'河田敬义',
+
+
+'Kayal':'卡亚勒',
+
+
+
+'Kazdan':'卡兹丹',
+
+'Keating':'基廷',
+
+'Keldysh':'凯尔迪什',
+'Keller':'凯勒',
+'Kellogg':'凯洛格',
+'Kelvin':'开尔文',
+
+'Kempe':'肯普',
+'Kendall':'肯德尔',
+
+'Kenkichi':'健吉',
+
+'Kepler':'开普勒',
+
+'Khatri':'卡德里',
+
+'Khayyam':'哈亚姆;海亚姆',
+
+'Khinchin':'辛钦',
+'Kiang Tsai Han':'江泽涵',
+
+'Kiefer':'基弗',
+'King Lai Hiong':'熊庆来',
+
+'Kirchhoff':'基尔霍夫',
+'Kleene':'克林',
+
+'Klein':'克莱因',
+'Kleinberg':'克莱因伯格',
+'Kline':'克莱因',
+
+'Kloosterman':'克鲁斯特曼',
+
+'Knopp':'克诺普',
+
+'Knuth':'克努特',
+'Koch':'柯赫',
+
+'Kodaira Kunihiko':'小平邦彦',
+
+'Koebe':'克贝',
+'Kolmogorov':'科尔莫戈洛夫',
+
+'Kontsevich':'孔采维奇',
+'Koopmans':'库普曼斯',
+'Korteweg':'科尔泰沃赫',
+
+'Kostant':'科斯坦特',
+'Koszul':'科斯居尔',
+
+'Köthe':'科特',
+'Kotlin':'科特林',
+
+
+'Kotzig':'科兹格',
+
+'Kovalevskaya':'柯瓦列夫斯卡娅',
+
+'Kravchuk':'克拉夫丘克',
+
+'Krein':'克赖因',
+'Kronecker':'克罗内克',
+'Krull':'克鲁尔',
+'Kruskal':'克鲁斯卡尔',
+'Kubota Tadahiko':'洼田忠彦',
+'Kummer':'库默尔',
+
+'Kung':'康',
+
+'Kuratowski':'库拉托夫斯基',
+'Kurosh':'库洛什',
+'Kutta':'库塔',
+
+
+'La':'拉',
+
+'Lacroix':'拉克鲁瓦',
+'Ladyzhenskaya':'拉德任斯卡娅',
+'Lafforgue':'拉福格',
+'Lagrange':'拉格朗日',
+'Laguerre':'拉盖尔',
+'Lalande':'拉朗德',
+
+'Lambert':'兰伯特',
+'Lanchester':'兰彻斯特',
+
+'Lanczos':'兰乔斯',
+'Landau':'兰道',
+'Landen':'兰登',
+
+'Lane':'莱恩',
+
+'Lang':'朗;语言',
+
+'Langevin':'朗之万',
+'Langlands':'朗兰兹',
+'Laplace':'拉普拉斯',
+'Laurent':'洛朗',
+"Lavrent'ev":'拉夫连季耶夫',
+
+
+'Lawson':'罗森',
+'Lax':'拉克斯',
+
+
+'Lederberg':'莱德伯格',
+'Legendre':'勒让德',
+'Leibniz':'莱布尼兹',
+'Leonardo':'列奥纳多',
+
+"L'Hospital":'洛必达',
+'Lie':'李',
+'Lobachevsky':'罗巴切夫斯基',
+
+
+
+'Le':'勒',
+'Lebesgue':'勒贝格',
+
+'Leffler':'列夫勒',
+'Lefschetz':'莱夫谢茨',
+
+'Legendre':'勒让德',
+'Lehmer':'莱默',
+
+'Leibler':'莱布勒',
+
+'Leibniz':'莱布尼兹',
+
+
+'Lemoine':'勒穆瓦纳',
+
+'Lenstra':'兰斯特拉',
+
+'Leontief':'列昂惕夫',
+
+'Leopoldt':'利奥波特',
+
+'Leray':'勒雷',
+'Levi':'莱维',
+
+'Levinson':'莱文森',
+'Levitan':'列维坦',
+'Levy':'莱维',
+
+'Lewy':'卢伊',
+'Lie':'李',
+'Lieb':'利布',
+"Lin Chia Chiao":'林加翘',
+
+'Lindeloef':'林德勒夫',
+'Lindelöf':'林德勒夫',
+
+'Lindemann':'林德曼',
+'Lindenstrauss':'林登施特劳斯',
+
+'Linnik':'林尼克',
+'Lions':'利翁斯',
+'Liouville':'刘维尔',
+'Lipschitz':'利普希茨',
+'Listing':'利斯廷',
+'Littlewood':'李特尔伍德',
+'Lobachevsky':'罗巴切夫斯基',
+'Lojasiewicz':'洛雅西维奇',
+'Loomis':'卢米斯',
+'Lorentz':'洛伦兹',
+
+
+'Lorenz':'洛伦兹',
+
+'Lovász':'洛瓦兹',
+
+'Lovelace':'拉芙蕾丝',
+'Luzin':'卢津',
+'Lyapunov':'李雅普诺夫',
+
+
+'Mac':'麦克',
+'Maclaurin':'麦克劳林',
+
+'Madhava':'玛德瓦',
+
+'Magenes':'马格内斯',
+
+'Mahler':'马勒',
+
+'Mahony':'马赫尼',
+
+'Malfatti':'马尔法蒂',
+'Malliavin':'马利亚万',
+
+'Mandelbrot':'芒德布罗;芒德勃罗',
+
+'Manin':'马宁',
+
+'Margulis':'马尔古利斯',
+'Markov':'马尔科夫',
+
+'Markushevich':'马尔库舍维奇',
+
+
+'Marshall':'马歇尔',
+
+'Massey':'马西',
+
+'Matiyasevich':'马蒂雅舍维奇',
+'Matsunaga Yoshisuke':'松永良别',
+
+'Maupertuis':'莫佩蒂',
+
+'Maxwell':'麦克斯韦',
+
+'Maynard':'梅纳德',
+
+'Mazur':'马祖尔',
+
+'McMullen':'麦克马伦',
+'Menaechmus':'梅内克缪斯',
+
+'Menelaus':'门纳劳斯',
+'Mercator':'梅卡托',
+
+
+
+'Mersenne':'梅森',
+
+'Mikami Yoshio':'三上义夫',
+
+'Mills':'米尔斯',
+'Milnor':'米尔诺',
+'Minfu Tan Hu':'胡明复',
+
+'Minkowski':'闵可夫斯基',
+
+
+'Mises':'米泽斯',
+'Mittag':'米塔',
+
+'Mirzakhani':'米尔扎哈尼',
+
+
+'Möbius':'莫比乌斯',
+'Monge':'蒙日',
+'Montel':'蒙泰尔',
+
+'Montgomery':'蒙哥马利',
+'Montucla':'蒙蒂克拉',
+'Morawetz':'莫拉维兹',
+'Mordell':'莫德尔',
+'Morgenstern':'莫根施特恩',
+'Mori Shigefumi':'森重文',
+
+'Morgan':'摩根',
+'Morley':'莫利',
+'Morse':'莫尔斯',
+'Moser':'莫泽',
+'Mosteller':'莫斯特勒',
+'Mostow':'莫斯托',
+'Mostowski':'莫斯托夫斯基',
+
+'Moulton':'莫尔顿',
+
+
+'Muir':'缪尔',
+'Mumford':'芒福德',
+'Murray':'默里',
+
+
+'Nagata Masayosi':'永田雅宜',
+
+'Naimark':'奈马克',
+
+'Nakayama Tadasi':'中山正',
+
+
+'Napier':'纳皮尔',
+'Napoleon':'拿破仑',
+'Nash':'纳什',
+
+'Navier':'纳维',
+'Neugebauer':'诺伊格鲍尔',
+
+
+'Neumann':'诺依曼',
+
+'Nevanlinna':'奈望林纳',
+'Newman':'纽曼',
+
+
+'Newton':'牛顿',
+'Neyman':'奈曼',
+
+'Nichomachus':'尼科马库斯',
+'Nichomedes':'尼科米德',
+
+
+'Nicolaus':'尼古拉',
+'Nicomachus':'尼科马库斯',
+
+'Nieuwentijt':'纽文泰特',
+
+
+
+'Nightingale':'南丁格尔',
+
+'Nirenberg':'尼伦伯格',
+
+
+'Noether':'诺特',
+'Novikov':'诺维科夫',
+
+
+'Obuhov':'奥布霍夫',
+
+
+
+'Ohm':'欧姆',
+'Okounkov':'奥昆科夫',
+
+'Oppermann':'奥普曼',
+
+'Ore':'奥尔',
+
+'Oresme':'奥里斯姆;奥雷姆',
+
+'Orlicz':'奥尔利奇',
+'Ornstein':'奥恩斯坦',
+'Ostrogradsky':'奥斯特罗格拉茨基',
+'Otto':'奥托',
+'Oughtred':'奥特雷德',
+
+
+
+
+'Pacioli':'帕西奥里;帕乔利',
+
+'Papakyriakopoulos':'帕帕基里亚科普洛斯',
+'Parent':'帕朗',
+'Parmenides':'巴门尼德斯',
+'Parseval':'帕塞瓦尔',
+
+'Pascal':'帕斯卡',
+'Pasch':'帕施',
+'Peacock':'皮科克',
+
+'Peano':'皮亚诺',
+
+'Pearson':'皮尔逊',
+'Peirce':'皮尔斯',
+'Pell':'佩尔',
+
+
+
+'Penrose':'彭罗斯',
+
+'Percival':'珀西瓦尔',
+'Perelman':'佩雷尔曼',
+
+'Perron':'佩龙',
+
+'Petersen':'彼得森',
+'Peterson':'彼得松',
+'Petrov':'彼得罗夫',
+'Petrovsky':'彼得罗夫斯基',
+'Peurbach':'波伊尔巴赫',
+
+'Pfaff':'普法夫',
+'Pfister':'菲斯特',
+
+'Philolaus':'费洛劳斯',
+
+'Piatetski':'皮亚捷茨基',
+
+'Picard':'皮卡',
+
+'Pierce':'皮尔斯',
+
+
+'Pillai':'皮莱',
+'Pingala':'平格拉',
+
+'Pinsker':'平斯克',
+'Planck':'普朗克',
+'Plateau':'普拉托',
+
+
+'Plato':'柏拉图',
+
+'Playfair':'普莱菲尔',
+'Plemelj':'普勒梅利',
+
+'Plouffe':'普卢夫',
+'Plutarch':'普鲁塔克',
+
+'Poincare':'庞加莱',
+'Poisson':'泊松',
+
+'Pol':'波尔',
+
+'Polignac':'波利尼亚克',
+
+'Polya':'波利亚',
+'Pólya':'波利亚',
+
+'Pomerance':'波默朗斯',
+
+'Poncelet':'蓬斯莱',
+'Pontryagin':'庞特里亚金',
+'Post':'波斯特',
+'Powell':'鲍威尔',
+'Prandtl':'普朗特',
+'Privalov':'普里瓦洛夫',
+'Proclus':'普罗克鲁斯',
+
+
+'Ptolemy':'托勒密',
+
+'Puppus':'帕波斯',
+'Putnam':'普特南',
+'Pythagoras':'毕达哥拉斯',
+
+
+'Radau':'拉道',
+
+'Rademacher':'拉德马赫',
+'Radon':'拉东',
+
+'Ramanujan':'拉马努金',
+'Ramsey':'拉姆齐',
+'Rankin':'兰金',
+'Rao':'拉奥',
+'Raphson':'拉弗森',
+'Ratner':'拉特纳',
+'Rayleigh':'瑞利',
+
+'Razbborov':'拉兹波洛夫',
+'Regiomontanus':'雷巧蒙塔努斯;雷格蒙塔努斯',
+'Reidemeister':'赖德迈斯特',
+
+
+
+
+
+'Remes':'列梅兹',
+'Reynolds':'雷诺',
+
+
+'Rham':'拉姆',
+
+'Rheticus':'雷蒂库斯',
+
+'Ricatti':'里卡蒂',
+'Ricci':'里奇',
+'Richardson':'理查森',
+
+
+
+'Riemann':'黎曼',
+
+'Riesz':'里斯',
+
+'Ringel':'林格尔',
+'Ritt':'里特',
+'Ritz':'里茨',
+
+'Robert':'罗伯特',
+
+'Roberval':'罗伯瓦尔',
+
+'Robin':'罗宾',
+
+'Robinson':'鲁滨逊',
+'Roch':'罗赫',
+
+'Rodrigues':'罗德里格斯',
+'Rogers':'罗杰斯',
+
+'Rohrl':'勒尔',
+'Rokhlin':'罗赫林',
+'Rolle':'罗尔',
+
+
+'Roman':'罗曼',
+'Rosen':'罗森',
+
+'Rosenberg':'罗森伯格',
+'Roth':'罗特',
+
+"Rozenfel'd":'罗森菲尔德',
+
+
+'Rudin':'鲁丁',
+
+'Ruffini':'鲁菲尼',
+
+'Rumely':'鲁梅利',
+
+'Runge':'龙格',
+'Russell':'罗素',
+
+
+
+
+'Saccheri':'萨凯里',
+
+'Saks':'萨克斯',
+
+'Samuelson':'萨缪尔森',
+
+
+'Sarnak':'萨纳克',
+
+'Sasaki Shigeo':'佐佐木重夫',
+
+'Sato':'佐藤',
+'Sato Mikio':'佐藤干夫',
+
+
+'Saxena':'萨克塞纳',
+
+
+'Schanuel':'尚努埃尔',
+
+'Schauder':'绍德尔',
+
+'Schimidt':'施密特',
+
+
+'Schinzel':'辛泽尔',
+
+'Schmid':'施密德',
+
+'Schneider':'施耐德',
+
+'Schoenfeld':'舍恩菲尔德',
+
+'Scholz':'肖尔茨',
+'Schooten':'斯霍滕',
+'Schubert':'舒伯特',
+
+
+'Schur':'舒尔',
+
+'Schwartz':'施瓦兹',
+'Schwarz':'施瓦兹',
+'Segre':'塞格雷',
+'Seidel':'赛德尔',
+'Seifert':'塞弗特',
+'Seki Takakazu':'关孝和',
+
+'Selberg':'塞尔贝格',
+
+'Selfridge':'塞尔福里奇',
+
+'Sendov':'森多夫',
+
+'Serre':'塞尔',
+
+'Seymour':'西摩',
+
+'Shafarevich':'沙法列维奇',
+
+
+
+'Shannon':'香农',
+
+
+
+'Shane':'沙恩',
+'Shapiro':'沙皮罗',
+
+'Shelah':'希拉;谢拉赫',
+
+
+'Shijie':'朱世杰',
+
+'Shimura Goro':'志村五郎',
+"Shnirel'man":'施尼雷尔曼',
+
+'Shoda Kenjiro':'正田建次郎',
+
+'Shor':'肖尔',
+
+
+
+'Siegel':'西格尔',
+
+'Sierpiński':'谢尔宾斯基',
+
+'Simon':'西蒙',
+
+'Simpson':'辛普森',
+
+'Singer':'辛格',
+
+
+'Singmaster':'辛马斯特',
+
+'Siu Yum Tong':'萧荫堂',
+
+'Skolem':'斯科伦',
+
+
+'Sluse':'斯吕塞',
+
+'Smale':'斯梅尔',
+
+'Smirnov':'斯米尔诺夫',
+
+'Smith':'史密斯',
+'Smogolenski':'穆尼阁',
+
+'Snaith':'斯奈斯',
+
+'Snell':'斯涅尔',
+
+'Sobolev':'索伯列夫',
+
+'Soundararajan':'桑德拉拉金',
+
+'Spanier':'斯帕尼尔',
+'Spencer':'斯潘塞',
+
+'Sperner':'施佩纳',
+
+'Sridhara':'斯里达拉',
+
+
+'Stark':'史塔克',
+'Staudt':'施陶特',
+'Steenrod':'斯廷罗德',
+
+'Stein':'斯坦',
+'Steinberg':'斯坦贝格',
+'Steiner':'施泰纳',
+
+'Steinhaus':'斯坦因豪斯;施坦豪斯',
+'Steinitz':'施泰尼兹',
+
+'Steklov':'斯杰克洛夫',
+
+'Stepanov':'斯杰潘诺夫',
+
+
+'Stevin':'斯蒂文',
+
+'Stickelberger':'施蒂克贝格',
+
+
+'Stieltjes':'斯蒂尔切斯',
+
+'Stiefel':'斯蒂弗尔',
+'Stifel':'施蒂费尔',
+
+
+'Stirling':'斯特林',
+
+'Stokes':'斯托克斯',
+
+'Stone':'斯通',
+
+'Straus':'施特劳斯',
+
+'Struik':'斯特罗伊克',
+'Strutt':'斯特拉特',
+'Sturm':'斯图姆',
+
+'Su Bu Chin':'苏步青',
+
+'Sudan':'苏丹',
+'Suetuna Zyoiti':'末纲恕一',
+
+'Sullivan':'沙利文',
+'Suslin':'苏斯林',
+
+'Swinnerton':'斯温纳顿',
+
+'Sylow':'西罗',
+
+'Sylvester':'西尔维斯特',
+
+
+'Tabor':'泰伯',
+
+'Takagi Teiji':'高木贞治',
+
+'Takebe Katahiro':'建部贤弘',
+
+'Tamarkin':'塔马金',
+
+'Taniyama Yutaka':'谷山丰',
+
+'Tannery':'塔内里',
+
+
+'Tarsi':'塔司',
+
+'Tarski':'塔斯基',
+'Tartaglia':'塔尔塔利亚',
+
+'Taryan':'塔尔杨',
+
+'Tate':'泰特',
+
+'Tauber':'陶伯',
+
+'Taylor':'泰勒',
+'Teichmueller':'泰希米勒',
+
+
+'Thales':'泰勒斯',
+
+'Theaetetus':'泰特托斯',
+
+'Theodorus':'西奥多罗斯',
+'Theodosius':'西奥多修斯',
+
+'Theon':'塞翁',
+
+'Toeplitz':'托普里兹',
+
+'Thom':'托姆',
+
+'Thompson':'汤普森',
+'Thomson':'汤姆森',
+
+'Thue':'图厄',
+'Thurston':'瑟斯顿',
+'Tikhonov':'吉洪诺夫',
+
+'Tinbergen':'丁伯根',
+'Tissot':'蒂索',
+
+'Titchmarsh':'蒂奇马什',
+'Tits':'蒂茨',
+
+'Toeplitz':'特普利茨',
+'Tonelli':'托内利',
+
+'Torricelli':'托里拆利',
+
+
+'Tosio':'敏夫',
+
+'Traub':'特劳伯',
+
+'Treves':'特利夫斯',
+
+'Tricomi':'特里科米',
+'Truesdell':'特鲁斯德尔',
+
+'Tschirnhaus':'奇恩豪斯',
+
+'Tsen Chiung Tze':'曾炯之',
+'Tsen Tze Fan':'郑之藩',
+'Tuan Hsio Fu':'段学复',
+'Tucker':'塔克',
+'Tukey':'图基',
+'Turing':'图灵',
+
+
+'Uhlenbeck':'乌伦贝克',
+'Ulam':'乌拉姆',
+'Urbanik':'乌尔班尼克',
+'Uryson':'乌雷松',
+
+
+'Valiant':'瓦林特',
+'Valiron':'瓦利龙',
+
+'Vandermonde':'范德蒙',
+
+'Vandiver':'范迪福',
+
+'Varadhan':'瓦拉德汉',
+
+'Veblen':'维布伦',
+'Venn':'维恩',
+
+'Verrier':'维耶',
+'Vieta':'韦达',
+'Viète':'韦达',
+
+'Vietoris':'菲托里斯',
+'Ville':'维尔',
+
+'Vinogradov':'维诺格拉多夫',
+'Viterbi':'维特比',
+'Viviani':'维维亚尼',
+
+'Vizing':'维津',
+
+'Voevodsky':'沃耶沃茨基',
+
+'Vojta':'沃伊塔',
+
+'Volterra':'沃尔泰拉',
+
+'Von':'冯',
+
+'Voronoi':'沃罗诺伊',
+
+'Vries':'弗里斯',
+
+
+'Waerden':'瓦尔登',
+
+'Wagner':'瓦格纳',
+
+'Wagstaff':'瓦格斯塔夫',
+
+'Wald':'瓦尔德',
+'Wall':'沃尔',
+'Wallace':'华莱士',
+
+
+'Wallis':'瓦利斯;沃利斯',
+
+'Walras':'瓦尔拉',
+
+'Walsh':'沃尔什',
+
+'Wang Hao':'王浩',
+
+'Wang Hsien Chung':'王宪钟',
+'Wang Shianghaw':'王湘浩',
+'Wantzel':'旺策尔',
+
+'Waring':'华林',
+
+'Watson':'沃森',
+
+'Weber':'韦伯',
+'Wedderburn':'韦德伯恩',
+
+'Weierstrass':'魏尔斯特拉斯',
+'Weil':'韦伊',
+
+
+'Weinstein':'维因斯坦',
+
+'Wells':'韦尔斯',
+
+'Werner':'维尔纳',
+
+'Wessel':'韦塞尔',
+
+'Weyl':'外尔',
+
+'Whewell':'休厄尔',
+'Whitehead':'怀特黑德',
+'Whitney':'惠特尼',
+
+'Whittaker':'惠特克',
+'Whyburn':'怀伯恩',
+
+
+
+'Wiener':'维纳',
+'Widgerson':'威格森',
+
+'Wilder':'怀尔德',
+
+
+'Wiles':'怀尔斯',
+
+'Wilkes':'威尔克斯',
+
+'Willmore':'威尔莫',
+'Wiman':'威曼',
+'Wintner':'温特纳',
+'Wishart':'威沙特',
+'Witt':'维特',
+
+'Witten':'威顿;威滕',
+
+'Wittgenstein':'维特根斯坦',
+'Wolf':'沃尔夫',
+
+'Woods':'伍兹',
+
+
+'Wren':'雷恩',
+'Wrongski':'朗斯基',
+
+'Wu Hung Hsi':'伍鸿熙',
+'Wylie':'伟烈亚力',
+
+'Yanghui':'杨辉',
+'Yang Chen Ning':'杨振宁',
+'Yang Ko Chuen':'杨武之',
+
+'Yates':'耶茨',
+'Yau Shing Tung':'丘成桐',
+'Yoccoz':'约柯兹',
+'Yosida Kosaku':'吉田耕作',
+'Youden':'尤登',
+'Young':'杨',
+
+
+'Yuk Wing Lee':'李郁荣',
+
+'Yukawa Hideki':'汤川秀树',
+
+'Yushkevich':'尤什凯维奇',
+
+
+'Zabusky':'扎布斯基',
+'Zadeh':'扎德',
+'Zariski':'扎里斯基',
+
+'Zauner':'佐纳',
+
+'Zeeman':'塞曼',
+'Zelmanov':'泽尔曼诺夫',
+'Zeno':'芝诺',
+'Zermelo':'策梅洛',
+'Zeuthen':'措伊滕',
+'Zhukovsky':'茹科夫斯基',
+'Zipping':'齐平',
+
+'Zorn':'佐恩',
+
+
 
 	//Math subject
 	'Level-1': '一级',
@@ -1903,9 +4550,9 @@ lang['zh_cn'] = {
 "Math Logic and Math Basis": "数理逻辑与数学基础",
 "Number Theory": "数论",
 //"Algebra": "代数学",
-"Algebraic Geometry": "代数几何学",
+"Algebraic Geometry": "代数几何",
 //"Geometry": "几何学",
-"Topology": "拓扑学",
+"Topology": "拓扑",
 "Mathematical Analysis": "数学分析",
 "Non-standard Analysis": "非标准分析",
 "Functionalism": "函数论",
@@ -1945,7 +4592,7 @@ lang['zh_cn'] = {
 "Lie Algebra": "李代数",
 "Kac-Moody Algebra": "Kac-Moody代数",
 "Ring Theory": "环论",
-"Case Theory": "格论",
+"Lattice Theory": "格论",
 "Pan-Algebraic Theory": "泛代数理论",
 "Category Theory": "范畴论",
 "Homological Algebra": "同调代数",
@@ -2058,9 +4705,9 @@ lang['zh_cn'] = {
 //"AI": "人工智能",
 	'Summarytip': '小乐数学zzllrr Mather，是小乐原创开源实现的一款跨平台可离线运行并满足多用户背景、多场景需要的数学软件。' +
 		'目前这是一个Demo版本（雏形演示），功能上只实现了数学公式显示，初等代数、线性代数、离散数学等学科的部分解题，' +
-		'因个人能力和精力有限，缺陷和错误难以避免（如有浏览器假死情况，直接关闭网页即可）' +
+		'因个人能力和精力有限，缺陷和错误难以避免' +
 		'在正式版本发布之前，内核、界面、功能可能还需经历数次重构和迭代，因此仅供参考。',
-	'Visiontip': '推动更多的数学、科学、教育、技术、工程、人文、互联网、物联网工作者，加入全球开源工具项目：Mather（暂译为数学客），更专业化地普及、研究、发展数学。',
+	'Visiontip': '推动更多的数学、科学、教育、技术、工程、人文、互联网、物联网工作者，加入全球开源工具项目：Mather（译为数学客），更专业化地普及、研究、发展数学。',
 	'Aimstip': '让数学更易学易练，易教易研，易赏易玩，易见易得，易传易及。',
 
 };

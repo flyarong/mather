@@ -11,7 +11,7 @@ tooltip['API']=[
 		{'Entity 实体':[{'数':'Num','整数':'Integer','小数':'Decimal','分数':'Frac','根数':'Root',
 			'矩阵':'Mtrx',
 		
-			'多项式':'Polynomial',
+			'多项式':'Polynomy',
 			'命题':'Prop',
 			'集合':'Set',
 			'置换':'Perm',
@@ -19,18 +19,18 @@ tooltip['API']=[
 			'数学表达式':'Mfn',
 			'函数':'Fun',
 		}]},
-		{'function.js':[{'实体':'Fun Mfn Polynomial'},
+		{'function.js':[{'实体':'Fun Mfn Polynomy'},
 			{'识别':'eType oType'},
 			{'运算符变换':'opneg opinv'},
-			{'上下文处理':'pptd pppow visiplus visiplusk simFactTimes simTimesOf1 simPowOf1 simFracOf1'},
+			{'上下文处理':'pptd pppow visiplus visiplusk simFactTimes simTimesOf1 simPowOf1 simFracOf1 simExpression deepClone e2h mathsimp'},
 		
-			{'符号计算':'plus minus times divide pow square cubic sqrt cbrt pmtds sums sumx kap fmin fmax'},
+			{'符号计算':'plus minus times divide pow square cubic sqrt cbrt pmtds sums sumx sump kap fmin fmax'},
 			{'方程':'equationsMS equationsMX equationM equationA'},
 			
 		]},
 		
 		{'num.js':[{'实体':'Integer Decimal Frac Root Num'},
-				{'识别':'nis nAis nisd nisVd nisVid nisn'},
+				{'识别':'nis nAis nisd nisVd nisVid nisn nisSupSuffix'},
 				{'正则':'nRegofab nReg2dot nReg2digits nReg2A'},
 				{'转换':'percnt2n n2percnt n2frac n2ArabBig n2Roman Roman2n'},
 				{'精度':'digi Nsqrt'},
@@ -41,7 +41,7 @@ tooltip['API']=[
 			{'识别':'isPrime feet1'},
 			{'因子分解':'tMod factor2 factor factorA factorA2n factors cntfactors Rho Factor odd odd_5'},
 
-			{'同余':'Mod modP multiMod factorMod'},
+			{'同余':'Mod modP multiMod factorMod Ord_1 Ord'},
 			{'数位性质':'lastDigitsOfPower last0OfFact'},
 			{'多元运算':'gcd lcm gcdFrac lcmFrac lcp'},
 			{'数论函数':'Primorial'},
@@ -86,10 +86,10 @@ tooltip['API']=[
 		{'URL':[
 			{'常量':[
 				{'通用':'H Hs w3c xmlns xhtml xmlnsxlink webStore'},
-				{'小乐':'ZRL ZRC ZIG ZIL ZIV ZAin1 HOM'},
+				{'小乐':'ZRL ZRC ZIG ZIL ZIV ZAin1 HOM ishome isdoodle isdoc iswiki issolve isedi'},
 			]},
 			{'正则':'uri uriRe'},
-			{'解析':'H_u H_w H_w1 H_W H_W1 H_d H_h H_a H_o urlTran picSrcNameExt'},
+			{'解析':'H_u H_w H_w1 H_W H_W1 H_d H_h H_a H_o urlTran picSrcNameExt loch losh'},
 			{'封装':'imgFav pathTxt fn0 fn1 fna fna0 fnb fnc fnd fne fnt fnx fnr fns'},
 			{'转换':'dataURItoBlob'},
 			{'接口':'FNS Admin txt2audio xhrcb csslib git jslib delivr unpkgTmp unpkg referf'},
@@ -113,17 +113,18 @@ tooltip['API']=[
 			{'格式化':'html2txt html2html altTxt txt2A csv2A blking ubb2html md2html replaceNodeInner'},
 			{'Engin':'Engin'},
 			{'元素':[
-				{'过渡':'br hr prog'},
+				{'过渡':'br hr brA hrA prog'},
 				{'结构':'SCtv DCtv spanmi itv detail ol ul dl Options OptGrps optgrp subReg tmb Table fieldset fieldseth subtabs refer'},
 				{'样式':'scRed scGain sci scit scib scil scir scbt sclr scbox scblr sctlr'},
-				{'用途':'imgdatasrc num i18 I18 colorbx rng txa txtreadonly mark del href hrefA scHotk q_key sceg sceg2 scegc scegj zMath ruby'},
+				{'用途':'imgdatasrc num i18 I18 colorbx rng txa txtreadonly precode mark del href hrefA scHotk q_key sceg sceg2 scegc scegj zMath ruby'},
+				{'自定义标签':'Mele Meles Mele2 Meleo'},
 			]},
-			{'碎片':'strop strradio0 strchkbx0 strbtn btnGo imgSRC SC sC sc DC dC dc'},
+			{'碎片':'strtxt strop strradio0 strchkbx0 strbtn btnGo imgSRC SC sC sc DC dC dc'},
 			{'属性':'chked seled attr2dataset attr2jSon jSon2attr'},
 			{'兼容LaTeX':[
 				{'上下标':'sup sub msup msub msups msubs subsup msubsup Msubsup'},
 				{'括符':'lp rp lrp'},
-				{'大型数学式':'lim sum prod intl mtrx'},
+				{'大型数学式':'lim sum prod intl iint oint mtrx'},
 				{'数学运算':'frac mfrac mfracs root mroots mod'},
 			]},
 
@@ -131,7 +132,7 @@ tooltip['API']=[
 		]},
 
 		{'LaTeX':[
-			{'颜色':'fcb '},
+			{'颜色':'fcb'},
 			{'字体':'kxf kxc ksz'},
 			{'过渡':'kbr kbr2'},
 			{'HTML元素':[
@@ -142,9 +143,9 @@ tooltip['API']=[
 			{'规范化':'kx encodeLatex'},
 			{'运算符':'kos'},
 			{'标记符':'kxo kxu kancel'},
-			{'括符':'$A $B boxed kbox hp lrpfrac genfrac zp pp'},
-			{'数学运算':'kroot kfrac kfraczp kxAfrac difn Opr'},
-			{'数学结构':'ksups ksubs binom zmtrx kmtrx zarray ztable det zdet kdet piece'},
+			{'括符':'$A $B $js tinyA boxed kbox hp lrpfrac genfrac zp pp'},
+			{'数学运算':'kroot kfrac kfraczp kxAfrac difn Opr orifun'},
+			{'数学结构':'ksups ksubs binom zmtrx kmtrx zarray ztable det zdet kdet piece aligned'},
 			{'数学关系':'kmod eq eqM Eq EqA'},
 			
 		]},
@@ -192,9 +193,9 @@ tooltip['API']=[
 		
 		{'字符':[
 			{'识别':'isStr isObj isVar hasVar'},
-			{'编码':'Base64 UTF8 XML ZML'},
+			{'编码':'Base64 UTF8 XML ZML compressBy'},
 			{'特殊字符':'fCC Latin entity'},
-			{'翻译':'gM GM sbc2dbc dbc2sbc zh2big'},
+			{'翻译':'gM GM gM2 sbc2dbc dbc2sbc zh2big'},
 			{'数字转换':'n2Zh Zh2n nTrim wrapTrim subwd'},
 			{'表格':'cell2cols cell2rows'}
 		]},
@@ -209,7 +210,7 @@ tooltip['API']=[
 			{'矩阵':'fMatrixPly fMatrix tableT'},
 			{'随机':'Random'},
 			{'统计':'max min countA CntN Cnt sizeKB'},
-			{'数值':'fixed4'},
+			{'数值':'fixed4 bigintsim'},
 			{'差分':'diff antidiff'},
 		]},
 
@@ -223,7 +224,7 @@ tooltip['API']=[
 			{'提取':'exp2arr exp2coe'}
 		]},
 		{'输出':[
-			{'DOM':'OH'},
+			{'DOM':'OH preDisplay'},
 			{'HTML':'zxdetail Mtrx2str'},
 			{'KaTeX':'zx zxdet zxmtrx zxul zxsum zxprod zxfrac zxroot zxmod zxEq'},
 

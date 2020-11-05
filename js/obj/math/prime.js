@@ -75,7 +75,7 @@ var gcd=function(A,p){/*辗转相除法 求最大公约数
 
 	},A,'cp2')
 
-},gcdFrac=function(A){//分子最小公倍数
+},gcdFrac=function(A){//分子最大公约数
 	/*
 		如果有整数，则直接求gcd
 		如果有分数，则提取各数字分子的最大公约数。
@@ -144,29 +144,52 @@ var gcd=function(A,p){/*辗转相除法 求最大公约数
 			['15','35','55','57','59'],['16','23','28','44','49','66','78'],['17','39'],['18','24','29','36','47','68'],['19','33','77']][+n]
 
 
-},Mod=function(a,p,fast){//求绝对最小剩余(简化剩余系)，例如3%5=-2	返回BigInt类型
+},Mod=function(a,p,fast,n){//求绝对最小剩余(简化剩余系)，例如3%5=-2	返回BigInt类型
 	/*
-		参数fast 指定不使用js自带的%取余运算，而是使用modP
+		参数n，指定求a^n 模 p
+		参数fast 指定不使用js自带的%取余运算，而是使用Ord_1半阶（指定了幂n时）
 			快慢比较，测试下列代码：
 			Arrf(modP,PrimeA(1000,0,6))
 			var t=Random(100000,1),n=BigInt(t),m=BigInt(t)%29n;'\n mod 29 = \n'+m
 	*/
-	var isneg=/-/.test(a),A=BigInt(a), P=BigInt(p), b=isneg?-A:A, b2=BigInt(2)*b;	//Math.abs不支持BigInt 
-	if(b2<P){
-		return A
-	}else if(b2==P){
-		return b
+	var an=n?(Number(a)>Number(p)? Number(a) % Number(p) : a):a, isneg=/-/.test(an),A=BigInt(an), P=BigInt(p), b=isneg?-A:A, b2=BigInt(2)*b;	//Math.abs不支持BigInt 
+	if(!n){
+		if(b2<P){
+			return A
+		}else if(b2==P){
+			return b
+		}
+		if(b<=P){
+			return isneg?A+P:A-P
+		}
+
+
 	}
-	if(b<=P){
-		return isneg?A+P:A-P
-	}
+
 	
-	if(fast){
-		
+	if(fast && n){//使用Ord_1半阶
+		var o=Ord_1(an,p);
+
+		if(o<0){//半阶
+			var n2=+n % -o, q=(+n-n2) / (-o);
+			if(q%2){
+				return -(A**BigInt(n2) % P )
+
+			}else{
+				return A**BigInt(n2) % P 
+			}
+
+		}else if(o){
+			var t=(n?A**BigInt(n2):A)%P;
+			return Mod(t,P)
+
+		}else{
+			return 0
+		}
 		
 		
 	}else{
-		var t=A%P;
+		var t=(n?A**BigInt(n):A)%P;
 		return Mod(t,P)
 	}
 
@@ -387,6 +410,37 @@ p-x^2=1 mod p
 	return Mod(x*x,p)
 
 
+},fermatN=function(x){ //Fermat费马数
+	return Number(x)==0?3n:((fermatN(BigInt(x)-1n)-1n)**2n+1n)
+
+},k2n1=function(k,n){ //k*2^n+1 用于检测费马数因子
+	return BigInt(k)*(2n**BigInt(n))+1n
+
+},isk2n1DivideFermatN=function(kStart,n,x){ /* 遍历检测可能的费马数因子   
+isk2n1DivideFermatN(1,7,5) = 5
+isk2n1DivideFermatN(1,8,6) = 1071
+isk2n1DivideFermatN(1,9,7) = 116503103764643
+
+
+	​	
+	 k的个位数s≠[1397] 当x模4为[0123]时
+	 */
+	var f=fermatN(x), Bn=BigInt(n), Bx=BigInt(x), n2=2n**Bn, x4=Bx % 4n, k=BigInt(kStart), kMax=2n**(2n**BigInt(x)-Bn), k2n=k*n2, kLen=[];
+	while(f % (k2n+1n) != 0n && k<kMax){
+		var kl=(''+k).length;
+		if(kl % 2 == 0 && kLen.indexOf(kl)<0){
+			kLen.push(kl);
+			console.log(k);
+		}
+		k+=2n;
+		if(k % 10n == BigInt('1397'[Number(x4)])){
+			k+=2n;
+		}
+		k2n=k*n2;
+	}
+	return [k,n,x]
+
+
 //下列涉及识别、判断性质
 
 },feet1=function(n,s){//得到4种判别式：割尾法1中，判断一个数是否被某个素数整除
@@ -396,7 +450,7 @@ p-x^2=1 mod p
 
 },isPrime=function(a,fact){/*是否素数
 	
-	参数 fact指定返回1个非平凡因子（如果是合数时）
+	参数 fact指定返回1个非平凡因子（如果是合数时，这里修改为必须返回1个素因子，否则Factor(2**6*9*11)，分解式中含有合数，分解不彻底）
 	返回 0 或某个非平凡因数（字符串格式或数字格式）(指定fact参数时)	合数时
 		1										素数时
 	*/
@@ -416,20 +470,24 @@ p-x^2=1 mod p
 
 	//基于数位特征判断合数
 	if(/^([^1])\1+$/.test(s.replace(/0/g,''))){//数位0之外数字都是同一个数字(非1)
-		consolelog('数位0之外数字都是',s0);
-		return fact?+s0:0
+		//console.log('数位0之外数字都是',s0);
+		//return fact?+s0:0
+
+		return fact?+factorA(s0)[0][0]:0
+
+
 	}else if(/^1+$/.test(s)){//数位全为1
-		consolelog('数位全为1',s);
+		//console.log('数位全为1',s);
 		if([2,19,23,317,1031,49081,86453,109297].indexOf(l)>-1){
 			return 1
 		}
 		
 		var fac=isPrime(l,1);//位数的一个因子
 		
-		consolelog('fac=',fac);
+		//console.log('fac=',fac);
 		if(fac==1){
 			if(!fact){return 0}
-			consolelog('全为1',l);//l<=120之内的合数得到全部分解：
+			//console.log('全为1',l);//l<=120之内的合数得到全部分解：
 			return [3,41,239,21649,53,2071723,3191,2791,2028119,83,173,35121409,107,2559647034361,733,493121,241573142393627673576957439049,
 				12171337159,317,3367147378267,497867,12004721,4531530181816613234555190841,1031,643,1192679,227][
 					[3,5,7,11,13,17,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101,103,107,109,113].indexOf(l)]
@@ -439,11 +497,11 @@ p-x^2=1 mod p
 		}
 
 	}else if(/^(.+)\1+$/.test(s)){
-		consolelog('周期性数位字符串');
+		//console.log('周期性数位字符串');
 		return fact?s.replace(/^(.+)\1+$/,'$1'):0
 
 	}else if(/^10+1$/.test(s)){
-		consolelog('101数');
+		//console.log('101数');
 		if(s=='101'){
 			return 1
 		}
@@ -458,7 +516,7 @@ p-x^2=1 mod p
 		
 	}
 
-consolelog('判断数位和被3整除');
+//console.log('判断数位和被3整除');
 	var t=0;
 	for(var i=0;i<l;i++){
 		if(/[0369]/.test(s[i])){
@@ -470,29 +528,29 @@ consolelog('判断数位和被3整除');
 	if(!t){return fact?3:0}
 
 
-consolelog('奇偶分组相减，判断是否被10...01数整除');
+//console.log('奇偶分组相减，判断是否被10...01数整除');
 
 	t=0;
 	for(var k=1;k<l-1;k++){//	for(var k=0;k<l-1;k++) 871貌似被识别为能被11整除，因此把k=0，改为k=1
 		var z=+(1+ZLR(0,k)+1);
-		consolelog(z,'k=',k,'所检验的数是：',a);
+		//console.log(z,'k=',k,'所检验的数是：',a);
 		for(var i=0,j=Math.ceil(l/(k+1));i<j;i++){
 			if(i%2){
-				consolelog('i=',i,'s',s.substr(l-(k+1)*(i+1)-1,k+1),'t=',t,+s.substr(l-(k+1)*(i+1)-1,k+1)+t);
+				//console.log('i=',i,'s',s.substr(l-(k+1)*(i+1)-1,k+1),'t=',t,+s.substr(l-(k+1)*(i+1)-1,k+1)+t);
 				t=(+s.substr(l-(k+1)*(i+1)-1,k+1)+t)%z;
 				
-				consolelog(z,t);
+				//console.log(z,t);
 			}else{
-				consolelog('i=',i,'s',s.substr(l-(k+1)*(i+1)-1,k+1),'t=',t,-(+s.substr(l-(k+1)*(i+1)-1,k+1))+t);
+				//console.log('i=',i,'s',s.substr(l-(k+1)*(i+1)-1,k+1),'t=',t,-(+s.substr(l-(k+1)*(i+1)-1,k+1))+t);
 				t=(-(+s.substr(l-(k+1)*(i+1)-1,k+1))+t)%z
 					
-				consolelog(z,t);
+				//console.log(z,t);
 			}
 		}
 		if(!t){return fact?z:0}
 	}
 	
-consolelog('周期性数位（随机间隔若干个0）字符串');
+//console.log('周期性数位（随机间隔若干个0）字符串');
 	for(var k=1;k<l-1;k++){
 		//if(/^(.+)0*\10*\10*$/.test(s)){
 		if((new RegExp('^(.+)0*'+ZLR('\\1[0]*',k)+'$')).test(s)){
@@ -554,7 +612,7 @@ consolelog('周期性数位（随机间隔若干个0）字符串');
 	}
 	
 	
-//	consolelog(a);
+//	//console.log(a);
 //	var i=5001, sqrtn=Math.floor(Math.sqrt(n));	
 	/*注意，JS整数最多15位，超过会有意外 9234567890123451 变成 9234567890123452	451902452332423231 变成 451902452332423230
 		并且下方的Math函数、> 需要用Integer改造
@@ -694,7 +752,7 @@ p是偶数时（即p=2, 忽略讨论）令m=p/2 = k-1则mod('m!(m-1)!',(-1)^(m+1
 			t.push(i)
 		}
 	}
-	consolelog('方法1：耗时：'+(+Time.now5()-(+t0)));
+	//console.log('方法1：耗时：'+(+Time.now5()-(+t0)));
 	return t
 	*/
 	
@@ -893,7 +951,7 @@ m指定从A中选m个数作为一个组合
 
 		
 },factor=function(a,fact){/*合数分解因数未合并 返回表达式
-		参数fact指定，只需分解为两数（不必是素数）之积
+		参数fact指定，只需分解为两数（不必是素数）之积（此处修改为要求返回第1个因数是素数）
 		
 		返回 因式分解×	合数时
 			本身	质数时
@@ -991,10 +1049,10 @@ factor2(1113123223111)
 	
 
 	var s=''+n,l=s.length,R=[],s0=s.substr(-1),S=Arrf(function(t){return [t[0],t[1],(+t[0])*(t[1])]},tMod(s0)), comp2=function(x){
-	//consolelog(x);
+	//console.log(x);
 		var a=x[0],b=x[1],m=a.length,ab=''+x[2],abl=ab.length,abm=abl<m+1?0:+ab.substr(-m-1)[0],a1=+a.substr(-1),b1=+b.substr(-1),al=a.replace(/^0+/,'').length,bl=b.replace(/^0+/,'').length,
 			SS=[],sm=l<m+1?0:s.substr(-m-1)[0],slm=+s.substr(0,l-m),m10=Math.pow(10,m);
-//consolelog(al+bl,l);	//ab=''+(+a)*(+b)
+//console.log(al+bl,l);	//ab=''+(+a)*(+b)
 		
 		if(al+bl>l+1){
 			return []
@@ -1011,25 +1069,25 @@ factor2(1113123223111)
 				
 				var jb=j+b,jbl=jb.replace(/^0+/,'').length,ij=i*j, ijl=ij?(''+ij).length:0;
 				
-				//consolelog('ia=',ia,'jb=',jb);
+				//console.log('ia=',ia,'jb=',jb);
 				
 				if(ial+jbl>l+1){
 					break;
 				}
 
-				//consolelog('ia=',ia,'jb=',jb);
+				//console.log('ia=',ia,'jb=',jb);
 				var s2=''+(i*b1+j*a1),s2l=s2.length;
 
 if(ia=='11' && jb=='23'){//
-				consolelog('\n\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n\n',ia,jb,n,S);
+				//console.log('\n\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n\n',ia,jb,n,S);
 
 }
 				if((+s2.substr(-1)+abm+'').substr(-1)==sm){
-				//	consolelog('前1位符合',ia,jb,n,S,ijm);	ia*jb=ab+(ib+aj)*10^m+ijm*10^m
+				//	//console.log('前1位符合',ia,jb,n,S,ijm);	ia*jb=ab+(ib+aj)*10^m+ijm*10^m
 					var ijm=i*j*m10,	r=+ab.substr(0,abl-m)+(+s2)+ijm;
 
 					if(r==slm){
-						//consolelog();
+						//console.log();
 						if(/^0+1$/.test(ia) || /^0+1$/.test(jb)){
 							break
 						}
@@ -1113,15 +1171,15 @@ if(ia=='11' && jb=='23'){//
 	}
 	
 	
-//	consolelog(S);
+//	//console.log(S);
 	while(!R.length){//按广度优先，用凑尾数法分解为两数乘积
-	//	consolelog('S[0]',S[0]);
-	//	consolelog('S',S.join(' ; '));
+	//	//console.log('S[0]',S[0]);
+	//	//console.log('S',S.join(' ; '));
 		if(S.length){
 			var t=comp2(S[0]);
 			S.splice(0,1);
 			if(t.length){
-			//	consolelog('t',t);
+			//	//console.log('t',t);
 				S=S.concat(t);
 			}
 		}else{
@@ -1194,6 +1252,58 @@ if(ia=='11' && jb=='23'){//
 },Primorial=function(n){//素数阶乘 前n个素数相乘
 	return times(PrimeA(n,2))
 
+},Ord=function(a,m, mIsPrime){/* a（对）模m的阶(次数，全阶)
+	*/
+	var x=Ord_1(a,m, mIsPrime);
+	if(x<0){
+		return -x*2
+	}
+	return x
+
+},Ord_1=function(a,m, mIsPrime){/* a（对）模m的-1阶(次数，半阶)（相对全阶而言）	
+		(a,m)>1为0；
+		(a,m)=1时，求出最小正整数d，满足a^d≡-1（如存在，此时返回-d，定义为半阶）
+		或a^d≡1 (mod m)（此时d是a模m的阶的通常定义）
+
+	*/
+	if(gcd([a,m])=='1'){// 利用阶整除欧拉函数φ δ_m(a)|φ(m) (根据Euler定理)
+		if(mIsPrime){// m是素数时，相当于求a模m的半阶
+			var A=factors(+m-1);
+			for(var i=1,l=A.length;i<l;i++){
+				var b=BigInt(a)**BigInt(A[i]) % BigInt(m);	//这里使用BigInt，以防止JS丢失精度引起异常出错
+				if(b==BigInt(m)-1n){
+					return -A[i]
+
+				}else if(b==1n){
+					return A[i]
+				}
+			}
+		}
+		var A=factorA(m), b=1, l=A[0].length;/* m不是素数时，因式分解
+		利用(c,d)=1   ⇒   δ_{cd}(a)=[δ_c(a), δ_d(a)]
+		以及 δ_m(a^c)= δ_m(a)/(δ_m(a),c)
+
+		这里认为上述两个阶的性质，对半阶也同样成立。
+		*/
+		if(l==1 && A[1][0]==1){// m是质数
+
+			return Ord_1(a,m,1)
+
+		}
+		for(var i=0,l=A[0].length;i<l;i++){
+			var o=Ord_1(a,A[0][i],1), c=A[1][i];
+			if(c>1){// 质因数重数>1
+				o=o/gcd([o,c])
+			}
+			b=lcm([b,o])
+
+		}
+		return b
+
+	}else{
+		return 0
+	}
+
 
 },SUMs=function(N,M,minv,maxv,dup,pos,neg,pos1,neg1){/*生成数和(正整数n分解为m个正整数之和
 			minv 起始最小值
@@ -1225,7 +1335,7 @@ if(ia=='11' && jb=='23'){//
 		条件表达式：常数,2n,2n+1,3n,3n-1,p素数,c合数
 			
 			
-	consolelog('sums',n,m,minv);
+	//console.log('sums',n,m,minv);
 	
 	*/
 

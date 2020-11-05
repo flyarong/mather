@@ -75,6 +75,7 @@ $.each({
 			].join(br)),
 		].join(br)),
 		detail(gM('Calculate Determinant'), [
+			href('wiki.html?q=Formula/Matrix/Determinant','行列式公式'),
 			sceg2('d') + ' 主对角线相乘',
 			sceg2('d-') + ' 副对角线相乘',
 
@@ -119,9 +120,9 @@ $.each({
 
 	"Relation": ['{前域} [{陪域}] 表达式f(x,y)、{集合}或[关系矩阵]'].concat(Arrf(sceg,
 		['{1,2,3,4} {<1,2>,<2,4>,<3,2>}', '{1,2,3,4,5,6,7,8} x|y',
-			'{∅,{a},{b},{a,b},{a,b,c},{a,b,c,d},{a,b,c,d,e,f}} x⊆y', '{a,b,c,d} I₄', '{a,b,c,d,e} {<a,b>,<c,d>,<e,f>}',
+			'{∅,{a},{b},{a,b},{a,b,c},{a,b,c,d},{a,b,c,d,e,f}} x⊆y', '{a,b,c,d} I4', '{a,b,c,d,e} {<a,b>,<c,d>,<e,b>}',
 			'P({a,b}) x⊆y', 'A/R={{1,2},{3,5},{4}}',
-			'{1,2} {3,4} x|y∧y>x', '{<1,2>,<2,4>} {<2,3>} x₁>x₂∨y₁+y₂=3'
+			'{1,2} {3,4} x|y∧y>x', '{<1,2>,<2,4>} {<2,3>} x1>x2∨y1+y2=3'
 		])).join(br),
 
 	"Relation Operation": concat(ZLR('逆 合成 幂 交 并 补'), Arrf(sceg2,
@@ -225,6 +226,7 @@ $.each({
 
 	'LaTeX':[
 		href(Hs+'katex.org/docs/supported.html','KaTeX API') + ' ' + href(Hs+'mathlive.io/reference.html','Mathlive'),
+		github('mathjax/MathJax-demos-web'),
 		href(H+'dralpha.altervista.org/zh/tech/tech.htm','LaTeX History中文'),
 		
 	].join(br),

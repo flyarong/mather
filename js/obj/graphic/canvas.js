@@ -76,6 +76,7 @@ ctt=function(canvas,w,h,OX,OY){
 		ctx.clearRect(x||0,y||0,w||canvs.width,h||canvs.height);
 	};
 	this.get=function(l,t,w,h){
+		//console.log(w||canvs.width);
 		return ctx.getImageData(l||0,t||0, w||canvs.width,h||canvs.height);
 	};
 	this.put=function(ctx2,x,y,l,t,w,h){
@@ -869,10 +870,12 @@ ctt=function(canvas,w,h,OX,OY){
 		}
 	};
 	
-	this.repaint=function(){/*
+	this.repaint=function(ini){/*
 		重新绘制
 		*/
-		this.ini();
+		if(ini){
+			this.ini();
+		}
 		//this.clear();
 		this.bg();
 		this.grid();

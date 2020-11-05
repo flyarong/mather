@@ -6,7 +6,17 @@
  */
 
 var L=localStorage,sch=location.search, H = 'http://', Hs = 'https://', w3c = 'www.w3.org/', xmlns = H + w3c + '2000/svg', xhtml = H + w3c + '1999/xhtml', xmlnsxlink = H + w3c + '1999/xlink', xmml = H + w3c + '1998/Math/MathML',
-	logon = false, isMobile=/Mobile/.test(navigator.userAgent), i18n = typeof lang == 'undefined' ? '' : lang[H_o().lang || L.lang || 'zh_cn'] || '';
+	logon = false, isMobile=/Mobile/.test(navigator.userAgent), i18n = typeof lang == 'undefined' ? '' : lang[H_o().lang || L.lang || 'zh_cn'] || '', loch=location.href,losh={}, ishome=/index\.html|mather\/$|^\/$/.test(location.pathname), 
+	isdoodle=/doodle\.html/.test(loch), 
+	isdoc=/document\.html/.test(loch),
+	iswiki=/wiki\.html/.test(loch),
+	issolve=/solve\.html/.test(loch),
+	isedi=/editor\.html/.test(loch),
+	Mele='LaTeX Ascii_Math Unicode_Math Content_MathML Presentation_MathML SVG Canvas Echarts Markdown YAML I18N EN JavaScript 3D 2D Zdog Lego Rough',
+	Meles='LA AM UM CM PM SV CV EC MD YM I18 EN JS D3 D2 ZD LG RF',
+	Mele2='LT LX LTX TEX IL YML',
+	Meleo={'IL':'Inline LaTeX','LX':'LaTeX','TEX':'LaTeX','YML':'YAML'};
+	
 if (typeof BigInt == 'undefined') {
 	var BigInt = function (x) { return +x }
 }
@@ -24,7 +34,7 @@ var uri = '^(blob|file|ftp|https?):.+', uriRe = new RegExp(uri, 'i'), dataRe = /
 	cssLinkRe = /\.css($|\?.*)/i, fontRe = /\.(eot|[ot]tf|ttc|font?|woff2?)($|#|\?.*)/i,
 	cssImgReg = 'url\\([\'"]?[^\\\'"\\)\\s]+[\'"]?\\)', cssImgRe = new RegExp(cssImgReg, 'gi'), textCssImgRe = new RegExp('([\\s:,]|^)' + cssImgReg, 'gi'),
 
-	imgReg = '(bmp|gif|ico|jpeg|jpg|apng|png|svg|webp)',
+	imgReg = '(avif|bmp|gif|ico|jpeg|jpg|apng|png|svg|webp)',
 	hrefImgRe = new RegExp('\\S*\\.' + imgReg + '[\\?\\&]*.*', 'i'), textImgRe = new RegExp('(file|ftp|https?):[/]+[^\'"\\s\\(\\)]*\\.' + imgReg, 'gi'),
 	digiReg = /^\d+(\.\d)?$/,
 	regReg = function (t) { return t.replace(/[\^\$\*\.\+\-\?\!\(\)\[\]\{\}]/g, '\\$&') },
@@ -68,7 +78,7 @@ var uri = '^(blob|file|ftp|https?):.+', uriRe = new RegExp(uri, 'i'), dataRe = /
 		}
 
 	}, git=function(x,githubio){
-		return Hs+(githubio?x+'.github.io/'+githubio:'github.com/'+x)
+		return Hs+(githubio!==undefined?x+'.github.io/'+githubio:'github.com/'+x)
 
 	}, delivr=function(x,y,type){
 		return Hs+'cdn.jsdelivr.net/npm/'+x+'/dist/'+(y||x+'.min')+'.'+(type||'js')
@@ -84,6 +94,7 @@ var uri = '^(blob|file|ftp|https?):.+', uriRe = new RegExp(uri, 'i'), dataRe = /
 		return detail(gM('Reference'),ol(A))
 
 	}, jslib={
+		'katex':referf(delivr('katex')),
 		'echarts':referf(delivr('echarts'))+referf(unpkg('echarts-gl')),
 		// www.npmjs.com/package/echarts
 		'echarts_eval':function(t){return '<div id=echarts0 style="width:90%;height:600px">'+
@@ -97,6 +108,8 @@ var uri = '^(blob|file|ftp|https?):.+', uriRe = new RegExp(uri, 'i'), dataRe = /
 		'function-plot':referf(unpkg('function-plot','function-plot')),
 
 		'zdog':referf(delivr('zdog','.dist.min')),
+
+		'lego':referf(unpkg('legra')),
 
 		'canvas_eval':function(t){return '<div id=js hidden>'+t+dc+
 	'<canvas id=cvs width="300" height="300"></canvas>'+
@@ -267,7 +280,9 @@ function GM(txt,fromLang,toLang) {
 }
 function gM(mesg, str, o) {
 	if (isArr(mesg)) { return Arrf(function (i) { return gM(i, str, o) }, mesg) }
-	var msg = '' + mesg, M = (msg[0] || '').toUpperCase() + (msg || '').substr(1), O = o || i18n, x = O ? O[msg] || O[M] || '' : '';
+	
+	var msg = '' + mesg, m0=msg[0] || '', m1=(msg || '').substr(1),
+		M = m0 + m1, M_=m0.toUpperCase()+m1, O = o || i18n, x = O ? O[msg] || O[M] || O[M_] || '' : '';
 	try {
 		if (!x && chrome && chrome.i18n) {
 			x = chrome.i18n.getMessage(msg, str)
@@ -277,6 +292,26 @@ function gM(mesg, str, o) {
 
 
 	}
+	var iscn=O['Anti']=='反', front=msg.replace(/ [^ ]+$/,''), fronted=front+'ed', fronting=front+'ing';
+	if(!x && /\.\d+$/.test(msg) && O[msg.replace(/\..+/,'')]){// 多义字
+		//console.log(msg);
+		return O[msg.replace(/\..+/,'')].split(';')[+msg.replace(/.+\./,'')]
+	}
+	if( /;/.test(x)){
+		return x.split(';')[0]
+	}
+
+
+	if(!x && msg.split(' ').length==3 && (O[front] || O[fronted] || O[fronting])){
+		return (O[front] || O[fronted] || O[fronting])+(iscn?'':' ')+gM(msg.replace(/.+ /,''))
+	}
+
+
+	
+	if(iscn && !x && / of /.test(msg)){
+		return msg.replace(/(.+) of (.+)/, function(t){var A=t.split(' of '); return gM(A[1]) + gM(A[0])})
+	}
+
 	if (!x && /[a-z]+2[a-z]/i.test(msg)) {
 		x = gM(msg.replace(/2/g, ' to '), str, o)
 	}
@@ -310,12 +345,16 @@ function gM(mesg, str, o) {
 			x = x.replace(/. ./g, function (x) { return /[a-z] [a-z]/i.test(x) ? x : x.replace(/ /g, '') })
 		}
 	}
-	if (!x && /-/.test(msg)) {
-		x = Arrf(function (t) { return gM(t, str, o) }, msg.split('-')).join('-');
+	if (!x && /[-]/.test(msg)) {
+		x = Arrf(function (t) { return gM(t, str, o) }, msg.split(/[-]/)).join('-');
 		hanziRe.lastIndex = 0;
 		if (hanziRe.test(x)) {
-			x = x.replace(/-/g, '')
+			x = x.replace(/[-](\D)/g, '$1')
 		}
+	}
+
+	if (!x && /[–]/.test(msg)) {
+		x = Arrf(function (t) { return gM(t, str, o) }, msg.split(/[–]/)).join('–');
 	}
 
 	if (!x && /\./.test(msg)) {// .无需翻译
@@ -323,8 +362,234 @@ function gM(mesg, str, o) {
 		return msg.split('.')[0]
 	}
 
+
+	
+	if(!x && iscn){
+		//无需翻译的后缀
+		if (/[sd]$/.test(msg)) {
+			var t=msg.replace(/.$/,''), ot=O[t];
+
+			if(ot){
+				return ot
+			}
+		}
+
+		if (/'s$/.test(msg)) {
+			var t=msg.replace(/.{2}$/,'.1'), t2=msg.replace(/.{2}$/,''), ot=O[t] || O[t2];
+
+			if(ot){
+				return ot
+			}
+			return t2
+		}
+		if (/[sz]'$/.test(msg)) {
+			var t=msg.replace(/.$/,'.1'), t2=msg.replace(/.$/,''), ot=O[t] || O[t2];
+
+			if(ot){
+				return ot
+			}
+			return t2
+		}
+
+
+		if (/([e]s|ly|ed)$/.test(msg)) {
+			var t=msg.replace(/.{2}$/,''), ot=O[t];
+
+			if(ot){
+				return ot
+			}
+		}
+		
+
+		if (/cy$/.test(msg)) {
+			var t=msg.replace(/.{2}$/,''), ot=O[t] || O[t+'t'] || O[t+'te'];
+
+			if(ot){
+				return ot+'度'
+			}
+		}
+
+		if (/ic$/.test(msg)) {
+			var t=msg.replace(/.{2}$/,''), ot=O[t] || O[t+'e'] || O[t+'y'];
+
+			if(ot){
+				return ot
+			}
+		}
+
+		if (/(ive|ity)$/.test(msg)) {
+			var t=msg.replace(/.{3}$/,''), ot=O[t] || O[t+'e'];
+
+			if(ot){
+				return ot
+			}
+		}
+
+		if (/ie[sd]$/.test(msg)) {
+			
+			var t=msg.replace(/ies$/,'y'), ot=O[t];
+			if(ot){
+				return ot
+			}
+
+		}
+
+		if (/(al)$/.test(msg)) {
+			var t=msg.replace(/.{2}$/,''), ot=O[t];
+
+			if(ot){
+				return ot
+			}
+
+			var t=msg.replace(/ical$/,'y'), ot=O[t];
+
+			if(ot){
+				return ot
+			}
+
+		}
+
+		if (/ing$/.test(msg)) {
+			
+			var t=msg.replace(/ing$/,''), ot=O[t];
+			if(ot){
+				return ot
+			}
+
+			t+='e';ot=O[t];
+			if(ot){
+				return ot
+			}
+
+			t=msg.replace(/ying$/,'')+'ie'; ot=O[t];
+			if(ot){
+				return ot
+			}
+
+			t=msg.replace(/(.)\1ing$/,'$1'); ot=O[t];
+			if(ot){
+				return ot
+			}
+		}
+
+		if (/ion$/.test(msg)) {
+			
+			var t=msg.replace(/ion$/,''), ot=O[t];
+			if(ot){
+				return ot
+			}
+			t+='e';ot=O[t];
+			if(ot){
+				return ot
+			}
+
+			t=msg.replace(/ption$/,'b'); ot=O[t];
+			if(ot){
+				return ot
+			}
+		}
+
+
+		if (/est$/.test(msg)) {
+			var t=msg.replace(/.{3}$/,''), ot=O[t] || O[t+'e'];
+
+			if(ot){
+				return '最'+ot
+			}
+		}
+
+		if (/ness$/.test(msg)) {
+			var t=msg.replace(/.{4}$/,''), ot=O[t];
+
+			if(ot){
+				return ot+'性'
+			}
+		}
+
+		if (/(ment|atic)$/.test(msg)) {
+			var t=msg.replace(/.{4}$/,''), ot=O[t];
+
+			if(ot){
+				return ot
+			}
+		}
+
+		//可拆开翻译的前缀
+
+		if (/^(Pseudo)/i.test(msg)) {// 6字开头
+			var t=msg.substr(6).replace(/./,function(x){return x.toUpperCase()}), ot=O[t];
+	
+			if(ot){
+				return gM(msg.substr(0,6), str, o) + ot
+			}
+				
+		}
+
+		
+		if (/^(Quasi|Multi|Hyper|Super|Ultra|Arc)/i.test(msg)) {// 5字开头
+			var t=msg.replace(/Arc/i,'$&.1').substr(5).replace(/./,function(x){return x.toUpperCase()}), ot=O[t];
+	
+			if(ot){
+				return gM(msg.replace(/Arc/i,'$&.1').substr(0,5), str, o) + ot
+			}
+		}
+
+
+		if (/^([SDH]emi|Poly|Anti|Auto)/i.test(msg)) {// 4字开头
+			var t=msg.substr(4).replace(/./,function(x){return x.toUpperCase()}), ot=O[t];
+
+			if(ot){
+				return gM(msg.substr(0,4), str, o) + ot
+			}
+				
+		}
+
+		if (/^(Su[bp]|Non|Tri|Uni)/i.test(msg)) {// 3字开头
+			var t=msg.substr(3).replace(/./,function(x){return x.toUpperCase()}), ot=O[t];
+	
+			if(ot){
+				return gM(msg.substr(0,3), str, o) + ot
+			}
+				
+		}
+
+
+		if (/^([UI][mn]|Ab)/i.test(msg)) {// 2字开头
+			var t=msg.substr(2).replace(/./,function(x){return x.toUpperCase()}), ot=O[t];
+	
+			if(ot){
+				return '不' + ot
+			}
+				
+		}
+		if (/^(Bi)/i.test(msg)) {// 2字开头
+			var t=msg.substr(2).replace(/./,function(x){return x.toUpperCase()}), ot=O[t];
+	
+			if(ot){
+				return gM(msg.substr(0,2), str, o) + ot
+			}
+				
+		}
+
+
+
+
+
+
+	}
+
+
+
+
 	return x || M
 }
+
+function gM2(t,reverse, sep,f){
+	var s=gM(t), ft=f?f(t):t;
+	return s==t?s:(reverse?s+(sep?sep+t:' ('+t+')'):ft+(sep?sep+s:' ('+s+')'))
+
+}
+
 function cacheUsage(){
 	var x=0;
 	for(item in L) {
@@ -488,7 +753,8 @@ var strop = '</option><option value=', strradio0 = '<input type=radio ', strchkb
 	num = function (x, min, max) { return '<input type=number value="' + (x||0) + '" min="'+(min||0)+'"' + (max ? ' max="' + max +'"' : '') + ' />' },
 	colorbx = function (v) { return '<input type=color value="'+(v||'')+'" />' },
 	rng = function (v,min,max) { return '<input type=range value="'+(v||0)+'" min="'+(min||0)+'" max="'+(max||0)+'" />' },
-	imgSRC = '<img src="img/', prog = imgSRC + 'loading.gif" width=16 class=prog />', chked = ' checked', seled = ' selected', txtreadonly = function (x) { return '<input type=text readonly value="' + fnq(x) + '" />' },
+	imgSRC = '<img src="img/', prog = imgSRC + 'loading.gif" width=16 class=prog />', chked = ' checked', seled = ' selected', 
+	strtxt='<input type=text ', txtreadonly = function (x,id) { return strtxt+'readonly value="' + fnq(x) + '" id="'+id+'" />' },
 	meter = function (i, low, optimum, high) { return '<meter min=0 max=100' + (low || low === 0 ? ' low=' + low : '') + (optimum || optimum === 0 ? ' optimum=' + optimum : '') + (high || high === 0 ? ' high=' + high : '') + ' value=' + i + ' />' },
 	bgfrom = '-webkit-gradient(linear, 0% 0%, 0% 100%, from(', bgto = '), to(', grad = function (t) {
 		//return '-webkit-gradient(radial, 20 20, 0, 20 20, 50, from(white), to(white), color-stop(.9,'+t+'))'
@@ -501,6 +767,7 @@ var strop = '</option><option value=', strradio0 = '<input type=radio ', strchkb
 	spanmi=function(t,v,c){return '<span class="mi-span'+(c?' '+c:'')+'" mi='+t+'>'+v+sc},
 	DC = '<div class=', dc = '</div>', dC = dc + DC, DCtv = function (t, v) { if(isArr(v)){return Arrf(function(x){return DCtv(t,x)},v)} return DC + '"' + t + '">' + (v || '') + dc },
 	br = '<br/>', hr = '<hr/>', kbr = '\\\\ ', kbr2 = '\\\\ ~ \\\\ ~', brn='\n',
+	brA=function(A,js){return (js?$js(A):A).join(br)}, hrA=function(A,js){return (js?$js(A):A).join(hr)},
 	kbrA = function (A) { return Arrf(function (x) { return '$' + x + '$' }, A).join(br) },
 	khrA = function (A) { return Arrf(function (x) { return '$' + x + '$' }, A).join(hr) },
 	i18=function(x){return isArr(x)?Arrf(i18,x):XML.wrapE('i18',x)},	
@@ -517,7 +784,7 @@ var strop = '</option><option value=', strradio0 = '<input type=radio ', strchkb
 	zdetail = function (s, v, notsk, notvk, notEdit, o) {
 		return detail(notsk ? s : ksc(s), notvk ? v : kdc(v) + (notEdit ? '' :
 			detail(gM('Edit') + strbtn + gM('Default') + '" class="katexv0" />',
-				txa(v, 'katexv" data-katex="' + v) + br + '<input type=text class=katexvrule />' + strbtn + gM('Replace') + '" class="katexvreplace" />' + strbtn + 'GO" class="katexvgo" />')), o)
+				txa(v, 'katexv" data-katex="' + v) + br + strtxt+'class=katexvrule />' + strbtn + gM('Replace') + '" class="katexvreplace" />' + strbtn + 'GO" class="katexvgo" />')), o)
 	},
 	kdetail = function (s, v, notsk, notvk) { return zdetail(s, v, notsk, notvk, 1) },
 
@@ -550,7 +817,7 @@ var strop = '</option><option value=', strradio0 = '<input type=radio ', strchkb
 
 	fdetail = function (f, A) {
 		return DCtv('fdetail', eval('(function' + f + ')("' + ('' + A[0]).replace(/,/g, '","') + '")') +
-			'<input type=text class=katexf data-katexf="' + f + '" placeholder="' + A.join(';') + '" value="' + A[0] + '" />' +
+			strtxt+'class=katexf data-katexf="' + f + '" placeholder="' + A.join(';') + '" value="' + A[0] + '" />' +
 			strbtn + gM('Parameter') + '" class="katexv1" />')
 	},
 	mark = function (v, t) { return '<mark title="' + (t || 'API') + '">' + v + '</mark>' }, del = function (s) { return XML.wrapE('del', s) },
@@ -561,15 +828,36 @@ var strop = '</option><option value=', strradio0 = '<input type=radio ', strchkb
 	ul = function (A, c) { return '<ul class="alignl ' + (c != null ? c : '') + '">' + Arrf(function (t) { return XML.wrapE('li', t) }, A).join('') + '</ul>' }, kul = function (A, c) { return ul(Arrf(function (x) { return x || x === 0 ? '$' + x + '$' : x }, A), c) },
 	dl = function (A, B, c) { return '<dl class="alignl ' + (c != null ? c : '') + '">' + concat(Arrf(function (t) { return XML.wrapE('dt', t) }, A), Arrf(function (t) { return XML.wrapE('dd', t) }, B)).join('') + '</dl>' }, kdl = function (A, B, c) { return dl(Arrf(function (x) { return x || x === 0 ? '$' + x + '$' : x }, A), B, c) },
 
+	$js=function(x,encode){return x instanceof Array ?Arrf(function(t){return $js(t,encode)},x):'$$$'+(encode?x.trim().replace(/\\/g,'\\\\'):x.trim())+'$$$'},
 	$A = function (A) { return Arrf(function (x) { return x instanceof Array ? $A(x) : (x || x === 0 ? '$' + x + '$' : '') }, A) },
+	tinyA=function(A, size){return A.length==0?[]:Arrf(function(x){return '\\'+ZLR('tiny scriptsize footnotesize small normalsize large Large LARGE huge Huge')[size!==undefined?size:3]+' '+$A(x)},A)},
 	encodeLatex = function (t) { return ('' + t).replace(/[\{\}]/g, '\\$&') },
 	$B = function (A, esc) { return Arrf(function (x) { return x instanceof Array ? $B(x, esc) : (esc ? encodeLatex(x) : (x || x === 0 ? '{' + x + '}' : '')) }, A) },
 
-	Kx = function (t) { return t.replace(/\$\$[^\$]+\$\$/g, function (x) { return kdc(x.substr(2, x.length - 4)) }).replace(/\$[^\$]+\$/g, function (x) { return ksc(x.substr(1, x.length - 2)) }) },
+	Kx = function (t) { return t.replace(/\${3}[^\$]*\${3}/g, function (x) {var t=x.substr(3, x.length - 6);return t? '㆖'+t+'㆘':''})
+		.replace(/\$\$[^\$]+\$\$/g, function (x) { return kdc(x.substr(2, x.length - 4)) })
+		.replace(/\$[^\$]+\$/g, function (x) { return ksc(x.substr(1, x.length - 2)) })
+		.replace(/㆖[^㆖㆘]+㆘/g, function (x) { return ksc($A(x.substr(1, x.length - 2))) })
+	},
 	KxA = function (A) { return ksc(A.join(kbr2)) },
-	//KxA = function (A) { return Table([[SCtv('oLaTeX pd10" tip="thtip', 'LaTeX'), itvc('oClear')]],[[Kx(A.join(kbr2)),'']], 'edit collapse','','OHLaTeX bd0').replace('edit collapse mg10','edit') },
 	kx = function (t) {
 		var s = re(('' + t).replace(/−/g, '-').replace(/​/g, '').replace(/[ ]/g, ' ')
+			.replace(/\$[^\x00-\xff][^\$]+\$/g, function (x) {
+				var x0=x.replace(/\$/g, ''), x00=x0.split('(')[0], x01=x0.substr(x00.length+1).replace(/\)$ */,''), o0={
+					'竖式':'Decimal.oprs',
+					'竖式+':'Decimal.oprs',
+					'竖式-':'Decimal.oprs',
+					'竖式*':'Decimal.oprs',
+					'竖式/':'Decimal.oprs',
+				},o1={
+
+				};
+				if(o0[x00]){
+	
+					return eval(x0.replace(x00+'(', o0[x00]+"('"+x00+"',"))
+				}
+				return eval(x0.replace(x00, o1[x00])) 
+			})
 			.replace(/\$[^\$]+\$/g, function (x) { return eval(x.replace(/\$/g, '')) }))
 
 			//	.replace(/≠/g,'=\\not\\mathrlap{}').replace(/≢/g,'≡\\not\\mathrlap{}')
@@ -578,10 +866,33 @@ var strop = '</option><option value=', strradio0 = '<input type=radio ', strchkb
 
 			.replace(/≢/g, '\\not \\mathrlap{} \\negthickspace \\negthickspace ≡')	// fix latex ≢ bug	V0.10.1				katex bug:	table元素中使用katex，不等号会错位	字体显示≢会丢失 删除线
 
+
+
+			//add math function names in katex.js ,"\\arccot","\\arcsec","\\arccsc","\\sech","\\csch","\\sinc","\\si","\\Si","\\ci","\\Ci","\\Shi","\\sgn","\\cis","\\arccis","\\Arg"
+
 			//extension 
+			.replace(/\\b (\{[^\{\}]+\})/g,'\\pmb {\\red$1}')	//加粗斜体红色
+			.replace(/\\b ([^\{}])/g,'\\pmb {\\red{$1}}')	//加粗斜体红色(单个字)
+			.replace(/\\r (\{[^\{\}]+\})/g,'\\textbf \\red $1')	//加粗正体红色
+			.replace(/\\r ([^\{}])/g,'\\textbf \\red{$1}')	//加粗正体红色(单个字)
+			.replace(/\\d /g,'\\hskip{0.1em}\\text{d}')	//微分d
+
+			.replace(/\\Rt/g,'\\text{Rt△}')	//直角三角形
+
+			.replace(/\\\(/g,'\\left(')
+			.replace(/\\\)/g,'\\right)')
+			.replace(/\\\[/g,'\\left[')
+			.replace(/\\\]/g,'\\right]')
+
+
+			.replace(/iddots/g,'kern3mu \\raisebox2mu{.}\\kern1mu\\raisebox7mu{.}\\kern1mu\\raisebox13mu{.}\\kern4mu')
+		//	.replace(/(inj|proj) ?(lim)/g, 'mathrm{$1~$2}')
 			.replace(/FUNC([A-Za-z]+)/g, '\\mathrm{$1}')		//函数字体FUNC* <=> \\mathrm{*}
 			.replace(/(\{[^\}]+\}|.) *\\\/ *(\{[^\}]+\}|.)/g, '\\frac{$1}{$2}')				//无嵌套分数形式	a\/b  <=> \frac{a}{b}
-			.replace(/[√∛∜]-?[\d\.]+/g, function(x){var i='√∛∜'.indexOf(x[0]);return '\\sqrt'+(i?'['+(i+2)+']':'')+'{'+x.substr(1)+'}'})
+			.replace(/(\{[^\}]+\}|.) *\\t\/ *(\{[^\}]+\}|.)/g, '\\tfrac{$1}{$2}')				//无嵌套分数形式	a\t/b  <=> \tfrac{a}{b}
+			.replace(/[√∛∜](-?[\d\.]+|\{[^\}]+\})/g, function(x){var i='√∛∜'.indexOf(x[0]);return '\\sqrt'+(i?'['+(i+2)+']':'')+'{'+x.substr(1)+'}'})
+
+
 		;
 
 
@@ -641,7 +952,8 @@ var strop = '</option><option value=', strradio0 = '<input type=radio ', strchkb
 	boxed = function (t) { return '\\boxed{' + t + '}' }, hp = function (t) { return '\\hphantom{' + (t || 0) + '}' },
 	kbox = function (t, p, pfx) { return boxed(kxc(t, p || 'bf', pfx || 'text')) },
 
-	ksc = function (t) { return isArr(t)?Arrf(ksc,t):SCtv('katex0', t) }, kdc = function (t) { return isArr(t)?Arrf(kdc,t):DCtv('katex0', t) },
+	ksc = function (t) { return isArr(t)?Arrf(ksc,t):SCtv('katex0" data-katex0="'+t.replace(/^\$|\$/g,'').trim(), t) }, 
+	kdc = function (t) { return isArr(t)?Arrf(kdc,t):DCtv('katex0" data-katex0="'+t.replace(/^\$|\$/g,'').trim(), t) },
 	ksz = function (t, n) { return '\\' + ['tiny', 'scriptsize', 'footnotesize', 'small', 'normalsize', 'large', 'Large', 'LARGE', 'huge', 'Huge'][(n || 0) + 4] + ' ' + t },
 
 
@@ -649,7 +961,7 @@ var strop = '</option><option value=', strradio0 = '<input type=radio ', strchkb
 	kfrac = function (t, p, tiny) {
 		if (t instanceof Array) { return frac(t[0], t[1], tiny || '') }
 		if (p) { return ('' + t).replace(/(\d+|[a-zα-ω])\/(\d+|[a-zα-ω])/ig, function (x) { return kfrac(x, '', tiny || '') }) }
-		return /\//.test(t) ? (t[0] == '-' ? '-' : '') + frac(t.split('/')[0].replace('-', ''), t.split('/')[1], tiny || '') : t
+		return /\//.test(t) && t.split('/').length==2 ? (t[0] == '-' ? '-' : '') + frac(t.split('/')[0].replace('-', ''), t.split('/')[1], tiny || '') : t
 	},
 	kfraczp = function (t, tiny, T) { return kfrac(zp(t) + (T ? '^{' + T + '}' : ''), 1, tiny || '') },
 	kxAfrac = function (A, p) { return Arrf(function (x) { return kfrac(x, 1) }, A).join(kbr2) },
@@ -682,26 +994,62 @@ var strop = '</option><option value=', strradio0 = '<input type=radio ', strchkb
 
 	sum = function (i, b, t, v, p, zM) {
 		return arguments.length >= 6 ? '\\' + (!zM ? 'display' : 'text') + 'style{\\' + ['sum', 'bigcup', 'mathop{+}', 'bigvee', 'sup', 'max', 'bigoplus'][p || 0] + (!zM ? '\\limits' : '') +
-			'_{' + (i ? i + '=' + b : (b instanceof Array ? '\\tiny\\begin{matrix} ' + b.join('\\\\ ') + ' \\end{matrix}' : (b == '-' ? b + '∞' : b))) + '}' + (t ? '^{' + (t == '+' ? '∞' : t) + '}' : '') +
+			'_{' + (i ? i + '=' + b : (b instanceof Array ? '\\substack{' + b.join('\\\\ ') + '}' : (b == '-' ? b + '∞' : b))) + '}' + (t ? '^{' + (t == '+' ? '∞' : t) + '}' : '') +
 			v + '}' : SCtv('inblk alignc', sub(t == '+' ? '∞' : t) + br + ['∑', '∪', '+', '⋁', 'sup', 'max', '⊕'][p || 0] + br + sup(i ? i + '=' + b : b)) + sci(v)
 	},
 
 	prod = function (i, b, t, v, p, zM) {
 		return arguments.length >= 6 ? '\\' + (!zM ? 'display' : 'text') + 'style{\\' + ['prod', 'bigcap', 'mathop{×}', 'coprod', 'bigwedge', 'inf', 'min', 'bigodot', 'bigotimes'][p || 0] + (!zM ? '\\limits' : '') +
-			'_{' + (i ? i + '=' + b : (b instanceof Array ? '\\tiny\\begin{matrix} ' + b.join('\\\\ ') + ' \\end{matrix}' : (b == '-' ? b + '∞' : b))) + '}' + (t ? '^{' + (t == '+' ? '∞' : t) + '}' : '') +
+			'_{' + (i ? i + '=' + b : (b instanceof Array ? '\\substack{' + b.join('\\\\ ') + '}' : (b == '-' ? b + '∞' : b))) + '}' + (t ? '^{' + (t == '+' ? '∞' : t) + '}' : '') +
 			v + '}' : SCtv('inblk alignc', sub(t == '+' ? '∞' : t) + br + ['∏', '∩', '×', '∐', '∧', 'inf', 'min', '⊙', '⊗'][p || 0] + br + sup(i ? i + '=' + b : b)) + sci(v)
 	},
 
-	intl = function (v, b, t, d, p, zM) {
-		return arguments.length >= 6 ? '\\' + (!zM ? 'display' : 'text') + 'style{\\' + ['int', 'iint', 'iiint', 'oint', 'oiint', 'oiiint', 'int\\cdots\\int'][p || 0] + (!zM ? '\\nolimits' : '') +
-			'_{' + ((b == '-' ? b + '∞' : b) || '') + '}' + (t ? '^{' + (t == '+' ? t + '∞' : t) + '}' : '') + v + '\\,'+
-			zlrA3('\\mathrm{d}{',(d || 'x').split(''), '}').join('\\,')+'}' : Msubsup('∫∬∭∮∯∰∱∲∳'[p || 0], b == null ? '' : b, (/[\+\-]/.test(t) ? t + '∞' : t) || (b == null ? '' : '+∞')) + v + 'd' + (d || 'x')
+	intl = function (fA, b, t, d, p, zM) {
+		var s=/, /.test(d)?'∧':'';
+		if(p==-1){
+			return fA+orifun(b, t)
+		}
+		return arguments.length >= 6 ? '\\' + (!zM||zM==1 ? 'display' : 'text') + 'style{\\' + ['int', 'iint', 'iiint', 'oint', 'oiint', 'oiiint', 'int\\dotsi\\int'][p || 0] + (!zM ? '\\nolimits' : (zM==1?'\\limits':'')) +
+			'_{' + (/^[\+\-]$/.test(b) ? b + '∞' : (b instanceof Array ? '\\substack{' + b.join('\\\\ ') + '}':(b||b==0?b:''))) + '}' + 
+			(t||t===0 ? '^{' + (/^[\+\-]$/.test(t) ? t + '∞' : t) + '}' : '') + (isArr(fA)?
+			snake([zlrA3('\\mathrm{d}{',(d || 'x,y;y,z;z,x').replace(/,/g, s+'\\mathrm{d}').split(';'), '}'),fA]).join('')+'}':fA + 
+			(d==' '?'':'\\,'+
+			zlrA3('\\mathrm{d}{',(d || 'xyz'.substr(0,p || 2).split('').join()).split(','), '}').join(s)+'}')) : 
+				Msubsup('∫∬∭∮∯∰∱∲∳'[p || 0], b == null ? '' : b, (/[\+\-]/.test(t) ? t + '∞' : t) || (b == null ? '' : '+∞')) + v + 'd' + (d || 'x')
 	},
 
-	difn = function (f, x, p, g) { var d = '\\' + (p ? 'partial' : 'mathrm{d}') + ' ', dg = g ? '^{' + g + '}' : ''; return '\\frac{' + d + dg + (f || '') + '}{' + d + (x || 'x') + dg + '}' },
+
+	iint = function (fA, b, t, d,p,zM) {
+		var s=/, /.test(d)?'∧':'';
+		return  '\\' + (!zM||zM==1 ? 'display' : 'text') + 'style{\\' + ['','int','iint', 'iiint'][p || 2] + (!zM ? '\\nolimits' : (zM==1?'\\limits':'')) +
+			'_{' + (b instanceof Array ? '\\substack{' + b.join('\\\\ ') + '}':(b||b==0?b:'')) + '}' + (t||t===0  ? '^{' + t + '}' : '') + (isArr(fA)?
+			snake([zlrA3('\\mathrm{d}{',(d || 'x,y;y,z;z,x').replace(/,/g, s+'\\mathrm{d}').split(';'), '}'),fA]).join(''):fA + '\\,'+
+			(d==' '?'':(!d?('\\mathrm{d}'+'  σV'[p || 2]):
+			zlrA3('\\mathrm{d}{',(d || 'xyz'.substr(0,p || 2).split('').join()).split(','), '}').join(s))))+'}' 
+	},
+
+	oint = function (fA, b, t, d,p,zM) {
+		var s=/, /.test(d)?'∧':'';
+		return  '\\' + (!zM||zM==1 ? 'display' : 'text') + 'style{\\' + ['oint','oint','oiint','oiiint'][p || 0] + (!zM ? '\\nolimits' : (zM==1?'\\limits':'')) +
+			'_{' + (b instanceof Array ? '\\substack{' + b.join('\\\\ ') + '}':(b||b==0?b:'')) + '}' + (t||t===0  ? '^{' + t + '}' : '') +
+			(!/,/.test(d) && !isArr(fA)?fA +(d==' '?'':'\\,\\mathrm{d}'+d):snake([zlrA3('\\mathrm{d}{',(d || 'x,y;y,z;z,x').replace(/,/g, s+'\\mathrm{d}').split(';'), '}'),fA]).join(''))+'}' 
+	},
+
+
+
+
+
+	orifun =function(x0,x1){
+		return '\\LARGE|\\normalsize\\substack{'+(x1||'')+'\\\\\\\\ '+x0+'}'
+	},
+	difn = function (f, x, p, g) { var d = (p ? '∂' : '\\mathrm{d}') + ' ', 
+		dx= +g>1?d + (x || 'x'):d,
+		dg = +g>1? '^{' + g + '}' : (isArr(x)?'^{' +x.length+'}':''),
+		dg_= +g>1 ? '^{' + g + '}' : (isArr(x)?x.join(d):(x || 'x'));
+		return ' \\tfrac{' + d + dg + (f || '') + '}{' + dx + dg_ + '}' },
 
 	Opr = function (i, b, t, v, p) { return '\\mathop{' + p + '}\\limits' + '_{' + (i ? i + '=' + b : (b=='-'?'-∞':b)) + '}' + (t ? '^{' + (t == '+' ? '∞' : t) + '}' : '') + (v || '') },
-	/* katex 不支持 ⋰ ∱∲∳ \idotsint 多重积分 ∫⋅⋅⋅∫ 与MathJax区别
+	/* katex 不支持 ⋰ (已使用\iddots 命令修复) ∱∲∳ \idotsint 多重积分 ∫⋅⋅⋅∫ 与MathJax区别
 	
 	 http://www.cnblogs.com/suerchen/p/4833381.html
 	 https://katex.org/docs/supported.html
@@ -823,7 +1171,18 @@ var strop = '</option><option value=', strradio0 = '<input type=radio ', strchkb
 		return isA ? rel(A, Arrf(function (t) { return c[nm[1]][+t || parseInt(t, 36)] }, nm[0].split('')), style) : A + r + c[nm ? nm[1] : 0][nm ? nm[0] || parseInt(+nm[0], 36) : 0] + ' ' + b
 
 	},
-
+	aligned=function(A,leftElement){
+		var a=[].concat(A);
+		if(leftElement){
+			a[1]=a[0]+' & '+a[1];
+			a.shift();
+		}else{
+			a[0]='& '+a[0]
+		}
+		return ['\\begin{aligned}',
+		a.join(kbr+brn+'& '),
+		'\\end{aligned}'].join(brn)
+	},
 
 	eq = function (t, m, b) { var k = kos(m); return (t || b) ? '\\' + k + (b ? '[' + b + ']' : '') + '{' + (t || '') + '}' : (/x/.test(k) ? '\\' + k : k) },
 	eqM = function (A, m) { return A.join(eq('', '', '\\mod ' + m)) },
@@ -877,7 +1236,7 @@ var strop = '</option><option value=', strradio0 = '<input type=radio ', strchkb
 			var spA = A.join('').replace(/[^a-z]/g, '').split('').sort().join('').replace(/(.)\1+/g, '$1').split('').concat('=');	//Arrf(String.fromCharCode,seqA(97,26))
 			c = spA.length;
 			Arrf(function (x, i) {
-				//consolelog(x, i, kx(x));
+
 				B[i] = split(kx(x), sp, 1);
 				if (B[i][0].length != c) {
 					for (var j = 0; j < c - 1; j++) {
@@ -1227,7 +1586,7 @@ array命令下		()	[]	\{\}	||	\|
 	*/
 		var al = arguments.length, r = v.length, c = (v[0] instanceof Array ? v[0] : '1').length, I = [], J = [], A;
 		if (parts) {
-			//consolelog(parts);
+
 			A = Arrf(function (t) { return t instanceof Array ? t.join(' & ') : t }, v);
 			if (/I/.test(parts)) {
 				I = Arrf(Number, parts.match(/I\d+(_\d+)*/g)[0].substr(1).split('_'));
@@ -1258,13 +1617,13 @@ array命令下		()	[]	\{\}	||	\|
 				I = D;
 				if (/C/.test(parts)) {
 					var s = D.slice(-1)[0];
-					//consolelog(s);
+					
 					J = Arrf(function (x) { return s - x }, D2).reverse();
 					J = J.slice(1).concat(s);
 				} else {
 					J = D2;
 				}
-				//consolelog(J);
+				
 			}
 			var ls = parts.split(' '), hline = ls[2] || (J.length ? '.' : '_'), vline = ls[1] || (I.length < 1 || I.length * J.length ? ':' : '|');
 
@@ -1289,17 +1648,17 @@ array命令下		()	[]	\{\}	||	\|
 
 			Arrf(function (t, i) { A[t] = '\\h' + ((hline[i] || hline[0]) == '.' ? 'dash' : '') + 'line ' + A[t] }, I);
 			//	console.log(J);
-			return '\\left' + (lr || '[') + ' \\begin{array}{' + J + '}' +
-				A.join(' \\\\' + (!spacing ? ' ' : '[' + spacing + 'pt]')) +
+			return (spacing?'\\def\\arraystretch{'+spacing+'}':'')+'\\left' + (lr || '[') + ' \\begin{array}{' + J + '}' +
+				A.join(' \\\\ ') +
 				' \\end{array}' + ' \\right' + (lcr || ']')
 
 		}
 
-		return al > 3 ? '\\begin{' + (lr == '.' ? '' : (lr || 'b')) + 'matrix}' + Arrf(function (x) { return x instanceof Array ? x.join(' & ') : x }, v).join(' \\\\' + (!spacing ? ' ' : '[' + spacing + 'pt]')) + ' \\end{' + (lcr == '.' ? '' : (lcr || 'b')) +
+		return al > 3 ? (spacing?'\\def\\arraystretch{'+spacing+'}':'')+'\\begin{' + (lr == '.' ? '' : (lr || 'b')) + 'matrix}' + Arrf(function (x) { return x instanceof Array ? x.join(' & ') : x }, v).join(' \\\\ ') + ' \\end{' + (lcr == '.' ? '' : (lcr || 'b')) +
 			'matrix}' : SCtv('mtrx' + (lr || '') + ' inblk align' + (lcr || lr || 'c'), v instanceof Array ? Table('', v) : v)
 	},
-	zmtrx = function (A, spacing, parts) { return mtrx(A, '', '', spacing, parts) },
-	kmtrx = function (A, fracOff, parts) { var t = mtrx((Mfn ? Arrf(function (a) { return isArr(a) ? Arrf(function (x) { return Mfn.fromStr(x).toStr(1) }, a) : Mfn.fromStr(a).toStr(1) }, A) : A), '', '', /frac/.test(A) || !fracOff && /\//.test(A) ? 5 : '', parts); return fracOff ? t : kfrac(t, 1, 't') },
+	zmtrx = function (A, spacing, parts,lr,lcr) { return mtrx(A, lr||'', lcr||'', spacing, parts) },
+	kmtrx = function (A, fracOff, parts,lr,lcr) { var t = mtrx((Mfn ? Arrf(function (a) { return isArr(a) ? Arrf(function (x) { return Mfn.fromStr(x).toStr(1) }, a) : Mfn.fromStr(a).toStr(1) }, A) : A), lr||'', lcr||'', /frac/.test(A) || !fracOff && /\//.test(A) ? 1.5 : '', parts); return fracOff ? t : kfrac(t, 1, 't') },
 
 	zstrx = function (t, p) { return Arrf(function (x) { return ZLR(x, '', p == undefined ? ' ' : '') }, t.split(';')) },
 	zarray = function (A, spacing, parts) { return mtrx(A, '.', '.', spacing, parts) },
@@ -1329,9 +1688,10 @@ array命令下		()	[]	\{\}	||	\|
 		return B
 	},
 	ztable = function (A, nobox, spacing) { var t = mtrx(A, '.', '.', spacing || '', 'rc  _'); return nobox ? t : boxed(t) },
-	det = function (A, spacing, tiny) { var al = arguments.length; return al >= 2 ? '\\begin{vmatrix}' + Arrf(function (x) { return kfrac(x.join(' & '), 1, tiny || '') }, A).join(' \\\\' + (!spacing ? ' ' : '[' + spacing + 'pt]')) + '\\end{vmatrix}' : SCtv('bdl bdr inblk alignc', Table('', A)) },
+	det = function (A, spacing, tiny) { var al = arguments.length; return al >= 2 ? (spacing?'\\def\\arraystretch{'+spacing+'}':'')+'\\begin{vmatrix}' + Arrf(function (x) { return kfrac(x.join(' & '), 1, tiny || '') }, A).join(' \\\\ ')
+		.replace(/⋰/g,'\\iddots') + '\\end{vmatrix}' : SCtv('bdl bdr inblk alignc', Table('', A)) },
 	zdet = function (A, spacing) { return det(Arrf(ZLR, A), spacing) },
-	kdet = function (A, fracOff) { return det(A, /frac/.test(A) || !fracOff && /\//.test(A) ? 5 : '', fracOff ? '' : 't') },
+	kdet = function (A, fracOff) { return det(A, /frac/.test(A) || !fracOff && /\//.test(A) ? 1.5 : '', fracOff ? '' : 't') },
 
 	lp = function (l, v, zM) { var t = arguments.length == 1, t3 = arguments.length >= 3; return zM ? '\\left' + (l || '\\{') + v + '\\right.' : (!t && !l ? '' : SCtv('inblk xxlarge', t ? '{' : l)) + SCtv('inblk alignl', t ? l : v) },
 	rp = function (v, r, zM) { return arguments.length == 3 ? '\\left.' + v + '\\right' + (r || '\\{') : SCtv('inblk alignr', v) + (r === '' ? '' : SCtv('inblk xxlarge', r || '}')) },
@@ -1344,7 +1704,7 @@ array命令下		()	[]	\{\}	||	\|
 	},
 	pp = function (v, c, l, r) { if (v === '') { return '' } return (c ? c[0] : (l || '(')) + v + (c ? c[1] : (r || ')')) },
 	big = function (size, lr, lmr) {return '\\'+(['big','Big','bigg','Bigg'][size||0]+(lmr||''))+'()[]{}'[lr||0].replace(/[\{\}]/g,'\\$&') },
-	frac = function (t, b, zM) { var nob = b == undefined, t3 = arguments.length >= 3; return t3 ? '\\' + (/^[td]$/.test(zM) ? zM : '') + 'frac{' + (zM == 't' ? '' : '\\displaystyle{}') + (zM == 'p' ? '\\partial ' : '') + t + '}{' + (zM == 't' ? '' : '\\displaystyle{}') + (zM == 'p' ? '\\partial ' : '') + b + '}' : SCtv('inblk alignc', SCtv('alignc', nob ? t[0] : t) + DCtv('fracline') + SCtv('alignc', nob ? t[1] : b)) },
+	frac = function (t, b, zM) { var nob = b == undefined, t3 = arguments.length >= 3; return t3 ? '\\' + (/^[td]$/.test(zM) ? zM : '') + 'frac{' + (zM == 't' ? '' : '\\displaystyle{}') + (zM == 'p' ? '∂' : '') + t + '}{' + (zM == 't' ? '' : '\\displaystyle{}') + (zM == 'p' ? '∂' : '') + b + '}' : SCtv('inblk alignc', SCtv('alignc', nob ? t[0] : t) + DCtv('fracline') + SCtv('alignc', nob ? t[1] : b)) },
 
 	root = function (t, n, s, zM) {
 		return arguments.length >= 4 ? '\\sqrt' + (n && +n != 2 ? '[' + n + ']' : '') + '{' + t + '}' : SCtv('rootleft inblk notm" data-size="' + (s || 1), DCtv('rootleftline" data-index="' +
@@ -1665,7 +2025,10 @@ function H_h(F, H) { var f = H_W(F), h = H_w(H); if (h == f || h == f + '/') { h
 
 function H_a(u, base) {
 
-	var b = base || '';
+	var b = base || (location.origin+location.pathname);
+	if(/\?.+\//.test(b)){
+		b=b.replace(/\?.+/,'')
+	}
 
 	if (b.indexOf('/', 8) > 0) {
 		var b0 = b.substr(0, b.indexOf('/', 8)) + '/';
@@ -1787,13 +2150,13 @@ var svgf = {
 	},
 	path: function (d, strk,fil) {
 		if(isArr(d)){
-			return Arrf(svgf.path,d)
+			return Arrf(function(x){return svgf.path(x, strk, fil)},d)
 		}
 		return '<path d="' + d + '" stroke="'+(strk||'white')+'" fill="'+(fil||'none')+'"></path>'
 	}, 
 	polygon: function (d, strk,fil) {
 		if(isArr(d)){
-			return Arrf(svgf.polygon,d)
+			return Arrf(function(x){return svgf.polygon(x, strk, fil)},d)
 		}
 		return '<polygon points="' + d + '" stroke="'+(strk||'white')+'" fill="'+(fil||'none')+'"></polygon>'
 	}, 
@@ -1834,6 +2197,11 @@ var svgf = {
 			return Arrf(function(x){return svgf.id(x,v,noVieWBox,w)},id)
 		}
 		return '<svg id="' + id+ '"' + (noVieWBox?'':' viewBox="0 0 30 30"') + ' stroke="'+(strk||'white')+'" fill="'+(fil||'none')+'" stroke-width="'+(w||2)+'">'+(v||'')+'</svg>'
+	},
+	ani: function(id, attr,from,to,dur,cnt){
+		return '<animate xlink:href="#'+id+'" attributeName="'+(attr||'stroke-dashoffset')
+			+'" from="'+(from===undefined?3000:from)+'" to="'+(to===undefined?0:to)
+			+'" dur="'+(dur||10)+'s" repeatCount="'+(cnt||'indefinite')+'" />'
 	},
 	obj2js: function (obj, path, haschd) {
 		var o=$(obj), os={
@@ -1898,6 +2266,13 @@ var svgf = {
 				return `svgf.id('${id+(wd||ht?'" width="'+wd+'" height="'+ht+'"':'')}',${v},'${vBox||1}','${w}','${strk+(tf?'" transform="'+tf:'')+(fil?",'"+fil+"'":'')}')`.replace(/,'','',''\)$/,')')
 
 			},
+			g: function () {
+				/*
+				var A=[];o.children().each(function(){A.push(os[this.tagName.toLowerCase()]())});
+				return A.join('+')
+				*/
+				return "'"+o.html()+"'"
+			}
 		};
 		
 		//console.log(o[0].tagName.toLowerCase(), os[o[0].tagName.toLowerCase()]);
@@ -1950,8 +2325,18 @@ var svgf = {
 			}
 
 			if (tO.M) {
+				var dm=(d0.getMonth() + tO.M) % 12;
 				tO.y += Math.floor((d0.getMonth() + tO.M) / 12);
-				d1.setMonth((d0.getMonth() + tO.M) % 12);
+				d1.setMonth(dm);
+				if((d1.getMonth()-d0.getMonth()) % 12 !=tO.M){//修正误差  例如：2019-12-31 -1M, 是2019-11-30 而不是2019-12-1
+					if(tO.M<0){
+						d1.setMonth((dm+1)% 12,1);
+						//console.log(dm, d1);
+						d1.setTime(d1.getTime()-oneDay);
+					}else{
+						d1.setMonth(dm,1);
+					}
+				}
 			}
 
 			if (tO.y) { d1.setFullYear(d0.getFullYear() + tO.y) }
@@ -2267,6 +2652,35 @@ function hex2rgba(h, a, arr) {
 function rgb2hex(r, g, b) {//r*256^2 + g*256 + b = r*2^16 + g*2^8+ b
 	return '#' + (1 << 24 | r << 16 | g << 8 | b).toString(16).substring(1);
 }
+
+function bigintsim(s, toLaTeX, vars){// + - * /	vars指定字母变量赋值（整数）
+	if(toLaTeX){
+		return s.replace(/\)\*\(/g,')(').replace(/\*/g,'‧')
+			.replace(/\*\*/g,'^').replace(/\d+/g,'{$&}')
+			.replace(/>=/g,'≥').replace(/<=/g,'≤')
+			.replace(/!=/g,'≠').replace(/==/g,'=')
+	}
+	var t=s||'';
+	if(vars){
+		if(vars['n']){
+			t=t.replace(new RegExp('n','g'), '('+vars['n']+')')
+		}
+		$.each(vars,function(i,v){
+			if(i!='n'){
+				t=t.replace(new RegExp(i,'g'), '('+v+')')
+			}
+		});
+	}
+
+	return eval(t.replace(/[\{\[]/g,'(').replace(/[\}\]]/g,')')
+		.replace(/\)(\d)/g,')*$1').replace(/(\d)\(/g,'$1*(')
+		.replace(/\)\(/g,')*(').replace(/\d+/g,'($&n)')
+		.replace(/\^/g,'**').replace(/‧/g,'*')
+		.replace(/≥/g,'>=').replace(/≤/g,'<=')
+		.replace(/≠/g,'!=').replace(/([^\!><=])=([^\!><=])/g,'$1==$2')
+		)
+}
+
 function bodyFocus() {
 	$('body')[0].tabIndex = 0;
 	$('body').focus();
@@ -2300,7 +2714,7 @@ var OffSet = function (obj, r, c, build) {//表格单元格偏移，如果找不
 
 }, Admin = {
 	testAjax: function (t) { $.ajax({ type: 'get', url: t, success: function (d) { saveText(d, '123.txt') } }) },
-	testAjax2: function (t,e) { $.ajax({ type: 'get', url: t, success: function (d) { console.log($(d).find(e).text()) } }) }
+	testAjax2: function (t,e,f) { $.ajax({ type: 'get', url: t, success: function (d) { var x=$(d).find(e).text();console.log(f?f(x):x) } }) }
 }, fCC = function (A) {
 	return String.fromCharCode.apply(null, A)
 }, sizeKB = function (sz) {
@@ -2624,7 +3038,10 @@ var A=[2,3,4,5,7];Arrf(function(t,i){if(i){A[A.length-i]-=A[A.length-i-1]}},A);A
 
 	//下列涉及排序、去重
 
-}, Uniq = function (s) {//字符或数字（数组，逗号隔开）去重，结果会自动排序	此方法去重不彻底，换成 Array.from(new Set([])).sort().join(',')
+}, Uniq = function (s,useSet) {//字符或数字（数组，逗号隔开）去重，结果会自动排序	此方法去重不彻底，换成 Array.from(new Set([])).sort().join(',')
+	if(useSet){//只返回去重后的排序数组，不join
+		return Array.from(new Set(isStr(s)?s.split(','):s)).sort()
+	}
 	return (','+s.split(',').sort().join(',,') + ',').replace(/(,[^,]+,)\1+/g, '$1').replace(/,{2,}/g, ',').replace(/^,|,$/g, '')
 
 }, sortBy = {
@@ -2644,11 +3061,10 @@ var A=[2,3,4,5,7];Arrf(function(t,i){if(i){A[A.length-i]-=A[A.length-i-1]}},A);A
 		}
 		return a - b
 	},
-	chr: function (x, y) {//按字母排序	也就是默认的Array.sort()
+	chr: function (x, y) {//按字母排序	也就是默认的Array.sort()	此处有误，字符相减得到NaN
 		var a = '' + x, b = '' + y;
 		return a - b
 	},
-
 	chrlen: function (x, y) {//按字母及长度排序	
 		var a = '' + x, b = '' + y;
 
@@ -2657,6 +3073,20 @@ var A=[2,3,4,5,7];Arrf(function(t,i){if(i){A[A.length-i]-=A[A.length-i-1]}},A);A
 
 		for (var i = 0; i < m; i++) {
 			var t = a[i].charCodeAt(0) - b[i].charCodeAt(0);
+			if (t) {
+				return Math.sign(t)
+			}
+		}
+		return la - lb
+	},
+	chrlen2: function (x, y) {//按字母及长度排序	大小写不敏感
+		var a = '' + x, b = '' + y;
+
+		if (a == b) { return 0 }
+		var la = a.length, lb = b.length, m = Math.min(la, lb);
+
+		for (var i = 0; i < m; i++) {
+			var t = a[i].toLowerCase().charCodeAt(0) - b[i].toLowerCase().charCodeAt(0);
 			if (t) {
 				return Math.sign(t)
 			}
@@ -2730,7 +3160,61 @@ var A=[2,3,4,5,7];Arrf(function(t,i){if(i){A[A.length-i]-=A[A.length-i-1]}},A);A
 	});
 
 
+}, compressBy={
+	prefix:function(v, decompress){
+		var vA=v.split(brn);
+		if(decompress){
+			for(var i=0;i<vA.length-1;i++){
+				var vi=vA[i], vit=vi.trim(),
+					vj=vA[i+1], v0=vj.length-vj.replace(/^ +/,'').length;
+				if(!/^ /.test(vi) && v0){
+					if(vi==vit){
 
+					}else{
+						vA.splice(i,1);
+						vA[i]=vA[i].replace(/^ +/,vi)
+					}
+					
+					for(var j=i+1;j<vA.length;j++){
+						var vj=vA[j], vj0=vj.length-vj.replace(/^ +/,'').length;
+						if(vj0==v0){
+							vA[j]=vj.replace(/^ +/,vi+(vi==vit?' ':''))
+	
+						}else if(!vj0){
+							break
+						}
+					}
+					if(vi!=vit){
+						i--;
+					}
+				}
+			}
+
+			return vA
+		}
+		for(var i=0;i<vA.length-1;i++){
+			var vi=vA[i], viA=vi.trim().split(' '), v0=viA[0], v0indx=vi.indexOf(v0),
+				vj=vA[i+1], vjA=vj.trim().split(' ');
+			if(/[A-Z]/i.test(v0) && vj.indexOf(v0)==v0indx && vjA.indexOf(v0)==0){
+				if(viA.length>1){
+					vA.splice(i,0,vi.substr(0,v0indx+v0.length+1))
+				}else{
+					//vA[i]=vi.substr(0,v0indx+v0.length+1);
+				}
+				
+				for(var j=i+1;j<vA.length;j++){
+					var vj=vA[j], vjA=vj.trim().split(' ');
+					if(vj.indexOf(v0)==v0indx && vjA.indexOf(v0)==0){
+						vA[j]=vj.replace(v0,'')
+
+					}else{
+						break
+					}
+				}
+			}
+		}
+		return vA
+	}
 
 }, Latin = function (t, caps) {
 	var f = function (i) { var s = html2txt('&' + String.fromCharCode(i) + t + ';'); if (/;/.test(s)) { s = '' } return s };
@@ -2748,14 +3232,15 @@ var A=[2,3,4,5,7];Arrf(function(t,i){if(i){A[A.length-i]-=A[A.length-i-1]}},A);A
 
 }, optgrp = function (t,v) {//返回字符串
 	return '<optgroup label="'+t+'">'+v+'</optgroup>'
-}, OptGrps = function (A) {//返回字符串	A=[{'label1':[{'t':'','v':'','s':1},]},]
+}, OptGrps = function (A, getI18) {//返回字符串	A=[{'label1':[{'t':'','v':'','s':1},]},]
 	var s = '';
 	for (var i = 0, l = A.length; i < l; i++) {
 		var a = A[i];
 		$.each(a, function (x, v) {
-			s += '<optgroup label="' + x + '">' + (isStr(v) ? Arrf(function (k) { return '<option value="' + k + '">' + k + '</option>' },
+			s += '<optgroup label="' + x + '">' + (isStr(v) ? Arrf(function (k) { return '<option value="' + k + '">' + (getI18 && k!='LaTeX' && k!='JavaScript'?gM(k):k) + '</option>' },
 				ZLR(v)) : Arrf(function (j) {
-					return '<option value="' + (j.v || j.t) + '"' + (j.s ? seled : '') + '>' + (j.t || j.v) + '</option>'
+					var tv=j.t || j.v;
+					return '<option value="' + (j.v || j.t) + '"' + (j.s ? seled : '') + '>' + (getI18 && tv!='LaTeX' && tv!='JavaScript'?gM(tv):tv) + '</option>'
 				}, v)).join('') + '</optgroup>'
 		});
 	}
@@ -2953,8 +3438,8 @@ function dbc2sbc(str) {
 	return result;
 }
 function zh2big(s, big2zh) {
-	var zh_s = '皑蔼碍爱翱袄奥坝罢摆败颁办绊帮绑镑谤剥饱宝报鲍辈贝钡狈备惫绷笔毕毙闭边编贬变辩辫鳖瘪濒滨宾摈饼拨钵铂驳卜补参蚕残惭惨灿苍舱仓沧厕侧册测层诧搀掺蝉馋谗缠铲产阐颤场尝长偿肠厂畅钞车彻尘陈衬撑称惩诚骋痴迟驰耻齿炽冲虫宠畴踌筹绸丑橱厨锄雏础储触处传疮闯创锤纯绰辞词赐聪葱囱从丛凑窜错达带贷担单郸掸胆惮诞弹当挡党荡档捣岛祷导盗灯邓敌涤递缔点垫电淀钓调迭谍叠钉顶锭订东动栋冻斗犊独读赌镀锻断缎兑队对吨顿钝夺鹅额讹恶饿儿尔饵贰发罚阀珐矾钒烦范贩饭访纺飞废费纷坟奋愤粪丰枫锋风疯冯缝讽凤肤辐抚辅赋复负讣妇缚该钙盖干赶秆赣冈刚钢纲岗皋镐搁鸽阁铬个给龚宫巩贡钩沟构购够蛊顾剐关观馆惯贯广规硅归龟闺轨诡柜贵刽辊滚锅国过骇韩汉阂鹤贺横轰鸿红后壶护沪户哗华画划话怀坏欢环还缓换唤痪焕涣黄谎挥辉毁贿秽会烩汇讳诲绘荤浑伙获货祸击机积饥讥鸡绩缉极辑级挤几蓟剂济计记际继纪夹荚颊贾钾价驾歼监坚笺间艰缄茧检碱硷拣捡简俭减荐槛鉴践贱见键舰剑饯渐溅涧浆蒋桨奖讲酱胶浇骄娇搅铰矫侥脚饺缴绞轿较秸阶节茎惊经颈静镜径痉竞净纠厩旧驹举据锯惧剧鹃绢杰洁结诫届紧锦仅谨进晋烬尽劲荆觉决诀绝钧军骏开凯颗壳课垦恳抠库裤夸块侩宽矿旷况亏岿窥馈溃扩阔蜡腊莱来赖蓝栏拦篮阑兰澜谰揽览懒缆烂滥捞劳涝乐镭垒类泪篱离里鲤礼丽厉励砾历历沥隶俩联莲连镰怜涟帘敛脸链恋炼练粮凉两辆谅疗辽镣猎临邻鳞凛赁龄铃凌灵岭领馏刘龙聋咙笼垄拢陇楼娄搂篓芦卢颅庐炉掳卤虏鲁赂禄录陆驴吕铝侣屡缕虑滤绿峦挛孪滦乱抡轮伦仑沦纶论萝罗逻锣箩骡骆络妈玛码蚂马骂吗买麦卖迈脉瞒馒蛮满谩猫锚铆贸么霉没镁门闷们锰梦谜弥觅绵缅庙灭悯闽鸣铭谬谋亩钠纳难挠脑恼闹你馁腻撵捻酿鸟聂啮镊镍柠狞宁拧泞钮纽脓浓农疟诺欧鸥殴呕沤盘庞国爱赔喷鹏骗飘频贫苹凭评泼颇扑铺朴谱脐齐骑岂启气弃讫牵扦钎铅迁签签谦钱钳潜浅谴堑枪呛墙蔷强抢锹桥乔侨翘窍窃钦亲轻氢倾顷请庆琼穷趋区躯驱龋颧权劝却鹊让饶扰绕热韧认纫荣绒软锐闰润洒萨鳃赛伞丧骚扫涩杀纱筛晒闪陕赡缮伤赏烧绍赊摄慑设绅审婶肾渗声绳胜圣师狮湿诗尸时蚀实识驶势释饰视试适寿兽枢输书赎属术树竖数帅双谁税顺说硕烁丝饲耸怂颂讼诵擞苏诉肃虽绥岁孙损笋缩琐锁獭挞台抬摊贪瘫滩坛谭谈叹汤烫涛绦腾誊锑题体屉条贴铁厅听烃铜统头图涂团颓蜕脱鸵驮驼椭洼袜弯湾顽万网韦违围为潍维苇伟伪纬谓卫温闻纹稳问瓮挝蜗涡窝呜钨乌诬无芜吴坞雾务误锡牺袭习铣戏细虾辖峡侠狭厦锨鲜纤咸贤衔闲显险现献县馅羡宪线厢镶乡详响项萧销晓啸蝎协挟携胁谐写泻谢锌衅兴汹锈绣虚嘘须许绪续轩悬选癣绚学勋询寻驯训讯逊压鸦鸭哑亚讶阉烟盐严颜阎艳厌砚彦谚验鸯杨扬疡阳痒养样瑶摇尧遥窑谣药爷页业叶一医铱颐遗仪彝蚁艺亿忆义诣议谊译异绎荫阴银饮隐樱婴鹰应缨莹萤营荧蝇颖哟拥佣痈踊咏涌优忧邮铀犹游诱舆鱼渔娱与屿语吁御狱誉预驭鸳渊辕园员圆缘远愿约跃钥岳粤悦阅云郧匀陨运蕴酝晕韵杂灾载攒暂赞赃脏凿枣灶责择则泽贼赠扎札轧铡闸诈斋债毡盏斩辗崭栈战绽张涨帐账胀赵蛰辙锗这贞针侦诊镇阵挣睁狰帧郑证织职执纸挚掷帜质钟终种肿众诌轴皱昼骤猪诸诛烛瞩嘱贮铸筑驻专砖转赚桩庄装妆壮状锥赘坠缀谆浊兹资渍踪综总纵邹诅组钻致钟么为只凶准启板里雳余链泄';
-	var zh_t = '皚藹礙愛翺襖奧壩罷擺敗頒辦絆幫綁鎊謗剝飽寶報鮑輩貝鋇狽備憊繃筆畢斃閉邊編貶變辯辮鼈癟瀕濱賓擯餅撥缽鉑駁蔔補參蠶殘慚慘燦蒼艙倉滄廁側冊測層詫攙摻蟬饞讒纏鏟産闡顫場嘗長償腸廠暢鈔車徹塵陳襯撐稱懲誠騁癡遲馳恥齒熾沖蟲寵疇躊籌綢醜櫥廚鋤雛礎儲觸處傳瘡闖創錘純綽辭詞賜聰蔥囪從叢湊竄錯達帶貸擔單鄲撣膽憚誕彈當擋黨蕩檔搗島禱導盜燈鄧敵滌遞締點墊電澱釣調叠諜疊釘頂錠訂東動棟凍鬥犢獨讀賭鍍鍛斷緞兌隊對噸頓鈍奪鵝額訛惡餓兒爾餌貳發罰閥琺礬釩煩範販飯訪紡飛廢費紛墳奮憤糞豐楓鋒風瘋馮縫諷鳳膚輻撫輔賦複負訃婦縛該鈣蓋幹趕稈贛岡剛鋼綱崗臯鎬擱鴿閣鉻個給龔宮鞏貢鈎溝構購夠蠱顧剮關觀館慣貫廣規矽歸龜閨軌詭櫃貴劊輥滾鍋國過駭韓漢閡鶴賀橫轟鴻紅後壺護滬戶嘩華畫劃話懷壞歡環還緩換喚瘓煥渙黃謊揮輝毀賄穢會燴彙諱誨繪葷渾夥獲貨禍擊機積饑譏雞績緝極輯級擠幾薊劑濟計記際繼紀夾莢頰賈鉀價駕殲監堅箋間艱緘繭檢堿鹼揀撿簡儉減薦檻鑒踐賤見鍵艦劍餞漸濺澗漿蔣槳獎講醬膠澆驕嬌攪鉸矯僥腳餃繳絞轎較稭階節莖驚經頸靜鏡徑痙競淨糾廄舊駒舉據鋸懼劇鵑絹傑潔結誡屆緊錦僅謹進晉燼盡勁荊覺決訣絕鈞軍駿開凱顆殼課墾懇摳庫褲誇塊儈寬礦曠況虧巋窺饋潰擴闊蠟臘萊來賴藍欄攔籃闌蘭瀾讕攬覽懶纜爛濫撈勞澇樂鐳壘類淚籬離裏鯉禮麗厲勵礫曆歷瀝隸倆聯蓮連鐮憐漣簾斂臉鏈戀煉練糧涼兩輛諒療遼鐐獵臨鄰鱗凜賃齡鈴淩靈嶺領餾劉龍聾嚨籠壟攏隴樓婁摟簍蘆盧顱廬爐擄鹵虜魯賂祿錄陸驢呂鋁侶屢縷慮濾綠巒攣孿灤亂掄輪倫侖淪綸論蘿羅邏鑼籮騾駱絡媽瑪碼螞馬罵嗎買麥賣邁脈瞞饅蠻滿謾貓錨鉚貿麽黴沒鎂門悶們錳夢謎彌覓綿緬廟滅憫閩鳴銘謬謀畝鈉納難撓腦惱鬧妳餒膩攆撚釀鳥聶齧鑷鎳檸獰甯擰濘鈕紐膿濃農瘧諾歐鷗毆嘔漚盤龐國愛賠噴鵬騙飄頻貧蘋憑評潑頗撲鋪樸譜臍齊騎豈啓氣棄訖牽扡釺鉛遷簽籤謙錢鉗潛淺譴塹槍嗆牆薔強搶鍬橋喬僑翹竅竊欽親輕氫傾頃請慶瓊窮趨區軀驅齲顴權勸卻鵲讓饒擾繞熱韌認紉榮絨軟銳閏潤灑薩鰓賽傘喪騷掃澀殺紗篩曬閃陝贍繕傷賞燒紹賒攝懾設紳審嬸腎滲聲繩勝聖師獅濕詩屍時蝕實識駛勢釋飾視試適壽獸樞輸書贖屬術樹豎數帥雙誰稅順說碩爍絲飼聳慫頌訟誦擻蘇訴肅雖綏歲孫損筍縮瑣鎖獺撻臺擡攤貪癱灘壇譚談歎湯燙濤縧騰謄銻題體屜條貼鐵廳聽烴銅統頭圖塗團頹蛻脫鴕馱駝橢窪襪彎灣頑萬網韋違圍爲濰維葦偉僞緯謂衛溫聞紋穩問甕撾蝸渦窩嗚鎢烏誣無蕪吳塢霧務誤錫犧襲習銑戲細蝦轄峽俠狹廈鍁鮮纖鹹賢銜閑顯險現獻縣餡羨憲線廂鑲鄉詳響項蕭銷曉嘯蠍協挾攜脅諧寫瀉謝鋅釁興洶鏽繡虛噓須許緒續軒懸選癬絢學勳詢尋馴訓訊遜壓鴉鴨啞亞訝閹煙鹽嚴顔閻豔厭硯彥諺驗鴦楊揚瘍陽癢養樣瑤搖堯遙窯謠藥爺頁業葉壹醫銥頤遺儀彜蟻藝億憶義詣議誼譯異繹蔭陰銀飲隱櫻嬰鷹應纓瑩螢營熒蠅穎喲擁傭癰踴詠湧優憂郵鈾猶遊誘輿魚漁娛與嶼語籲禦獄譽預馭鴛淵轅園員圓緣遠願約躍鑰嶽粵悅閱雲鄖勻隕運蘊醞暈韻雜災載攢暫贊贓髒鑿棗竈責擇則澤賊贈紮劄軋鍘閘詐齋債氈盞斬輾嶄棧戰綻張漲帳賬脹趙蟄轍鍺這貞針偵診鎮陣掙睜猙幀鄭證織職執紙摯擲幟質鍾終種腫衆謅軸皺晝驟豬諸誅燭矚囑貯鑄築駐專磚轉賺樁莊裝妝壯狀錐贅墜綴諄濁茲資漬蹤綜總縱鄒詛組鑽緻鐘麼為隻兇準啟闆裡靂餘鍊洩';
+	var zh_s = '皑蔼碍爱翱袄奥坝罢摆败颁办绊帮绑镑谤剥饱宝报鲍辈贝钡狈备惫绷笔毕毙闭边编贬变辩辫鳖瘪濒滨宾摈饼拨钵铂驳卜补布参蚕残惭惨灿苍舱仓沧厕侧册测层诧搀掺蝉馋谗缠铲产阐颤场尝长偿肠厂畅钞车彻尘陈衬撑称惩诚骋痴迟驰耻齿炽冲虫宠畴踌筹绸丑橱厨锄雏础储触处传疮闯创锤纯绰辞词赐聪葱囱从丛凑窜错达带贷担单郸掸胆惮诞弹当挡党荡档捣岛祷导盗灯邓敌涤递缔点垫电淀钓调迭谍叠钉顶锭订东动栋冻斗犊独读赌镀锻断缎兑队对吨顿钝夺鹅额讹恶饿儿尔饵贰发罚阀珐矾钒烦范贩饭访纺飞废费纷坟奋愤粪丰枫锋风疯冯缝讽凤肤辐抚辅赋复负讣妇缚该钙盖干赶秆赣冈刚钢纲岗皋镐搁鸽阁铬个给龚宫巩贡钩沟构购够蛊顾剐关观馆惯贯广规硅归龟闺轨诡柜贵刽辊滚锅国过骇韩汉号阂鹤贺横轰鸿红后壶护沪户哗华画划话怀坏欢环还缓换唤痪焕涣黄谎挥辉毁贿秽会烩汇讳诲绘荤浑伙获货祸击机积饥讥鸡绩缉极辑级挤几蓟剂济计记际继纪夹荚颊贾钾价驾歼监坚笺间艰缄茧检碱硷拣捡简俭减荐槛鉴践贱见键舰剑饯渐溅涧将浆蒋桨奖讲酱胶浇骄娇搅铰矫侥脚饺缴绞轿较秸阶节茎惊经颈静镜径痉竞净纠厩旧驹举据锯惧剧鹃绢杰洁结诫届紧锦仅谨进晋烬尽劲荆觉决诀绝钧军骏开凯颗壳课垦恳抠库裤夸块侩宽矿旷况亏岿窥馈溃扩阔蜡腊莱来赖蓝栏拦篮阑兰澜谰揽览懒缆烂滥捞劳涝乐镭垒类泪篱离里鲤礼丽厉励砾历历沥隶俩联莲连镰怜涟帘敛脸链恋炼练粮凉两辆谅疗辽镣猎临邻鳞凛赁龄铃凌灵岭领馏刘浏龙聋咙笼垄拢陇楼娄搂篓芦卢颅庐炉掳卤虏鲁赂禄录陆驴吕铝侣屡缕虑滤绿峦挛孪滦乱抡轮伦仑沦纶论萝罗啰逻锣箩骡骆络妈玛码蚂马骂吗买麦卖迈脉瞒馒蛮满谩猫锚铆贸么霉没镁门闷们锰梦谜弥觅绵缅庙灭悯闽鸣铭谬谋亩钠纳难挠脑恼闹你拟馁腻撵捻酿鸟聂啮镊镍柠狞宁拧泞钮纽脓浓农疟诺欧鸥殴呕沤盘庞国爱赔喷鹏骗飘频贫苹凭评泼颇扑铺朴谱脐齐骑岂启气弃讫牵扦钎铅迁签签谦钱钳潜浅谴堑枪呛墙蔷强抢锹桥乔侨翘窍窃钦亲轻氢倾顷请庆琼穷趋区躯驱龋颧权劝却鹊让饶扰绕热韧认纫荣绒软锐闰润洒萨鳃赛伞丧骚扫涩杀纱筛晒闪陕赡缮伤赏烧绍赊摄慑设绅审婶肾渗声绳胜圣师狮湿诗尸时蚀实识驶势释饰视试适寿兽枢输书赎属术树竖数帅双谁税顺说硕烁丝饲耸怂颂讼诵擞苏诉肃虽绥岁孙损笋缩琐锁獭挞台抬摊贪瘫滩坛谭谈叹汤烫涛绦腾誊锑题体屉条贴铁厅听烃铜统头图涂团颓蜕脱鸵驮驼椭洼袜弯湾顽万网韦违围为潍维苇伟伪纬谓卫温闻纹稳问瓮挝蜗涡窝呜钨乌诬无芜吴坞雾务误锡牺袭习铣戏细虾辖峡侠狭厦锨鲜纤咸贤衔闲显险现献县馅羡宪线厢镶乡详响项萧销晓啸蝎协挟携胁谐写泻谢锌衅兴汹锈绣虚嘘须许绪续轩悬选癣绚学勋询寻驯训讯逊压鸦鸭哑亚讶阉烟盐严颜阎艳厌砚彦谚验鸯杨扬疡阳痒养样瑶摇尧遥窑谣药爷页业叶一医铱颐遗仪彝蚁艺亿忆义诣议谊译异绎荫阴银饮隐樱婴鹰应缨莹萤营荧蝇颖哟拥佣痈踊咏涌优忧邮铀犹游诱舆鱼渔娱与屿语吁御狱誉预驭鸳渊辕园员圆缘远愿约跃钥岳粤悦阅云郧匀陨运蕴酝晕韵杂灾载攒暂赞赃脏凿枣灶责择则泽贼赠扎札轧铡闸诈斋债毡盏斩辗崭栈战绽张涨帐账胀赵蛰辙锗这贞针侦诊镇阵挣睁狰帧郑证织职执纸挚掷帜质钟终种肿众诌轴皱昼骤猪诸诛烛瞩嘱贮铸筑驻专砖转赚桩庄装妆壮状锥赘坠缀谆浊兹资渍踪综总纵邹诅组钻致钟么为只凶准启板里雳余链泄';
+	var zh_t = '皚藹礙愛翺襖奧壩罷擺敗頒辦絆幫綁鎊謗剝飽寶報鮑輩貝鋇狽備憊繃筆畢斃閉邊編貶變辯辮鼈癟瀕濱賓擯餅撥缽鉑駁蔔補佈參蠶殘慚慘燦蒼艙倉滄廁側冊測層詫攙摻蟬饞讒纏鏟産闡顫場嘗長償腸廠暢鈔車徹塵陳襯撐稱懲誠騁癡遲馳恥齒熾沖蟲寵疇躊籌綢醜櫥廚鋤雛礎儲觸處傳瘡闖創錘純綽辭詞賜聰蔥囪從叢湊竄錯達帶貸擔單鄲撣膽憚誕彈當擋黨蕩檔搗島禱導盜燈鄧敵滌遞締點墊電澱釣調叠諜疊釘頂錠訂東動棟凍鬥犢獨讀賭鍍鍛斷緞兌隊對噸頓鈍奪鵝額訛惡餓兒爾餌貳發罰閥琺礬釩煩範販飯訪紡飛廢費紛墳奮憤糞豐楓鋒風瘋馮縫諷鳳膚輻撫輔賦複負訃婦縛該鈣蓋幹趕稈贛岡剛鋼綱崗臯鎬擱鴿閣鉻個給龔宮鞏貢鈎溝構購夠蠱顧剮關觀館慣貫廣規矽歸龜閨軌詭櫃貴劊輥滾鍋國過駭韓漢號閡鶴賀橫轟鴻紅後壺護滬戶嘩華畫劃話懷壞歡環還緩換喚瘓煥渙黃謊揮輝毀賄穢會燴彙諱誨繪葷渾夥獲貨禍擊機積饑譏雞績緝極輯級擠幾薊劑濟計記際繼紀夾莢頰賈鉀價駕殲監堅箋間艱緘繭檢堿鹼揀撿簡儉減薦檻鑒踐賤見鍵艦劍餞漸濺澗將漿蔣槳獎講醬膠澆驕嬌攪鉸矯僥腳餃繳絞轎較稭階節莖驚經頸靜鏡徑痙競淨糾廄舊駒舉據鋸懼劇鵑絹傑潔結誡屆緊錦僅謹進晉燼盡勁荊覺決訣絕鈞軍駿開凱顆殼課墾懇摳庫褲誇塊儈寬礦曠況虧巋窺饋潰擴闊蠟臘萊來賴藍欄攔籃闌蘭瀾讕攬覽懶纜爛濫撈勞澇樂鐳壘類淚籬離裏鯉禮麗厲勵礫曆歷瀝隸倆聯蓮連鐮憐漣簾斂臉鏈戀煉練糧涼兩輛諒療遼鐐獵臨鄰鱗凜賃齡鈴淩靈嶺領餾劉瀏龍聾嚨籠壟攏隴樓婁摟簍蘆盧顱廬爐擄鹵虜魯賂祿錄陸驢呂鋁侶屢縷慮濾綠巒攣孿灤亂掄輪倫侖淪綸論蘿羅囉邏鑼籮騾駱絡媽瑪碼螞馬罵嗎買麥賣邁脈瞞饅蠻滿謾貓錨鉚貿麽黴沒鎂門悶們錳夢謎彌覓綿緬廟滅憫閩鳴銘謬謀畝鈉納難撓腦惱鬧妳擬餒膩攆撚釀鳥聶齧鑷鎳檸獰甯擰濘鈕紐膿濃農瘧諾歐鷗毆嘔漚盤龐國愛賠噴鵬騙飄頻貧蘋憑評潑頗撲鋪樸譜臍齊騎豈啓氣棄訖牽扡釺鉛遷簽籤謙錢鉗潛淺譴塹槍嗆牆薔強搶鍬橋喬僑翹竅竊欽親輕氫傾頃請慶瓊窮趨區軀驅齲顴權勸卻鵲讓饒擾繞熱韌認紉榮絨軟銳閏潤灑薩鰓賽傘喪騷掃澀殺紗篩曬閃陝贍繕傷賞燒紹賒攝懾設紳審嬸腎滲聲繩勝聖師獅濕詩屍時蝕實識駛勢釋飾視試適壽獸樞輸書贖屬術樹豎數帥雙誰稅順說碩爍絲飼聳慫頌訟誦擻蘇訴肅雖綏歲孫損筍縮瑣鎖獺撻臺擡攤貪癱灘壇譚談歎湯燙濤縧騰謄銻題體屜條貼鐵廳聽烴銅統頭圖塗團頹蛻脫鴕馱駝橢窪襪彎灣頑萬網韋違圍爲濰維葦偉僞緯謂衛溫聞紋穩問甕撾蝸渦窩嗚鎢烏誣無蕪吳塢霧務誤錫犧襲習銑戲細蝦轄峽俠狹廈鍁鮮纖鹹賢銜閑顯險現獻縣餡羨憲線廂鑲鄉詳響項蕭銷曉嘯蠍協挾攜脅諧寫瀉謝鋅釁興洶鏽繡虛噓須許緒續軒懸選癬絢學勳詢尋馴訓訊遜壓鴉鴨啞亞訝閹煙鹽嚴顔閻豔厭硯彥諺驗鴦楊揚瘍陽癢養樣瑤搖堯遙窯謠藥爺頁業葉壹醫銥頤遺儀彜蟻藝億憶義詣議誼譯異繹蔭陰銀飲隱櫻嬰鷹應纓瑩螢營熒蠅穎喲擁傭癰踴詠湧優憂郵鈾猶遊誘輿魚漁娛與嶼語籲禦獄譽預馭鴛淵轅園員圓緣遠願約躍鑰嶽粵悅閱雲鄖勻隕運蘊醞暈韻雜災載攢暫贊贓髒鑿棗竈責擇則澤賊贈紮劄軋鍘閘詐齋債氈盞斬輾嶄棧戰綻張漲帳賬脹趙蟄轍鍺這貞針偵診鎮陣掙睜猙幀鄭證織職執紙摯擲幟質鍾終種腫衆謅軸皺晝驟豬諸誅燭矚囑貯鑄築駐專磚轉賺樁莊裝妝壯狀錐贅墜綴諄濁茲資漬蹤綜總縱鄒詛組鑽緻鐘麼為隻兇準啟闆裡靂餘鍊洩';
 	return s.replace(hanziRe, function (t) { return (big2zh ? zh_s[zh_t.indexOf(t)] : zh_t[zh_s.indexOf(t)]) || t })
 }
 
@@ -3082,9 +3567,9 @@ function linear2nest(Arr) {//平面线性二维数组[[相对层级,内容]+] �
 				B[B.length - 1].push(a[i])
 			}
 		}
-	//	consolelog('B=', B.join(' ; '));
+
 		for (var i = 0, l = B.length; i < l; i++) {
-		//	consolelog(B[i][0][2], C.join(' ；'));
+
 			if (B[i].length > 1) {
 				C.push([B[i][0][2]].concat(f(B[i].slice(1))));
 			} else {
@@ -3096,6 +3581,9 @@ function linear2nest(Arr) {//平面线性二维数组[[相对层级,内容]+] �
 	return f(A)
 }
 
+function precode(t){
+	return XML.wrapE('pre', XML.wrapE('code',t))
+}
 function md2html(str, sep) {
 	var codeblockA = [], headA = [], listA = [], listOU = {},
 		lnk = {}, footlnk = {}, footlnkA = [],
@@ -3136,7 +3624,7 @@ function md2html(str, sep) {
 			return eval(t)
 			*/
 			try {
-				//consolelog(t);
+
 				return '$' + eval(t) + '$'
 			} catch (e) {
 				return t
@@ -3145,7 +3633,11 @@ function md2html(str, sep) {
 
 	}
 
-
+	while(/<math .+alttext=".+">[\s\S]+<\/math>/.test(s)){// 替换mathml 为 katex
+		var t=s.split('</math>'), t0=t[0].split('<math ');
+		console.log(s.substr(t0[0].length,t[0].length-t0[0].length+7), '\n\n',t0[1].replace(/.+alttext="([^"]+)".+/,'$1'));
+		s=s.replace(s.substr(t0[0].length,t[0].length-t0[0].length+7), '$'+t0[1].replace(/.+alttext="([^"]+)".+/,'$1')+'$')
+	}
 
 	while (/\$[^\$]+\$#.+#/.test(s)) {
 		s = s.replace(/\$[^\$]+\$#.+#/, function (x) {
@@ -3186,7 +3678,7 @@ function md2html(str, sep) {
 
 	if (/\n[ \t]*([\-\*\+]|\d+\.) .+/.test(s)) {//ol ul
 		var fou = function (str) {
-			//consolelog('fou', str);
+
 			var listA = [], ouA = [];
 			var st = str.replace(/\n[ \t]*([\-\*\+]|\d+\.) .+/g, function (x) {
 				var t = x.trim(), n = x.split(/[\-\*\+]|\d+\./)[0].length - 1, ht = t.replace(/([\-\*\+]|\d+\.) */, '');
@@ -3197,7 +3689,7 @@ function md2html(str, sep) {
 
 
 			});
-			//consolelog('st', st);
+
 			while (/\n<[uo]lli\d+>\d+\n(?!<[uo]lli\d+>\d+)/.test(st)) {
 				st = st.replace(/\n<[uo]lli\d+>\d+\n.+/, function (x) {
 					var xA = x.trim().split('\n');
@@ -3210,20 +3702,16 @@ function md2html(str, sep) {
 				})
 			}
 
-			//consolelog('st2', st);
+
 			st = st.replace(/(\n<[uo]lli\d+>\d+)#/g, '$1');
 			var ne = linear2nest(listA);
-			//consolelog('ne', ne);
 
-			//consolelog('listA', listA);
-
-			//consolelog('ouA', ouA);
 
 			var g = function (x) {
 				return x.replace(/^\[ \]/, strchkbx0 + 'disabled />').replace(/^\[x\]/i, strchkbx0 + 'disabled' + chked + ' />')
 			}, f = function (x) {
 				if (isArr(x)) {
-					//consolelog('x[0]= ', x[0]);
+
 					var s = g(listA[x[0]][1]), x1 = x.slice(1);
 
 					return s + (x.length > 1 ? (ouA[x[0] + 1] == 'ul' ? ul : ol)(Arrf(f, x1)) : '');
@@ -3251,7 +3739,7 @@ function md2html(str, sep) {
 				return t.replace(/^\||\|$/g, '').split('|')
 			}, x.replace(/^\n|\n$/g, '').split('\n')),
 				sepA = sep.replace(/^\||\|$/g, '').split('|'), cols = sepA.length;
-			//consolelog(sep, A.slice(0, sepi));
+
 			var c = '';
 			if (/^\|.+\|$/.test(sep)) {
 				c = 'TBrc'
@@ -3365,25 +3853,23 @@ function md2html(str, sep) {
 		})
 		.replace(/\[[^\]\^]+\] *\[[^\s\]\^]+\]/g, function (x) {
 			var t = x.replace(/^.|.$/g, '').split(/\] *\[/), lnkt = lnk[t[1]];
-			//consolelog(t, lnk);
-			//consolelog(t[1], lnkt);
+
 			if (lnkt) {
 				var u = lnkt.split(' ')[0], tt = / /.test(lnkt) ? lnkt.replace(/\S+ /, '').replace(/"/g, '') : '', hf = uriRe.test(u) ? href : inhref;
 				return hf(u, t[0], tt)
 
 			} else {
-				//consolelog(lnk, t[1]);
+
 				return x.replace(/\] *\[/, ']?[')
 			}
 		})
 		.replace(/\[\^[^\]]+\]/g, function (x) {
 			var t = x.replace(/^..|.$/g, ''), lnkt = footlnk[t];
-			//console.log(x, t);
-			//console.log(footlnk, lnkt);
+
 
 			if (lnkt) {
 				var ki = footlnkA.indexOf(t);
-				//console.log(footlnkA, ki);
+
 				if (ki < 0) {
 					ki = footlnkA.length;
 					footlnkA.push(t);
@@ -3400,7 +3886,7 @@ function md2html(str, sep) {
 
 	if (/\[U?TOC\]/.test(s) && headA.length) {
 		var ne = linear2nest(headA), toc = SCtv('bold',gM('Contents'));
-		//consolelog(headA, ne);
+
 		var f = function (x, u) {
 			if (isArr(x)) {
 				var s = headA[x[0]][1], x1 = x.slice(1);
@@ -3418,7 +3904,7 @@ function md2html(str, sep) {
 
 	if (codeblockA.length) {
 		s = s.replace(/<codeblockquote>\d+<.codeblockquote>/g, function (x) {
-			return XML.wrapE('pre', XML.wrapE('code', XML.encode(codeblockA[+x.replace(/\D/g, '')])))
+			return precode(XML.encode(codeblockA[+x.replace(/\D/g, '')]))
 		});
 	}
 
@@ -3451,7 +3937,7 @@ function md2html(str, sep) {
 
 		});
 	}
-	//consolelog(s);
+
 
 	//s=s.replace(/<JS>([\s\S](?!<\/JS>))+.?<\/JS>/g,function(t){setTimeout(function(){eval(t.substr(4,t.length-9).trim())},100);return ''});
 	s=replaceNodeInner(s,'JS', function(t){setTimeout(function(){eval(t)},100);return ''});
@@ -3538,3 +4024,23 @@ function textareaAdd(str, obj, newline, sellen) {
 	O[0].selectionStart = t;
 	O[0].selectionEnd = t;
 }
+function detectZoom (){ 
+	var ratio = 0,
+	  screen = window.screen,
+	  ua = navigator.userAgent.toLowerCase();
+  
+	if (window.devicePixelRatio !== undefined) {
+		ratio = window.devicePixelRatio;
+	}else if (~ua.indexOf('msie')) {  
+	  if (screen.deviceXDPI && screen.logicalXDPI) {
+		ratio = screen.deviceXDPI / screen.logicalXDPI;
+	  }
+	}else if (window.outerWidth !== undefined && window.innerWidth !== undefined) {
+	  ratio = window.outerWidth / window.innerWidth;
+	}
+		
+	return ratio;
+}
+
+var Melef=function(x){var t=Meleo[x]||'';return SCtv('Mele'+(t?'" tip="'+t+'." title="'+t:''),x)};
+	Arrf(function(v,i){Meleo[ZLR(Meles)[i]]=v}, ZLR(Mele));

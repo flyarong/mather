@@ -4,6 +4,35 @@
  * Released under MIT License
  */
 
+var deepClone = function(obj) {
+	// 先检测是不是数组和Object
+	// let isArr = Object.prototype.toString.call(obj) === '[object Array]';
+	let isArr = Array.isArray(obj);
+	let isJson = Object.prototype.toString.call(obj) === '[object Object]';
+	if (isArr) {
+	  // 克隆数组
+	  let newObj = [];
+	  for (let i in obj) {
+		newObj[i] = deepClone(obj[i]);
+	  }
+	  return newObj;
+	} else if (isJson) {
+	  // 克隆Object
+	  let newObj = {};
+	  for (let i in obj) {
+		newObj[i] = deepClone(obj[i]);
+	  }
+	  return newObj;
+	}
+	// 不是引用类型直接返回
+	return obj;
+  };
+  
+  Object.prototype.deepClone = function() {
+	return deepClone(this);
+  };
+  Object.defineProperty(Object.prototype, 'deepClone', {enumerable: false});
+
 var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 	build:{
 		JS:function(t){//JS中的数学常数或函数，得到小数
@@ -143,11 +172,12 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 			a.type='Mfn';a.toStr=function(l,p){return Mfn.toStr(this,l,p)};a.toStr4=function(p){return Mfn.toStr4(this,p)};a.ref=function(r){return Mfn.ref(this,r)};
 			return a
 		},
-		Polynomial:function(a){
+		Polynomy:function(a){
 			
 		},
 		A:function(A,ref){//A是已知Mfn对象		ref是某一个子表达式的引用(@\d+$)
-			var a=[].concat(A);a.type='Mfn';a.toStr=function(l,p){return Mfn.toStr(this,l,p)};a.toStr4=function(p){return Mfn.toStr4(this,p)};a.ref=function(r){return Mfn.ref(this,r)};
+			var a=deepClone(A);
+			//var a=[].concat(A);a.type='Mfn';a.toStr=function(l,p){return Mfn.toStr(this,l,p)};a.toStr4=function(p){return Mfn.toStr4(this,p)};a.ref=function(r){return Mfn.ref(this,r)};
 			if(ref){
 				a[0]=ref;
 			}
@@ -244,11 +274,12 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 		ref_A2是A[2]中的值（且非纯数字）
 		
 		*/
+		//consolelog('uniRef',ref_A2);
 		var l=A[2].length;
-		if(ref_A2){
+		if(ref_A2 && !/^\d+$/.test(ref_A2)){
 			var i=A[2].indexOf(ref_A2), j=A[2].lastIndexOf(ref_A2);
 			
-			
+			//consolelog('ref_A2'.ref_A2,i,j);
 			if(i==-1 || i == j){//无别称
 				return
 			}
@@ -259,11 +290,14 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 			if(!A[1][ref2]){
 				ref2='@'+j+'$'
 			}
-			// consolelog('表达式含有 ',ref2,' 都要替换成 ',ref1);
+			//consolelog('表达式含有 ',ref2,' 都要替换成 ',ref1,i,j);
 			var f=function(x){return x.replace(new RegExp(regReg(ref2),'g'), ref1)};
 			
+
+			//consolelog(A[2].join(' ; '));
 			A[2][j]='';	//替换为空值
 			A[1][ref2]={};
+
 			if(A[0]==ref2){
 				A[0]=ref1;
 			}
@@ -273,15 +307,19 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 				if(k!=i && k!=j){
 					var t=A[2][k];
 					
-					// consolelog('遍历k =',k,'表达式 t = ',t);
+					 //consolelog('遍历k =',k,'表达式 t = ',t);
+
+
 					if(t.indexOf(ref2)>-1){//表达式含有无效需替换的引用
 						A[2][k]=f(t);
 						var r='@'+k+'&', o=A[1][r];
 						if(!o){
 							r='@'+k+'$';o=A[1][r];
 						}
+						//consolelog('o.c替换前',o.c);
 						o.c=f(o.c);
-						
+					//consolelog('o.c替换后',o.c);
+
 						if(o.v && isArr(o.v)){
 							if(isArr(o.v,1)){
 								o.v[1]=Arrf(f,o.v[1])
@@ -291,17 +329,22 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 						}
 						A[1][r]=o;
 					}
+
 				}
 			}
 			return Mfn.uniRef(A,ref_A2);//再执行一次，确保多个同义别称索引都被替换
 		}
 		
-		for(var i=0;i<l;i++){
-			var t=A[2][i];
-			if(t && !/^\d+$/.test(t)){
-				Mfn.uniRef(A,t)
+		if(arguments.length<2){
+			for(var i=0;i<l;i++){
+				var t=A[2][i];
+				if(t && !/^\d+$/.test(t)){
+					//consolelog('遍历 进行 uniRef, ',i,t);
+					Mfn.uniRef(A,t)
+				}
 			}
 		}
+
 		
 		
 	},
@@ -313,6 +356,8 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 			return str
 		}
 		var S=''+str,S0=S[0],SP=S.replace('-',''), i=A[2].indexOf(S), j=i>-1?i:A[2].length, r='@'+j+'&';
+
+
 		if(/@/.test(S)){
 
 			if(/^[-√∛∜]@\d+.$/.test(S)){
@@ -323,7 +368,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 				A[1][r]={'f':'||','c':S.replace(/\|/g,'')};
 
 				
-			}else if(/^@\d+.[\!‼#]$/.test(S)){
+			}else if(/^@\d+.[\!‼#°]$/.test(S)){
 				A[1][r]={'f':S.substr(-1),'c':S.substr(0,S.length-1)};
 
 				
@@ -359,7 +404,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 			return r
 		}
 			
-	// consolelog(S,S0);
+	////consolelog(S,S0);
 		S=S.replace('-','');
 		var SA=S.split('/');
 		if(S.indexOf('/')>0){//S是有理数
@@ -403,18 +448,30 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 	},
 	has:{//子元素
 		"var":function(A,ref){//是否含单变量或自身就是单变量
-			var o=A[1][ref||A[0]], of=o.f, oc=o.c, ov=o.v;
+			var o=A[1][ref||A[0]];
+			//console.log(ref,A[0],o);
+			if(!o){
+				return 0
+			}
+			var of=o.f, oc=o.c, ov=o.v;
 			if(of=='var' || of=='_'){
 				return 1
 			}
 			if(/num/.test(of)){//一些字母代表著名常数，不认为是变量
 				return 0
 			}
+
 			if(ov){
 				for(var i=0,l=ov.length;i<l;i++){
-					if(Mfn.has.var(A,ov[i])){
-						return 1
+					var oi=ov[i];
+					if(isArr(oi)){
+						for(var j=0,m=oi.length;j<m;j++){
+							if(/@/.test(oi[j]) && Mfn.has.var(A,oi[j])){
+								return 1
+							}
+						}
 					}
+
 				}
 			}else{
 				return Mfn.has.var(A,oc)
@@ -576,9 +633,9 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 	加减
 
 			*/
-		var x=(''+s).replace(/^-0$/,'0'),AAA=[],tmp={},tmpA=[],i=0;
+		var x=simExpression(''+s),AAA=[],tmp={},tmpA=[],i=0;
 		
-		// consolelog('Mfn.fromStr    ',x);
+		// console.log('Mfn.fromStr    ',x);
 		
 		
 		AAA.type='Mfn';AAA.toStr=function(l,p){return Mfn.toStr(this,l,p)};AAA.toStr4=function(p){return Mfn.toStr4(this,p)};AAA.ref=function(r){return Mfn.ref(this,r)};
@@ -636,10 +693,12 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 
 		//预处理
 		x=x.replace(/ *log */g,'㏒').replace(/ *ln */g,'㏑')		//化成单个字符的好处，替换时不会误替换
-			.replace(/ *e\^/g,' exp ')
+			//.replace(/ *e\^/g,' exp ')
+			.replace(/sqrt/g,'√')
+			.replace(/cbrt/g,'∛')
 			.replace(/ *!!+ */g,'‼')
 			.replace(/，/g,',')
-			.replace(/[⋅\*]/g,'×').replace(/[⋅\*]/g,'×').replace(/[/]/g,'÷')
+			.replace(/[⋅]/g,'×').replace(/([^\^])\*/g,'$1×').replace(/[/]/g,'÷')
 			.replace(/ *\d+[\d\s]*\d* */g, function(x){return '('+x.replace(/\s/g,'')+')'}).replace(/ *\^ *\( *-\((\d+)\)\) */g,'^(-$1)')		//数字加括号
 			.replace(new RegExp(' *'+'['+SBS.Num[0][0]+']+ *','g'), function(x){return '^('+sub2n(x.trim())+')'}).replace(/ *\^ */g,'^')
 			.replace(new RegExp(' *'+'['+SBS.Num[0][1]+']+ *','g'), function(x){return '_('+sub2n(x.trim())+')'}).replace(/ *_ */g,'_').replace(/_([a-zα-ω])/ig,'_($1)')
@@ -802,6 +861,42 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 
 
 
+		while(/\|.*\|/.test(t)){
+			// consolelog('缓存绝对值符号',t);		存在嵌套歧义，只考虑相邻，暂不支持识别嵌套	|3|-1|-2|
+			var ti=t.match(/\|[^\|]*\|/ig)[0], tif='||', tic=ti.split('|')[1].trim().replace(/ *, */g,','), tiv='',
+				tai=tmpA.indexOf(ti), rg=new RegExp(ti.replace(/[\|\+\-\^\$]/g,' *\\$& *'),'g');
+			if(/^\d+$/.test(tic)){
+				tif='num';
+				tiv=Decimal.build.D(tic);
+			}
+			//consolelog(tai,'缓存绝对值ing,  t =  ', t, rg,tic,tiv);
+			t=t.replace(rg,'@'+(tai<0?i:tai)+'$');
+
+			//consolelog(t);
+			if(tai<0){
+				// consolelog('缓存绝对值迭代,  t =  ', t,' i = ', i);
+			
+				i++;
+				
+				var j=i-1;
+				tmpA.push(tif=='num'?tic:ti);	//tic:ti
+				//consolelog(tic,tif);
+				var ct=cache(tic);
+				
+				//consolelog(ct,tmp,tmpA);
+				if(tif=='||'){
+					tmp['@'+j+'$']={'f':tif, 'c':ct};
+					tmpA[j]='|'+ct+'|';
+				}else{
+					tmp['@'+j+'$']={'f':tif, 'c':ct, 'v':tiv};
+				}
+				
+				// consolelog('tif= ',tif, 'tic= ',tic, 'ti= ',ti);
+			}
+		}
+
+
+
 		while(/[a-zα-ω]_(@\d+\$|[a-zα-ω])/i.test(t)){
 // consolelog('缓存下标',t);
 			var ti=t.match(/[a-zα-ω]_(@\d+\$|[a-zα-ω])/ig)[0].replace(/\s/g,''), tif='_', tiv=ti.split('_'), tic=ti,
@@ -870,10 +965,10 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 			}
 		}
 
-		while(/[!‼#]/.test(t)){//		后缀前面只可能是：括号@1$  纯数字	单个字母(拉丁、希腊)
+		while(/[!‼#°]/.test(t)){//		后缀前面只可能是：括号@1$  纯数字	单个字母(拉丁、希腊)
 // consolelog('缓存后缀',t);
-			var ti=t.match(/([a-zα-ω]|@\d+[\$&]) *[!‼#]+/ig)[0].replace(/\s/g,''), tic=ti, tif=ti.substr(-1),
-				tai=tmpA.indexOf(tic), rg=new RegExp(' *'+ti.replace(/([!‼#])/g,' *$1 *').replace(/[\$]/g,'\\$&'),'g');
+			var ti=t.match(/([a-zα-ω]|@\d+[\$&]) *[!‼#°]+/ig)[0].replace(/\s/g,''), tic=ti, tif=ti.substr(-1),
+				tai=tmpA.indexOf(tic), rg=new RegExp(' *'+ti.replace(/([!‼#°])/g,' *$1 *').replace(/[\$]/g,'\\$&'),'g');
 
 			t=t.replace(rg,'@'+(tai<0?i:tai)+'&');
 			if(tai<0){
@@ -1352,7 +1447,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 
 
 	toStr4:function(A,p){// 简单情况下的四则运算 latex  补充省略的×号，\d/\d识别为分数线 /识别为÷		参数p 控制/识别为分数线
-		//console.log(A.toStr(1));
+
 		var x=A.toStr(1).replace(/(\d+)((\\left)?\()/g,'$1×$2').replace(/(\) *)(\d+)/g,'$1×$2')	// 显示隐藏的×号
 		.replace(/\\left\( ([a-z\d]+\/[a-z\d]+)\\right\) /g,'{$1}')	// 去多余的分数括号
 
@@ -1378,7 +1473,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 		return x
 
 	},
-	toStr:function(A, latex, p){/*A → 数学表达式str (unicode Math)		latex指定返回LaTeX格式	p指定是否添加括号
+	toStr:function(A, latex, p, prodCharOn){/*A → 数学表达式str (unicode Math)		latex指定返回LaTeX格式	p指定是否添加括号
 			如果A本身就是字符串，则认为是数学表达式，转成LaTeX输出
 		*/
 		if(isStr(A)){
@@ -1415,7 +1510,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 					return latex?oc.replace(/%/,'\\$&'):oc
 				}
 				if(of=='var'){
-					return oc
+					return oc	//此处为了防止变量前面有函数字母，产生混淆, 前面需加空格，但加上之后，行列式公式，出现死循环
 				}
 				if(of=='_'){
 					// consolelog(ov);
@@ -1437,7 +1532,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 					
 					return of+f(oc,1)
 				}
-				if(/[!‼#]/.test(of)){
+				if(/[!‼#°]/.test(of)){
 					var py=1,fx=(latex?of.replace(/#/,'\\$&'):of);
 					if(/@/.test(oc)){
 						 var cf=A[1][oc].f, t=A[1][oc].c;
@@ -1458,12 +1553,36 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 					
 					
 					
-					return latex?kroot(f(oc,1),'01√∛∜'.indexOf(of)):of+(nisVid(foc,1)?foc:pp(foc))
+					return latex?kroot(foc,'01√∛∜'.indexOf(of)):of+(nisVid(foc,1)?foc:pp(foc))
+				}
+
+				if(/[㏑]/.test(of)){
+					var foc=f(oc,1);
+					
+					
+					
+					return (latex?'\\ln ':of)+(nisVid(foc,1)?foc:pp(foc))
+				}
+
+				if(/[㏒]/.test(of)){// ㏒(x,y)
+					//console.log(A[1][oc].c);
+					var foc=A[1][A[1][oc].c];
+					
+					if(!foc){console.log(A);return ''}
+					var focv=A[1][A[1][oc].c].v;//[x,y]
+
+					var foc0=f(focv[0],1), foc1=f(focv[1],1);
+					
+					
+					return latex?'\\log_{'+foc0+'}'+(nisVid(foc1,1)?foc1:pp(foc1)):of+pp(foc0+','+focv)
 				}
 				if(of=='pow'){
-					var x0=f(ov[0],1), x1=f(ov[1],1), x0isVid=nisVid(x0,1), x1isVid=nisVid(x1,1), X0=x0isVid?x0:(latex?zp:pp)(x0), X1=latex?pp(x1,'{}'):(x1isVid?x1:pp(x1));
+					var x0=f(ov[0],1).trim(), x1=f(ov[1],1).trim();
 
-					
+					var x0isVid=nisVid(x0,1), x1isVid=nisVid(x1,1)||nisSupSuffix(x1),
+						X0=x0isVid?x0:(latex?zp:pp)(x0), X1=latex?pp(x1,'{}'):(x1isVid?x1:pp(x1));
+
+
 		
 					if(latex && /^1[/].+$/.test(x1)){
 						
@@ -1486,9 +1605,9 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 						
 						
 					}
-					
+					//consolelog(X0,X1);
 					return X0+'^'+X1
-					//return latex?(x0isVid?x0:zp(x0))+'^'+pp(x1,'{}'):(x0isVid?x0:pp(x0))+'^'+(x1isVid?x1:pp(x1))
+
 				}
 				
 				if(of==','){
@@ -1500,7 +1619,14 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 
 				if(of=='()'){
 					return nop?f(oc,1):(latex?zp:pp)(f(oc,1))
-				}	
+				}
+
+
+				if(of=='||'){
+					//consolelog(oc,A);
+					return '|'+f(oc,1)+'|'
+				}
+
 				if(/^\(.+\)$/.test(of)){
 					return (latex?zp:pp)(f(oc.replace(/\(|\)/g,''),1))
 				}				
@@ -1562,7 +1688,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 
 					var s=ov[1][0];//乘积的首项
 					
-// consolelog('首项',s,A);
+ //console.log('首项',s,A);
 					if(/@/.test(s)){
 						var sf=A[1][s].f, t=A[1][s].c;
 						if(sf=='()' && /@/.test(t)){
@@ -1577,14 +1703,15 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 								if(sf!='pms'){//除式
 									ov[1][0]=kfrac(f(s,1))
 								}else{
-									ov[1][0]=zp(f(s,1))
+									ov[1][0]=zp(f(s,1));
+									//console.log(ov[1][0]);
 								}
 							}else{
 								
 								ov[1][0]=pp(f(s,1))
 							}
 							//ov[1][0]=(latex?zp:pp)(f(s,1));
-	// consolelog('此时 ',latex, ov[1][0]);
+	//console.log('此时 ',latex, ov[1][0]);
 						}
 					}
 					for(var i=0,l=ov[1].length;i<l-1;i++){
@@ -1625,9 +1752,9 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 								
 								if(latex){
 									if(sf=='tds'){//除式
-										ov[1][0]=kfrac(f(s,1))
+										ov[1][i+1]=kfrac(f(s,1))
 									}else{
-										ov[1][0]=zp(kfrac(f(s,1)))
+										ov[1][i+1]=zp(kfrac(f(s,1)))
 									}
 								}else{
 									
@@ -1640,7 +1767,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 
 					}
 					
-				// consolelog('latex',latex,' ov[] = ',ov[0], ov[1],A);
+				 //console.log('latex',latex,' ov[] = ',ov[0], ov[1],A);
 					var a0=ov[0],a1=Arrf(f,ov[1]);
 				// consolelog(' a0 = ',a0, ' a1 = ',a1);
 					for(var i=0,l=a1.length;i<l-1;i++){//简化乘法符号
@@ -1653,9 +1780,11 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 						if(oi=='×'){
 					// consolelog(' a = ',a, ' b = ',b);
 							//if(av || ap || bp || (av || an) && bv || av && bn){
-							//if(av || ap || bp || avi && bv || av && bn){
+							//if((av || ap || bp || avi && bv || av && bn) && !prodCharOn ){
 							
-							if(!(/\d$/.test(a) &&  /^\d/.test(b)) && 0){
+					
+							//
+							if(!(/\d$/.test(a) &&  /^\d/.test(b)) && !prodCharOn){
 								a0[i]='';
 				// consolelog(' a0 = ',a0);
 							}
@@ -1669,9 +1798,9 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 					return /^-?\d+\/\d+$/.test(y) && latex?kfrac(y):y
 				}// tds结束
 
-// consolelog(of);
+ //consolelog(of);
 
-				var isinv=/⁼/.test(of),of0=of.replace(/⁼/,''), fx=latex?(ZLR(SBS.Latex.func).indexOf(of.replace(/⁼/,''))<0?kxf(of0):'\\'+of0)+(isinv?'^{-1}':''):' ', s=oc;
+				var isinv=/⁼/.test(of),of0=of.replace(/⁼/,''), fx=latex?(ZLR(SBS.Latex.func).indexOf(of0)<0?kxf(of0):'\\'+of0)+(isinv?'^{-1}':''):' ', s=oc;
 				
 				if(/@/.test(s)){
 					// consolelog('s = ',s,' A[1][s] == ',A[1][s],'A[1] = ',A[1]);
@@ -1693,8 +1822,11 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 					}
 				}
 				
-					
-				return fx+f(ov,1)
+				//console.log(fx, ov,oc);
+				if(!ov){
+					return simExpression(fx+' '+f(oc,1))
+				}
+				return simExpression(fx+' '+f(ov,1))
 
 				
 			}
@@ -1708,16 +1840,16 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 
 
 	opr1:function(op,arr,sim,p){//一元运算(结果)	sim是参数，指定是否递归化简			p是参数
-		// consolelog('Mfn.opr1 op = ',op,'arr = ',arr,' p =',p);
+		// console.log('Mfn.opr1 op = ',op,'arr = ',arr,' p =',p);
 		var A=isArr(arr)?Mfn.build.A(arr):Mfn.fromStr(arr), A0=A[0], oA=A[1][A0],of=oA.f,oc=oA.c,ov=oA.v;
 		// consolelog('A = ',A);
 		if(op=='type'){//公式类型（最外层的运算）
 			return A[1][A[0]].f
 		}
 
-		if(op=='obj'){//返回Num类数学对象（Integer, Decimal, Frac, Root）	或 Polynomial
+		if(op=='obj'){//返回Num类数学对象（Integer, Decimal, Frac, Root）	或 Polynomy
 			var t=Mfn.toStr(A);
-			return Num.fromStr(t)||Polynomial.fromStr(t)||A
+			return Num.fromStr(t)||Polynomy.fromStr(t)||A
 		}
 
 		if(op=='obj.type'){//返回对象子类型
@@ -1741,7 +1873,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 	*/
 	
 		if(op=='导数'){//
-
+//console.log(of,Mfn.has.var(A),A);
 			if(of=='var' || of=='_'){
 				return Mfn.build.Num(1)
 			}
@@ -1758,7 +1890,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 				return Neg(Mfn.opr1('导数',A,sim,p),sim)
 			}
 			if(of=='pms'){
-
+//console.log(snake([ov[0],seqA(0,l)]).join(''));
 				var l=ov[1].length, B=Mfn.fromStr(snake([ov[0],seqA(0,l)]).join('')), bp={};
 				for(var i=0;i<l;i++){
 					var oi=ov[1][i];
@@ -1810,13 +1942,28 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 
 			}
 
+			if(of=='pow'){
+				var l=ov[1].length, o10=ov[1][0], o11=ov[1][1], bp={}, B;
+				if(A[1][o10].f=='num'){// a^x
+					
+					var t=A.ref('㏑2');
 
+					A[1][A0].v[1][1]=A.ref(o11+'^'+t);
+
+					bp[o10]=Neg(Mfn.opr1('导数',Mfn.build.A(A,o11),sim,p));
+					
+					B=Mfn.opr1(':',A,'',bp);
+
+					return sim?Mfn.opr1('=',B,'',p):B
+				}
+
+			}
 
 		}
 	
 
 	
-		if(op=='=='){//深度递归化简			bug	Mfn.opr1('=',Mfn.fromStr('1-25/(45+2)')).toStr()		Mfn.opr1('=',Mfn.fromStr('(25/9)^(1/2)-23'))		200032023&j3-=j2×2/3;
+		if(op=='=='){//深度递归化简			bug	Mfn.opr1('=',Mfn.fromStr('1-25/(45+2)')).toStr()		Mfn.opr1('=',Mfn.fromStr('(25/9)^(1/2)-23'))
 			var fresh=0;
 			for(var i=0;i<A[2].length;i++){
 				var ai='@'+i+'&',Ai=A[1][ai];
@@ -1864,7 +2011,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 
 
 		if(op=='='){//普通化简（尽量不涉及递归运算）		此时参数p，指定数学对象环境（数域Num，矩阵Mtrx，布尔逻辑Bool）
-// consolelog(' = 开始化简 A',A,' of = ',of);
+ //console.log(' = 开始化简 A',A,' of = ',of);
 			if(of=='num' || of=='var' || of=='_'){
 				
 				return A
@@ -1975,6 +2122,56 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 					return A
 				}
 				
+				if(cof=='°'){//度数
+					oc=coc.replace(/.$/,'');
+					co=A[1][oc];
+					cof=co.f;
+					cov=co.v;
+					var n=+cov.toStr() % 360, n1=Math.abs(360-n);
+					if(of=='cos'){
+						if(!n){
+							return Mfn.fromStr(1);
+						}
+						if(n==15 || n1==15){
+							return Mfn.fromStr('(√6+√2)/4');
+						}
+						if(n==30 || n1==30){
+							return Mfn.fromStr('√3/2');
+						}
+						if(n==45 || n1==45){
+							return Mfn.fromStr('1/√2');
+						}
+						if(n==60 || n1==60){
+							return Mfn.fromStr('1/2');
+						}
+						if(n==75 || n1==75){
+							return Mfn.fromStr('(√6-√2)/4');
+						}
+						if(n==90 || n1==90){
+							return Mfn.fromStr(0);
+						}
+						if(n==105 || n1==105){
+							return Mfn.fromStr('(√2-√6)/4');
+						}
+						if(n==120 || n1==120){
+							return Mfn.fromStr('-1/2');
+						}
+						if(n==135 || n1==135){
+							return Mfn.fromStr('-1/√2');
+						}
+						if(n==150 || n1==150){
+							return Mfn.fromStr('-√3/2');
+						}
+						if(n==165 || n1==165){
+							return Mfn.fromStr('-(√6+√2)/4');
+						}
+						if(n==180){
+							return Mfn.fromStr('-1');
+						}
+
+					}
+
+				}
 
 				if(cof=='var' || cof=='_'){
 					return A
@@ -2001,10 +2198,105 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 			}
 
 
+			if(ZLR('sin').indexOf(of)>-1){
+				var co=A[1][oc], cof=co.f, coc=co.c, cov=co.v;
 
+				
+				if(cof=='°'){//度数
+					oc=coc.replace(/.$/,'');
+					co=A[1][oc];
+					cof=co.f;
+					cov=co.v;
+					var n=+cov.toStr() % 360, n1=n-180;
+					if(of=='sin'){
+						if(!n || !n1){
+							return Mfn.fromStr(0);
+						}
+						if(n==15 || n1==-15){
+							return Mfn.fromStr('(√6-√2)/4');
+						}
+						if(n==30 || n1==-30){
+							return Mfn.fromStr('1/2');
+						}
+						if(n==45 || n1==-45){
+							return Mfn.fromStr('1/√2');
+						}
+						if(n==60 || n1==-60){
+							return Mfn.fromStr('√3/2');
+						}
+						if(n==75 || n1==-75){
+							return Mfn.fromStr('(√6+√2)/4');
+						}
+						if(n==90){
+							return Mfn.fromStr(1);
+						}
+						if(n1==15 || n1-180==-15){
+							return Mfn.fromStr('(√2-√6)/4');
+						}
+						if(n1==30 || n1-180==-30){
+							return Mfn.fromStr('-1/2');
+						}
+						if(n1==45 || n1-180==-45){
+							return Mfn.fromStr('-1/√2');
+						}
+						if(n1==60 || n1-180==-60){
+							return Mfn.fromStr('-√3/2');
+						}
+						if(n1==75 || n1-180==-75){
+							return Mfn.fromStr('-(√6+√2)/4');
+						}
+						if(n1==90){
+							return Mfn.fromStr('-1');
+						}
+
+
+					}
+
+				}
+
+
+			}
 
 			if(of=='pms'){// 加减式化简
-// consolelog('pms 化简 ov=',ov.join(' ; '));
+ //console.log('pms 化简 ov=',ov.join(' ; '));
+
+
+
+				if(ov[0].length==1){
+					//console.log('比较x,y');
+					//console.log(A);
+					var x=Mfn.build.A(A,ov[1][0]), y=Mfn.build.A(A,ov[1][1]), y_=Mfn.opr1('-',Mfn.build.A(A,ov[1][1])), ov00=ov[0][0];
+					if(Mfn.is.b2['=='](x, y)){
+						//console.log('x=y');
+						if(ov00=='-'){
+							return Mfn.fromStr(0)
+						}else{
+							var t=A.ref(2);
+							A[0]=A.ref(ov[1][0]+'×'+t);
+							//console.log('x+x',A);
+							return Mfn.opr1('=',A)
+						}
+
+					}else if(Mfn.is.b2['=='](x, y_)){
+						//console.log('x=-y');
+						if(ov00=='+'){
+							return Mfn.fromStr(0)
+						}else{
+							var t=A.ref(2);
+							A[0]=A.ref(ov[1][0]+'×'+t);
+							//console.log('x--x',A);
+							return Mfn.opr1('=',A)
+							
+						}
+					}
+
+					//console.log('比较x,y 后');
+					//console.log(A);
+				}
+	
+
+
+
 				for(var i=0;i<ov[1].length;i++){/*平面化	a-(b-c+d)+e	变成 a-b+c-d+e		a+(b-c+d)+e	变成 a+b-c+d+e
 							a-(-b-c+d)+e	变成 a+b+c-d+e			a+(-b-c+d)+e	变成 a-b-c+d+e
 					*/
@@ -2044,20 +2336,52 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 
 					}
 					if(oif=='-'){
+						//console.log('负值','ov[0]',ov[0],'ov[1]',ov[1]);
 						if(i){
 							ov[0][i-1]=opinv(ov[0][i-1]);
 							ov[1][i]=oic;
 						}else{
+
 							
 							//首项是负项，暂时不处理
 						}
 
 					}
-					
-					
-					
 				}
-				
+
+				for(var i=0;i<ov[1].length;i++){/*平面化第2步	-(-x) 化成x
+					*/
+					var oi=A[1][ov[1][i]], oif=oi.f, oic=oi.c, oiv=oi.v;
+					if(oif=='-'){
+						//console.log('负值','ov[0]',ov[0],'ov[1]',ov[1]);
+						if(i){
+							ov[0][i-1]=opinv(ov[0][i-1]);
+							ov[1][i]=oic;
+						}else{
+
+							
+							//首项是负项，暂时不处理
+						}
+
+					}
+				}
+
+
+		
+
+				var o0=A[1][ov[1][0]], o0f=o0.f, o0c=o0.c, o0v=o0.v;
+				/*
+				if(o0f=='-'){
+					console.log('首项是负项',ov.join(' ; '));
+					ov[0].unshift('-');
+					ov[1][0]=o0c;
+					ov[1].unshift(A.ref(0));
+					console.log(A.ref(0));
+					console.log('首项是负项，改成',ov.join(' ; '));
+
+				}
+*/
+
 				var i=ov[0].indexOf('+'),o0=A[1][ov[1][0]];
 				if(i>-1 && o0.f=='-'){//-a...+b	变成 b-a...
 // consolelog('-a...+b	变成 b-a...');
@@ -2069,7 +2393,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 				
 				A[1][A0].v=ov;
 	
-// consolelog('平面化后 ov = ',ov.join(' ;;; '));
+ //console.log('平面化后 ov = ',ov.join(' ;;; '));
 	
 				var B0=[],B1=[],B2=0;//分别记录有理常数系数，含变量（以及根式常数等）表达式	有理数
 				
@@ -2257,7 +2581,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 				
 				B2=''+B2;
 				
-				// consolelog('有理常数系数 B0 = ',B0, '复杂表达式 B1 = ',B1,' 有理数 B2 = ',B2,'A = ',A);
+			//	console.log('有理常数系数 B0 = ',B0, '复杂表达式 B1 = ',B1,' 有理数 B2 = ',B2,'A = ',A);
 				
 				var C=[[],[]];//正项 负项
 				for(var i=0;i<B0.length;i++){//B0有理系数数组，B1未知表达式数组
@@ -2312,7 +2636,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 					
 				}
 				
-				// consolelog('正负项数组：C = ',C,'B0 = ',B0, 'B1 = ',B1,  'B2 = ',B2);
+				//console.log('正负项数组：C = ',C,'B0 = ',B0, 'B1 = ',B1,  'B2 = ',B2);
 
 				if(C[0].length && C[1].length){
 					
@@ -2331,7 +2655,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 				
 				if(C[0].length+C[1].length){
 					
-					
+					//console.log('C=',C, 'B2=',B2);
 					
 					
 					if(B2!='0'){
@@ -2355,6 +2679,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 						});
 					}
 
+					//console.log('加、减元：C=',C, 'B2=',B2);
 					
 					if(C[0].length){// 有加元
 
@@ -2374,13 +2699,13 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 						var s=C[1].join('-')+(B2!='0'?'-'+t:'');
 						
 					}
-
+//console.log('s=',s);
 					A[0]=A.ref(s);
 					
 					return A
 						
-				}else{// 只剩下有理数
-					
+				}else{
+					//console.log('只剩下有理数');
 					return Mfn.fromStr(B2)
 					
 				}
@@ -2401,6 +2726,19 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 					A[1][A[1][ov[1][0]].c].f=='num' && A[1][A[1][ov[1][1]].c].f=='num'){// 是两个根数
 					// consolelog(ov[0][0],A[1][A[1][ov[1][0]].c].c,A[1][A[1][ov[1][1]].c].c);
 					return Sqrt(fracOpr(ov[0][0],A[1][A[1][ov[1][0]].c].c,A[1][A[1][ov[1][1]].c].c),1)
+
+				}
+
+				if(of=='tds' && ov[0].length==1 && /[÷]/.test(ov[0][0]) &&
+					Mfn.is.b2['=='](Mfn.build.A(A,ov[1][0]), Mfn.build.A(A,ov[1][1]))){// 是两个相同值相除
+
+					return Mfn.fromStr(1)
+
+				}
+
+				if(of=='tds' && ov[0].length==1 && /[÷]/.test(ov[0][0]) &&
+					Mfn.is.b2['=='](Mfn.build.A(A,ov[1][0]), Mfn.opr1('-',Mfn.build.A(A,ov[1][1])))){// 是两个相反值相除
+					return Mfn.fromStr(-1)
 
 				}
 
@@ -2490,7 +2828,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 				// consolelog('k = ',k);
 				
 				
-				var newV=[[],[]],isnegk=0;// newV[中缀运算符A，元素A]
+				var newV=[[],[]],isnegk=0;// newV[中缀运算符A，元素A]		抽取有理系数
 				for(var j=0,l=ov[1].length;j<l;j++){
 					var o0j=ov[0][j-1], o1j=ov[1][j], dividej=j && o0j=='÷';
 					
@@ -2499,7 +2837,10 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 						// consolelog('乘积的一项，是有理数，A = ',A,'o1j = ',o1j,'A[1][o1j] = ',A[1][o1j],'o0j = ',o0j);
 						var kj=Mfn.toStr(Mfn.build.A(A,o1j));
 				// consolelog('k = ',k,'j = ',j, 'kj = ',kj,'j = ',j,'o0j = ', o0j,'dividej = ',dividej);
+						//k=Mfn.oprs(dividej?'/':'*',[k,kj],1).toStr();
 						k=fracOpr(dividej?'/':'*',k,kj);
+
+
 				// consolelog('k = ',k,'j = ',j, 'kj = ',kj);
 				
 					}else if(A[1][o1j].f=='times'){
@@ -2512,16 +2853,18 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 								newV[1].push(om);
 							}else{//num
 								var kj=Mfn.toStr(Mfn.build.A(A,om));
+								//console.log('k=',k,'kj = ',kj,' om = ',om,'dividej= ',dividej);
 								k=fracOpr(dividej?'/':'*',k,kj);
-				// consolelog('k = ',k,'j = ',j,' m = ',m);
+								//k=Mfn.oprs(dividej?'/':'*',[k,kj],1).toStr();
+				 //console.log('k = ',k,'j = ',j,' m = ',m);
 								if(''+k=='0'){
 									break 
 								}
 							}
 							
 						}
-// consolelog('中缀运算符数组',newV[0].join('；'));
-// consolelog('乘积项数组 ',newV[1].join('；'));
+//consolelog('中缀运算符数组',newV[0].join('；'));
+//consolelog('乘积项数组 ',newV[1].join('；'));
 
 
 /*
@@ -2529,9 +2872,37 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 						
 						var o1jo=A[1][o1j],o1jov=o1jo.v;
 */
-						
-						
 
+
+					}else if(A[1][o1j].f=='tds'){
+						
+						var o1jo=A[1][o1j],o1jov=o1jo.v, o1joc=o1jo.c, tdsA=o1jov[0], o1jov1=o1jov[1];
+
+						//consolelog(o1jo,o1jov,o1joc);
+						for(var m=0,n=o1jov1.length;m<n;m++){
+							var om=o1jov1[m], dividem=m && tdsA[m-1]=='÷';
+							if(Mfn.is.b1.Var(A,om)){
+								newV[0].push(dividej ^ dividem?'÷':'×');
+								newV[1].push(om);
+							}else{//num
+								//consolelog(A,om);
+								var kj=Mfn.toStr(Mfn.build.A(A,om));
+								//consolelog('k = ',k,'kj = ',kj,' m = ',m);
+								k=fracOpr(dividej ^ dividem?'/':'*',k,kj);
+				// consolelog('k = ',k,'j = ',j,' m = ',m);
+								if(''+k=='0'){
+									break 
+								}
+							}
+							
+						}
+/*
+						//consolelog(newV[0][0],A[1][newV[1][0]]);
+						if(newV[0][0]=='×' && A[1][newV[1][0]].c=='1'){
+							newV[0].shift();
+							newV[1].shift();
+						}
+*/
 					}else{
 						
 						newV[0].push(dividej?'÷':'×');
@@ -2544,8 +2915,8 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 
 				}
 
-// consolelog('中缀运算符数组 变成',newV[0].join('；'));
-// consolelog('乘积项数组 变成',newV[1].join('；'));
+ //consolelog('中缀运算符数组 变成',newV[0].join('；'));
+ //consolelog('乘积项数组 变成',newV[1].join('；'),newV,A);
 
 				if(k=='0'){
 					return Mfn.fromStr(0)
@@ -2608,7 +2979,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 					}
 					
 					
-					// consolelog('底，nV=',nV.join(' ; '),'相应幂次数组 nVP=',nVP.join(' ; '),A,'k = ',k);
+					//consolelog('底，nV=',nV.join(' ; '),'相应幂次数组 nVP=',nVP.join(' ; '),A,'k = ',k);
 					
 					var nV0=[],nV1=[];//乘元，除元
 					for(var m=0,n=nV.length;m<n;m++){
@@ -2721,43 +3092,53 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 					}//底幂 循环结束
 					
 					
-					
-					/*
-					var nV0=[],nV1=[];//乘元，除元
+			
+
+					var nV0=[],nV1=[], nVV0=[], nVV1=[];//乘元，除元
 					for(var m=0,n=newV[1].length;m<n;m++){
+
 						if(newV[0][m]=='×'){
 							
 							
 							
 							
 							nV0.push(newV[1][m]);
+							nVV0.push(A[1][newV[1][m]].c);
 						}else{
 							
 							
 							
 							
 							nV1.push(newV[1][m]);
+							nVV1.push(A[1][newV[1][m]].c);
 						}
 					}
 					
 					// ×÷相消		抵消
 					for(var i=0;i<nV0.length && nV1.length;i++){
 						var ni=nV0[i],nj=nV1.indexOf(ni);
+////consolelog(nV1,ni,'nVV',nVV1,nVV0[i]);
+						if(nj<0){
+							nj=nVV1.indexOf(nVV0[i]);
+						}
+
+
 						if(nj>-1){
 							nV0.splice(i,1);
 							nV1.splice(nj,1);
 							i--;
 						}
 					}
-					*/
 					
-			// consolelog('乘法交换律处理：newV[1] = ',newV[1], 'newV[0] = ',newV[0], '乘元 nV0 = ',nV0, ' 除元 nV1 = ',nV1);
+					
+			 //consolelog('乘法交换律处理：newV[1] = ',newV[1], 'newV[0] = ',newV[0], '乘元 nV0 = ',nV0, ' 除元 nV1 = ',nV1);
 					
 					
 					if(nV0.length){
 
 						newV[0]=['×'];
 						if(nV0.length>1){
+							//consolelog('乘元排序',nV0);
 							nV0.sort(function(x,y){// 乘元排序
 								return Mfn.toStr(Mfn.build.A(A,x))<Mfn.toStr(Mfn.build.A(A,y))?-1:0;
 							});
@@ -2811,7 +3192,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 					
 						
 					//乘法结合律	相邻项相同，或是同底的幂（幂合并）
-						var nV0=[],nV1=[];//乘元，除元
+					var nV0=[],nV1=[];//乘元，除元
 
 				// consolelog('结合律处理完毕');
 					
@@ -2831,15 +3212,17 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 					var ojc=snake(newV).join('');// 1×a÷b	 1×a	 1÷b
 					
 					var B1i=ojc;
-					// consolelog('B1i = ',B1i,'k = ',k, 'k = ',k,'A = ',A);
+					//consolelog('B1i = ',B1i,'k = ',k, 'k = ',k,'t0=',t0,'A = ');
 					if(/1×.+÷/.test(B1i)){
-// consolelog(B1i);
-						if(k=='1'){
+
+
+						//if(+k==1){
 							B1i=B1i.substr(2);
-						}
+						//}
+//consolelog(B1i);
 						var t0=A.ref(B1i),t=t0;
-// consolelog('t=',t, 'k=',k);
-						if(k!='1'){//有理系数
+
+						if(+k!=1){//有理系数
 
 							t=A.ref(k);
 
@@ -2847,7 +3230,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 							
 						}
 						A[0]=t;
-
+//consolelog(A[0],t0,A);
 					}else if(/1÷/.test(B1i)){//1÷
 						B1i=B1i.substr(2);
 // consolelog('B1i = ',B1i,'k = ',k);
@@ -2868,7 +3251,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 
 						}else{
 							var t=A.ref(k);
-// consolelog('A.ref(k) = ',t,'A[2] = ',A[2]);//bug divide(['5^n',3])
+
 							A[0]=A.ref(t+B1i);
 						}
 					}
@@ -2888,11 +3271,14 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 					
 			}//tds化简完毕
 			
-//bug rcp('a')
-			
+
+			if(/√∛∜/.test(of)){
+				//of='pow';
+
+			}
 			
 			if(of=='pow'){
-// consolelog('化简 pow（仅部分情况）， 以及其他情况暂不化简');
+ //console.log('化简 pow（仅部分情况）， 以及其他情况暂不化简');
 				
 				var o0=A[1][ov[0]], o0c=o0.c, o0v=o0.v, o0f=o0.f,
 					o1=A[1][ov[1]], o1c=o1.c, o1v=o1.v, o1f=o1.f;
@@ -2948,9 +3334,10 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 					}
 				}
 				
-				if(Mfn.is.b1.frac(A,ov[0]) && Mfn.is.b1.frac(A,ov[1])){//有理数幂		bug 01110-31-30 求特征值
+				//console.log(ov);
+				if(Mfn.is.b1.frac(A,ov[0]) && Mfn.is.b1.frac(A,ov[1])){//有理数幂
 					var a=Mfn.build.A(A,ov[0]).toStr(),b=Mfn.build.A(A,ov[1]).toStr();
-					// consolelog(a,b,fracOpr('^',a,b));
+				 //console.log(a,b,fracOpr('^',a,b));
 					return Mfn.fromStr(fracOpr('^',a,b))
 				}else{
 					
@@ -3057,30 +3444,35 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 
 
 		if(op=='::'){//外换元（对象），从外面引进Mfn对象		参数p对象{'x':A, 'a':B, '@2$':C, '@3&':D, '2.71828':E}键(变量单字母、@引用、num值)：值（Mfn对象）
-			 console.log('::外换元',p);
+			// //consolelog('::外换元',p);
 			var iA=[];
 			$.each(p,function(i,v){
+
 				if((i+'')[0]=='@'){
 					iA.push([i.replace(/\D/g,''),v])	//明确给出的大索引序号, 对象
+
 				}else{
 					iA.push([A[2].indexOf(i+''),v])		//通过查找得到大索引序号, 对象
 				}
 			});
+
 			for(var i=0,l=iA.length;i<l;i++){
 				var i0=iA[i][0], ii='@'+i0+'&',iv=iA[i][1];
 				if(!A[1][ii]){//未查到@ &索引
 					ii='@'+i0+'$'	//注意，这里从num转变成var, 键没跟着改（@$ → @&），是因为会影响其他表达式的引用
 				}
-				
-				 console.log('i = ',i,'外换元（对象），从外面引进Mfn对象 iv = ',iv,' 此时A[2] = ',A[2].join(' ; '));
+
 
 				if(A[1][ii]){//查到@ 索引
-					 console.log(iv[0]);
-					console.log(iv[1]);
-					
-					 console.log(iv[1][iv[0]], iv[2]);
-					
-					var y=iv[1][iv[0]], yf=y.f, yc=y.c, yt=iv[2][+iv[0].replace(/\D/g,'')], Al=A[2].length;
+
+					//consolelog('查到@ 索引',ii,A[1][ii]);
+					var y=iv[1][iv[0]];
+
+					if(!y){
+						continue
+					}
+
+					var yf=y.f, yc=y.c, yt=iv[2][+iv[0].replace(/\D/g,'')], Al=A[2].length;
 					
 					
 					
@@ -3136,8 +3528,8 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 
 						A[2][i0]=A[2][+iv.replace(/\D/g,'')];
 						
-						// consolelog('开始统一变量别称 uniRef, A[2] = ',A[2].join(' '));
-						//Mfn.uniRef(A);
+						//consolelog('开始统一变量别称 uniRef, A[2] = ',A[2].join(' '));
+						//Mfn.uniRef(A);	此处启用会出现问题
 					}
 
 				}
@@ -3149,18 +3541,18 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 
 		
 		if(op==':'){//外换元，换函数，换数，赋值等			参数p对象{'x':'y', 'a':'-a', 'sin':'cos'}	键(变量单字母、@引用、num值、函数名)：值（Mfn对象、变量单字母、num数值、表达式字符串、内部引用@、函数名）
-			// consolelog('外换元: 开始 A[2] = ',A[2].join(' ; '),'p = ',p);
-		
+			 //consolelog('外换元: 开始 A[2] = ',A[2].join(' ; '),'p = ',p);
+
 			$.each(p,function(i,v){
 				var o={};
 				o[i]=v;
 				
-			// consolelog('新值 v = ', v, isArr(v),isVar(v),/@/.test(v),/\d+(\.?\d)*[%‰‱]?$/.test(v));
+			 
 				if(isArr(v)){//数组，即Mfn对象
 
 					A=Mfn.opr1('::',A,sim,o)
 					
-				}else if(isVar(v)){
+				}else if(isVar(v) || v=='*'){// A^*伴随矩阵
 					A=Mfn.opr1(':var',A,sim,o)
 						
 				}else if(/@/.test(v)){
@@ -3180,16 +3572,17 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 							A[2][+k.replace(/\D/g,'')]=A[2][+k.replace(/\D/g,'')].replace(i0,v0)
 						}
 					});
-					
+				
 				}else{//表达式字符串
-					// consolelog('换元 表达式字符串',v);
+
 					o[i]=Mfn.fromStr(v);
 					A=Mfn.opr1('::',A,sim,o)
+				
 				}
+				
 			});
-			// consolelog(':外换元结束', A);
-			
-		//	return Mfn.fromStr(1)
+
+
 			return A
 
 		}
@@ -3203,10 +3596,10 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 		}
 		
 
-// consolelog('op = ',op);
+ //console.log('op = ',op);
 		if(Mfn.is.b1.frac(A)){
 			var Fr=FracReduct(Mfn.toStr(A));//bug 这里需弃用toStr	嫌慢
-			// consolelog('A是有理数 ',Fr);
+			 //console.log('A是有理数 ',Fr);
 			var s=Frac.opr1(op,Fr,p);
 			// consolelog('有理数一元运算结果 ',s);
 			return Mfn.fromStr(isStr(s)?s:s.toStr())
@@ -3434,7 +3827,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 		}
 		if(op=='√'){
 
-
+//console.log('of=',of);
 			if(of=='√'){// √(√x) = ∜x
 				A[1][A0].f='∜';
 				return A
@@ -3464,7 +3857,7 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 
 
 
-			//一般情况下	√x
+			console.log('一般情况下	√x');
 			A[0]=A.ref('√'+A0);
 			
 			return A
@@ -3553,19 +3946,13 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 		// consolelog('oprs  :     ',op,'准备换元  o =',o);
 		
 		
-		
+		//consolelog(snake([ops,a]).join(''), o);
 
 		var A=Mfn.opr1(':',Mfn.fromStr(snake([ops,a]).join('')),'',o);
-		// consolelog('下面去括号');
+		 //consolelog('下面去括号');
 		Mfn.simp(A,'','()');//去括号
-	// consolelog('oprs 结束之后   A=  ',A,'sim = ',sim);
+
 	
-/*		bug [λ-a+1 1;2 λ-a]&i1-=i2;i1/=	
-		
-
-0 1 0 0 0 0 1 0 0 0 0 1 a b c d
-
-*/
 		return sim?Mfn.opr1('=',A,'',p):A
 
 
@@ -3575,10 +3962,12 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 
 	
 
-}, Polynomial={/*多项式（一种典型（含未知变量）的函数、重要的数学表达式）	复数的算术运算（i^2 = -1），矩阵多项式（乘法不可交换）的化简都依赖它
+}, Polynomy={/*多元多项式（一种典型（含未知变量）的函数、重要的数学表达式）	复数的算术运算（i^2 = -1），矩阵多项式（乘法不可交换）的化简都依赖它
 
+		为了与其他开源的多项式库Polynomial区别开，改用Polynomy名字
 
-
+		用n维矩阵来存储n元多项式，
+		与1元多项式（使用数组存储）有区别
 
 	*/
 
@@ -3659,7 +4048,9 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 //下列涉及上下文处理（增加括号避免歧义、按数学习惯简化公式写法）
 
 },pptd=function(t,atFirst,notlatex){//乘除环境	t是Mfn或者字符串，atFirst指定是否是第一项	返回字符串
+	//console.log(pptd,t);
 	var a=isArr(t),A=a?t:Mfn.fromStr(t), x=Mfn.opr1('type',A);
+	//console.log('type',x);
 	if(!a){
 		if(/^1$/.test(t)){
 			return ''
@@ -3685,7 +4076,8 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 	}
 	return Mfn.toStr(A,!notlatex,1)
 
-
+}, simExpression=function(s){
+	return (''+s).replace(/([^a-z]) +([a-z])/gi,'$1$2').replace(/^-0$/,'0').trim()
 
 
 },simFactTimes=function(a){/*简化乘式中的阶乘a!
@@ -3917,50 +4309,50 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 
 
 //字符串输出
-},plus=function(A,latex){
+},plus=function(A,latex,nobug){
 	
-	return Mfn.oprs('+',A,1).toStr(latex)
+	return Mfn.oprs('+',A,!nobug).toStr(latex)
 		
-},minus=function(A,latex){
+},minus=function(A,latex,nobug){
 	
-	return Mfn.oprs('-',A,1).toStr(latex)
+	return Mfn.oprs('-',A,!nobug).toStr(latex)
 
-},neg=function(A,latex){
+},neg=function(A,latex,nobug){
 	
-	return Mfn.opr1('-',A,1).toStr(latex)
+	return Mfn.opr1('-',A,!nobug).toStr(latex)
 
 
-},times=function(A,latex){
+},times=function(A,latex,nobug){
 	
-	return Mfn.oprs('×',A,1).toStr(latex)
+	return Mfn.oprs('×',A,!nobug).toStr(latex)
 		
-},divide=function(A,latex){
+},divide=function(A,latex,nobug){
 	
-	return Mfn.oprs('÷',A,1).toStr(latex)
+	return Mfn.oprs('÷',A,!nobug).toStr(latex)
 
-},rcp=function(A,latex){
+},rcp=function(A,latex,nobug){
 	
-	return Mfn.opr1('1/',A,1).toStr(latex)
+	return Mfn.opr1('1/',A,!nobug).toStr(latex)
 		
-},pow=function(A,latex){
+},pow=function(A,latex,nobug){
 	
-	return Mfn.oprs('^',A,1).toStr(latex)
+	return Mfn.oprs('^',A,!nobug).toStr(latex)
 		
-},square=function(A,latex){
+},square=function(A,latex,nobug){
 	
-	return Mfn.opr1('^2',A,1).toStr(latex)
+	return Mfn.opr1('^2',A,!nobug).toStr(latex)
 	
-},cubic=function(A,latex){
+},cubic=function(A,latex,nobug){
 	
-	return Mfn.opr1('^3',A,1).toStr(latex)
+	return Mfn.opr1('^3',A,!nobug).toStr(latex)
 		
-},sqrt=function(A,latex){
+},sqrt=function(A,latex,nobug){
 	
-	return Mfn.opr1('√',A,1).toStr(latex)
+	return Mfn.opr1('√',A,!nobug).toStr(latex)
 		
-},cbrt=function(A,latex){
+},cbrt=function(A,latex,nobug){
 	
-	return Mfn.opr1('∛',A,1).toStr(latex)
+	return Mfn.opr1('∛',A,!nobug).toStr(latex)
 
 
 },pmtds=function(A,i,latex){//四则运算，当含有变量时，不化简，返回表达式，当常量时，返回化简结果。
@@ -3971,16 +4363,20 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 	return Mfn.oprs(o,A,!hasVar(A)).toStr(latex)
 
 
-},sums=function(A,B,latex){//形式线性组合	ax+by
+},sums=function(A,B,latex,nobug){//形式线性组合	ax+by
+	if(nobug){
+		return Mfn.fromStr(Mfn.oprs('+',Arrf(function(x,i){return Mfn.oprs('×',[A[i],x]).toStr()},B)).toStr()).toStr(latex)
+	}
 	return Mfn.fromStr(plus(Arrf(function(x,i){return times([A[i],x])},B))).toStr(latex)
-	//return plus(Arrf(function(x,i){return times([A[i],x])},B),latex)		bug 只显示一个分数，var A=["1/3", "-2/3", "2/3"],B=["x_1", "x_2", "x_3"];Plus(Arrf(function(x,i){return times([A[i],x])},B),1).toStr(1)
 
-},sumx=function(A,x,n,latex){//向量分量的线性组合	x是向量字母
-	return sums(A,zlrA((x||'x')+'_',seqA(1,n||A.length)),latex)
+},sumx=function(A,x,n,latex,nobug){//向量分量的线性组合	x是向量字母
+	return sums(A,zlrA((x||'x')+'_',seqA(1,n||A.length)),latex,nobug)
 
-},kap=function(k,a,p,latex){//形式幂		ka^p
-	return times([k,pow([a,p])],latex)
+},kap=function(k,a,p,latex,nobug){//形式幂		ka^p
+	return times([k,pow([a,p])],latex,nobug)
 
+},sump=function(A,x,deg,latex,nobug){//多项式形式		A[0]x^deg+A[1]x^(deg-1)+...
+	return Arrf(function(k,i){var a=''+k||''; a= a && a!='0'?(times([a,pow([x,deg-i],'',nobug)],latex,nobug)):''; return /^-/.test(a)?a:(a?'+'+a:'')}, A).join('').replace(/^\+/,'')
 
 },fmin=function(A){//最小值
 	var B=[].concat(A);
@@ -3991,6 +4387,10 @@ var Fun={//抽象函数 [函数名, 参数数组expA] 	本质是数组
 	var B=[].concat(A);
 	B.sort(sortBy.num);
 	return B.slice(-1)[0]
+
+},e2h=function(x,sim){
+	var m=Mfn.fromStr(x);
+	return kfrac((sim?Mfn.opr1('=',m):m).toStr(1))
 
 // 下列涉及解方程运算
 
@@ -4323,7 +4723,7 @@ OH(equationsMX([[2,3],[3,5],[2,7],[1,11]],1)[1].join(br))
 	var l=K.length,A=K.concat([]), fr=[neg(K[1]),K[0]], X=[], S=[], M=m, p='x';
 
 	if(dtl){
-		S.push(eq0([sump(A,p,-l)],3,m));
+		S.push(eq0([sump(A,p,1,1)],3,m));
 	}
 	if(/^-?1$/.test(K[0])){
 		X.push(Mod(fr[0],M));
@@ -4341,7 +4741,7 @@ OH(equationsMX([[2,3],[3,5],[2,7],[1,11]],1)[1].join(br))
 		M=+m/g;
 
 		if(dtl){
-			S.push(eq0([sump(A,p,-l)],3,M));
+			S.push(eq0([sump(A,p,1,1)],3,M));
 			X.push(frac(-A[1],A[0],''));
 		}
 	}else{
@@ -4355,7 +4755,7 @@ OH(equationsMX([[2,3],[3,5],[2,7],[1,11]],1)[1].join(br))
 
 	if(dtl && a!=A.join()){
 
-		var t=eq0([sump(A,p,-l)],3,M);
+		var t=eq0([sump(A,p,1,1)],3,M);
 		S.push(t);
 		X.push(frac(-A[1],A[0],''));
 	}
@@ -4447,7 +4847,7 @@ OH(equationsMX([[2,3],[3,5],[2,7],[1,11]],1)[1].join(br))
 
 	}
 
-},equationA=function(K,d,p1111,p){/*解一元代数方程
+},equationA=function(K,d,p){/*解一元代数方程
 	输入有理系数数组	不考虑含其它未知变量的情况
 	
 	返回[计算结果数组, 步骤数组]	计算结果数组为空表示无解
@@ -4464,19 +4864,18 @@ OH(equationsMX([[2,3],[3,5],[2,7],[1,11]],1)[1].join(br))
 	参数 p 指定变量名 （此时会返回步骤数组）
 	*/
 	
-	// consolelog('一元多次方程',K);//bug 5 1 0 1 1 -1 0 -1 2求特征值 undefined	equationA([1, -8, 16, -3]) https://zhidao.baidu.com/question/1772342166371113060.html?entry=qb_uhome_search
 	var A=Arrf(FracReduct,K),l=A.length, X=[], S=[];
 
 	if(p){
 
-		S.push(eq0(sump(A,p,-l)));
+		S.push(eq0(sump(A,p,l-1,1)));
 	}
 	if(l==2){//ax+b=0
 		if(!/^0$/.test(A[0])){
 
 			X.push(divide([neg(A[1]),A[0]]));
 			if(p){
-				S.push(eqv(sump([A[0],0],p,-2),neg(A[1])), eqv(p,X[0]));
+				S.push(eqv(sump([A[0]],p,1,1),neg(A[1],1)), eqv(p,e2h(X[0])));
 			}
 		}else{
 			if(/^0$/.test(A[1])){
@@ -4496,53 +4895,68 @@ OH(equationsMX([[2,3],[3,5],[2,7],[1,11]],1)[1].join(br))
 				var m=lcmFrac(A);//分母最小公倍数
 				A=Arrf(function(s){return times([s,m])},A);
 				if(p){
-					S.push(eq0(sump(A,p,-l)));
+					S.push(eq0(sump(A,p,l-1,1)));
 				}
 			}
+
 			var m=gcd(A);
+
 			if(m!='1'){//约分
 				A=Arrf(function(s){return divide([s,m])},A);
 				if(p){
-					S.push(eq0(sump(A,p,-l)));
+					S.push(eq0(sump(A,p,l-1,1)));
 				}
 			}
 			
 			var delta=minus([square(A[1]),times([4,A[0],A[2]])]);
-			// consolelog('判别式Δ = ',delta);
+			 //console.log('判别式Δ = ',delta);
 			if(/^0$/.test(delta)){//判别式=0
-				delta=divide([neg(A[1]),times(2,A[0])]);
+				delta=divide([neg(A[1]),times([2,A[0]])]);
 				
 				X.push(delta,delta);
 				if(p){
-					S.push(eq0(nWrap0(sump([1,neg(X[0])],p,-2))+sup(2)), eq0(sump([1,neg(X[0])],p,-2)), eqv(p,X[0]));
+					S.push(eq0(zp(e2h(p+'-'+pp(X[0]),1))+'^2'), eqv(p,X[0]));
 				}
 			}else if(/^-/.test(delta)){//判别式<0
 				if(p){
-					S.push('判别式Δ = '+delta+ ' < 0，因此无实数解');
+					S.push('判别式Δ = '+e2h(delta)+ ' < 0，因此无实数解');
 				}
 				if(d){//实数域无解
 
 				}else{
 					//x=(-b+-√Δ)/(2a)
 					// consolelog('Δ = ',delta);
-					delta=na2n(sqrt(neg(delta)),'i');
+					delta=times([sqrt(neg(delta)),'i']);
 					// consolelog('√Δ = ',delta);
-					X.push(divide([minus([delta,A[1]]), times([2,A[0]])]), divide([plus([delta,A[1]]), times([-2,A[0]])]));
+					var a2=times([2,A[0]]), b_2a=divide([A[1],a2]), delta_2a=divide([delta,a2]);
+					//X.push(divide([minus([delta,A[1]]), times([2,A[0]])]), divide([plus([delta,A[1]]), times([-2,A[0]])]));
+					X.push(minus([delta_2a,b_2a]), neg(plus([delta_2a,b_2a])));
+
+
+					//console.log(X);
 					if(p){
 						S.push(
-							eq0(nWrap0(sump([1,neg(X[0])],p,-2),1)+nWrap0(sump([1,neg(X[1])],p,-2),1)),
-							eq0(sump([1,neg(X[0])],p,-2))+' 或 '+eq0(sump([1,neg(X[1])],p,-2)),
-							eqv(p,X[0])+' 或 '+X[1]
+							eq0(zp(sump([1,neg(X[0])],p,1,1))+zp(sump([1,neg(X[1])],p,1,1))),
+		
+							eqv(p,e2h(X[0]))+' 或 '+e2h(X[1])
 							);
 					}
 				}
 			}else{//判别式>0
-				delta=sqrt(delta);
-				X.push(divide([minus([delta,A[1]]), times([2,A[0]])]), divide([plus([delta,A[1]]), times([-2,A[0]])]));
 				if(p){
-					S.push(eq0(nWrap0(sump([1,neg(X[0])],p,-2),1)+nWrap0(sump([1,neg(X[1])],p,-2),1)),
-						eq0(sump([1,neg(X[0])],p,-2))+' 或 '+eq0(sump([1,neg(X[1])],p,-2)),
-						eqv(p,X[0])+' 或 '+X[1]
+					S.push('判别式Δ = '+e2h(delta)+ ' > 0，有两个不相等的实根',
+						'利用求根公式~x='+kfrac(['-b±'+kroot('b^2-4ac'),'2a']),
+						'或十字相乘法'
+					);
+				}
+				delta=sqrt(delta);
+				var a2=times([2,A[0]]), b_2a=divide([A[1],a2]), delta_2a=divide([delta,a2]);
+				//console.log('根号Δ = ',delta);
+				//X.push(divide([minus([delta,A[1]]), a2]), divide([neg(plus([delta,A[1]])), a2]));
+				X.push(minus([delta_2a,b_2a]), neg(plus([delta_2a,b_2a])));
+				if(p){
+					S.push(eq0(zp(sump([1,neg(X[0])],p,1,1))+zp(sump([1,neg(X[1])],p,1,1))),
+						'解得~'+eqv(p,e2h(X[0]))+' 或 '+e2h(X[1])
 						);
 				}
 			}
@@ -4560,7 +4974,7 @@ OH(equationsMX([[2,3],[3,5],[2,7],[1,11]],1)[1].join(br))
 			var m=lcmFrac(A);//分母最小公倍数
 			A=Arrf(function(s){return times([s,m])},A);
 			if(p){
-				S.push(eq0(sump(A,p,-l)));
+				S.push(eq0(sump(A,p,3,1)));
 			}
 		}
 		var m=gcd(A);
@@ -4568,7 +4982,7 @@ OH(equationsMX([[2,3],[3,5],[2,7],[1,11]],1)[1].join(br))
 			// consolelog(m,A);
 			A=Arrf(function(s){return divide([s,m])},A);
 			if(p){
-				S.push(eq0(sump(A,p,-l)));
+				S.push(eq0(sump(A,p,3,1)));
 			}
 		}
 		var _a=divide([A[1],A[0],-3]), // 标准方程的-a/3
@@ -4579,7 +4993,7 @@ OH(equationsMX([[2,3],[3,5],[2,7],[1,11]],1)[1].join(br))
 				
 			delta=plus([P3,Q2]);
 		if(p){
-			S.push('判别式Δ = '+delta);
+			S.push('判别式Δ = '+e2h(delta));
 		}
 		// consolelog('系数',A);
 		// consolelog('3p=',p3,'2q=',q2,'q=',q,'p^3=',P3,'q^2=',Q2,'Δ = ',delta,'-a/3 = ',_a);
@@ -4623,12 +5037,16 @@ OH(equationsMX([[2,3],[3,5],[2,7],[1,11]],1)[1].join(br))
 				}
 			}else{
 				var x6=plus([_a,divide([x3,2])]), x7=times(['√3/2',x4]);
-				S.push('q=',q,'delta=',delta);
-				S.push('x1=',x1,'x2=',x2);
-				S.push('x3=',x3,'x4=',x4);
-				S.push('x6=',x6,'x7=',x7);
+
 				if(p){
-					S.push('有1个实根'+e2h(x5), '1对共轭复根'+e2h(x6)+' ± i'+nWrap(e2h(x7)));
+					/*
+					S.push('q='+q,'Δ='+delta);
+					
+					S.push('x_1=',e2h(x1),'x_2=',x2);
+					S.push('x_3=',x3,'x_4=',x4);
+					S.push('x_6=',x6,'x_7=',x7);
+					*/
+					S.push('有1个实根'+e2h(x5), '1对共轭复根'+e2h(x6)+' ± i'+zp(e2h(x7)));
 				}
 				X.push(plus([x6,times(['i',x7])]), plus([x6,times(['-i',x7])]));
 			}
@@ -4646,14 +5064,11 @@ OH(equationsMX([[2,3],[3,5],[2,7],[1,11]],1)[1].join(br))
 	
 };
 /*
-	bug	neg("(-1/24)(4√14i-8)")
-	
-解2次方程	12 -8 6		分子分母未约分
+	bug	
+
 sump([1,neg("(1/24)(4√14i-8)")],'x',-2)
 
-2 -1 2 5 -3 3 -1 0 2
-1 3 -3 -3 -5 -3 -6 6 4
-求不出特征值
+
 01-210-1-2-10 求合同变换，化成对角阵
 
 

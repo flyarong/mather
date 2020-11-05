@@ -221,6 +221,80 @@ consolelog(op,A,p);
 
 
 //下列涉及排列组合函数
+},factoradicDirectSum=function(A){//阶乘进制	 直和加法（不实现进位，退位）
+	var B=[];
+	for(var i=0,l=A.length;i<l;i++){
+		var Ai=A[i], Ain=Ai.length, Bn=B.length;
+		if(Bn<Ain){
+			B=copyA(BigInt('0'),Ain-Bn).concat(B);
+			Bn=Ain;
+		}
+		for(var j=0;j<Ain;j++){
+			B[Bn-j-1]=(B[Bn-j-1]||BigInt(0))+Ai[Ain-j-1]
+		}
+
+	}
+	return B
+},factoradicNorm=function(A,p){//阶乘进制	 规范化（各位值绝对值，不大于索引号，从右往左1! 2! 3! ... ）（参数p，指定进位的符号方向，1，往正数方向计算；-1，往负数方向；0，往绝对值最小的方向）
+	var n=A.length,B=[].concat(A);
+	for(var i=0;i<n;i++){
+		var ni=n-1-i, Bi=B[ni], d=i+1, bd=BigInt(d), pi=p;
+
+		if(!p){
+			if(Bi>bd){
+				pi=1;
+			}
+			if(-Bi>=bd){
+				pi=-1;
+			}
+		}
+
+		if(pi==1){
+			if(Bi>bd){// 进位
+				var q=Bi / bd, r=Bi % bd;
+				B[ni]=r;
+				if(ni){
+					B[ni-1]+=q;
+				}else{
+					B.unshift(q)
+				}
+
+			}else if(Bi<0){// 补位
+				var q=(-Bi) / bd+BigInt(1), r=bd - (-Bi) % bd;
+				B[ni]=r;
+				if(ni){
+					B[ni-1]-=q;
+				}else{
+					B.unshift(-q)
+				}
+			}
+
+		}else if(pi==-1){
+			if(-Bi>=bd){// 进位
+				var q=(-Bi) / bd, r=(-Bi) % bd;
+				B[ni]=-r;
+				if(ni){
+					B[ni-1]-=q;
+				}else{
+					B.unshift(-q)
+				}
+
+			}else if(Bi>0){// 补位
+				var q=Bi / bd+BigInt(1), r=bd - Bi % bd;
+				B[ni]=-r;
+				if(ni){
+					B[ni-1]+=q;
+				}else{
+					B.unshift(q)
+				}
+			}
+		}
+		
+	}
+
+
+	return B
+
 
 },factoradic=function(n){//十进制 整数（暂不实现小数） 转成 阶乘进制	
 	var t=BigInt(n||0),rA=[], r=t,i=BigInt(2);
@@ -249,18 +323,92 @@ consolelog(op,A,p);
 
 },Factb=function(n){//阶乘		factorial	b使用BigInt
 	var t=BigInt(n||0);
-	if(t<=BigInt(0)){t=BigInt(1)}
-	return t==BigInt(1)?t:Factb(t-BigInt(1))*t
+	if(t<=BigInt(0) || t==BigInt(1)){return BigInt(1)}
+	return Factb(t-BigInt(1))*t
+
+},FactbTrim0=function(n,div2){//阶乘 去除尾零	参数div2，指定需要除以2的幂次（弥补之前除以5之后的影响，修正目的）
+
+	/*
+
+	计算极限
+(999999999n**10478n+'').length == 94302
+
+(Factb(9675)+'').length == 34362
+
+
+(FactbTrim0(9674)+'').length == 31943
+
+FactbTrim0(9675)		 Uncaught SyntaxError: Invalid regular expression: /0+$/: Stack overflow
+
+	*/
+
+
+	
+//方法1
+	var t=BigInt(n||0);
+	if(t<=BigInt(0) || t==BigInt(1)){return BigInt(1)}
+	var x=Factb(t-BigInt(1))*t;
+	while(!(x%BigInt(10))){
+		x/=BigInt(10)
+	}
+	return x
+
+//方法2
+
+var t=BigInt(n||0);
+if(t<=BigInt(0) || t==BigInt(1)){return BigInt(1)}
+if(/0$/.test(t)){
+	var s=BigInt((t+'').replace(/0+$/,''));
+	return BigInt((FactbTrim0(t-BigInt(1),d)*s+'').replace(/0+$/,''))
+}
+
+return BigInt((FactbTrim0(t-BigInt(1))*t+'').replace(/0+$/,''))
+
+
+
+
+//方法3
+
+
+	var t=BigInt(n||0), d=div2||0;
+	if(t<=BigInt(0) || t==BigInt(1)){return BigInt(1)}
+	if(/0$/.test(t)){
+		var s=BigInt((t+'').replace(/0+$/,''));
+		while(/5$/.test(s)){
+			s/=BigInt(5);
+			d++;
+		}
+
+		while(/[2468]$/.test(s) && d){
+			s/=BigInt(2);
+			d--;
+		}
+
+		return FactbTrim0(t-BigInt(1),d)*s
+	}
+
+	var s=t;
+	while(/5$/.test(s)){
+		s/=BigInt(5);
+		d++;
+	}
+
+	while(/[2468]$/.test(s) && d){
+		s/=BigInt(2);
+		d--;
+	}
+
+	return FactbTrim0((t-BigInt(1)),d)*s
 
 },Fact=function(n){//阶乘 n<22时
 	var t=+n||0;
-	if(t<=0){t=1}
-	return t==1?t:Fact(t-1)*t
+	if(t<=0 || t==1){return 1}
+	return Fact(t-1)*t
 		
 },Fact2=function(n){//双阶乘
 	var t=+n||0;
-	if(t<=0){t=1}
-	return t==1?1:Fact2(t-2)*t
+	if(t<=0 || t==1){return 1}
+	return Fact2(t-2)*t
 		
 },Permut=function(n,m){//排列数
 	var t=+n||0,s=+m||0,v=1;

@@ -587,7 +587,8 @@ solve['number']=function(inputValue, uriA){
 
 		rS=rS.concat(
 			Arrf(function(x){
-				var xs=x.split(/ |&/),xs0=xs[0],xs0s=xs0.split(/\D/),x0=xs0s.length>1?+xs0s[0]:1,x1=+xs0s[1]||+xs0s[0],pA=seqsA(xs[1]),qA=seqsA(xs[2]),rA=[],A=[];
+				var xs=x.split(/ |&/g),xs0=xs[0],xs0s=xs0.split(/\D/),x0=xs0s.length>1?+xs0s[0]:1,x1=+xs0s[1]||+xs0s[0],
+					pA=seqsA(xs[1]),qA=seqsA(xs[2]),rA=[],A=[];
 				
 				rA=rA.concat(Arrf(function(d){
 					var t=Idivide(x0,x1,d);
@@ -595,14 +596,16 @@ solve['number']=function(inputValue, uriA){
 					return t[0]
 				},pA));
 				
+				var mA=pA.concat(qA);
 				if(mA.length==2){
 					var lm=lcm(mA), t=Idivide(x0,x1,lm);
 					rA.push(t[0]);
 					var nA=Arrf(function(t){return +t.split('下列')[1].split('个数')[0]},rA);
 					rA.splice(rA.length-1,0,mA+'的最小公倍数是'+lm);
-					rA.push('能被'+pA.join('或')+'整除，且不能被'+qA.join('或')+'整除的数的个数等于'+nA[0]+'-'+nA[1]+'='+nOpr2s('-',nA));//(n1-lm))
-					rA.push('和等于'+A[0][3]+'-'+t[3]+'='+nOpr2s('-',[A[0][3],t[3]]));
+					rA.push('能被'+pA.join('或')+'整除，且不能被'+qA.join('或')+'整除的数的个数等于'+nA[0]+'-'+nA[1]+'='+Mfn.oprs('-',nA).toStr(1));//(n1-lm))
+					rA.push('和等于'+A[0][3]+'-'+t[3]+'='+Mfn.oprs('-',[A[0][3],t[3]]).toStr(1));
 				}
+				
 				return kxA(rA)
 				
 			},VA)
@@ -1006,7 +1009,7 @@ a b c d
 			Arrf(function(t){
 				var V=t.split(/[ &,]/),dgts=V.length>1?V[1]:0,decimals=(V[0].split('.')[1]||'').length,Vl=V[0].length,d=-dgts-(decimals<dgts?1:0), f=n2frac(V[0],dgts).split('/');
 				return (dgts?V[0].substr(0,Vl+d)+
-					Arrf(function(t){return t=='.'?t:'\\dot '+t},V[0].substr(d).split('')).join(''):V[0])+' = '+frac(f[0],f[1]||1,'')
+					V[0].substr(d).replace(/\d/,'\\dot$&').replace(/(\d.*)(\d)$/,'$1\\dot$2'):V[0])+' = '+(f[0][0]=='-'?'-':'')+frac(f[0].replace(/-/,''),f[1]||1,'')
 		},VA));
 	}
 
@@ -1028,8 +1031,8 @@ a b c d
 	if(sel(uriA,'科学记数法')){
 		rS=rS.concat(
 			Arrf(function(t){
-				var V=t.split(/[ &,]/),dgts=V.length>1?+V[1]:0;
-				return V[0]+' = '+(isNaN(dgts)?(+V[0]).toExponential():(+V[0]).toExponential(dgts)).replace('e+0','').replace(/e(.\d+)/,'⋅10^{$1}').replace('+','')
+				var V=t.split(/[ &,]/),dgts=V.length>1?+V[1]:Math.max(V[0].replace(/^0\.0*|0+$/g,'').length-1,0);
+				return V[0]+' = '+(isNaN(dgts)?(+V[0]).toExponential():(+V[0]).toExponential(dgts)).replace('e+0','').replace(/e(.\d+)/,'×10^{$1}').replace('+','')
 		},VA));
 	}
 	if(sel(uriA,'工程记数法')){
@@ -1076,7 +1079,9 @@ a b c d
 				f[1]=m.split('/');
 			
 			//	consolelog(f[1]);
-				return frac(V.split('/')[0],V.split('/')[1],'')+' = '+(f0!=V?frac(f0.split('/')[0]+'×'+gcd(V.split('/')),f0.split('/')[1]+'×'+gcd(V.split('/')),'')+' = '+f0+' = ':'')+
+				return frac(V.split('/')[0],V.split('/')[1],'')+' = '+
+					(f0!=V?frac(f0.split('/')[0]+'×'+gcd(V.split('/')),(f0.split('/')[1]||1)+'×'+gcd(V.split('/')),'')+
+					(f0.split('/')[1]?' = '+f0:'')+' = ':'')+
 					(f[1][1]?(f[0] && f[0]!='-' && f0==V?frac(f[0].replace('-','')+'×'+f[1][1]+'+'+f[1][0],f[1][1],'')+' = ':'')+
 					f[0]+frac(f[1][0],f[1][1],'')+(m==n?'':' = '+f[0]+frac(nA[0], nA[1], '')):f[1][0]);
 		},VA));
@@ -1143,8 +1148,8 @@ a b c d
 			//	consolelog(m.join('\n'));
 				
 				if(opr1){
-					consolelog(ops,m,l);
-					R=[nOpr2s(ops,V,1)+' = '+frac(m[0][0],m[0][1],'')+opr+frac(m[1][0],m[1][1],'')+' = '+frac(nOpr2s(ops,Arri(m,0),1),l,'')+ ' = '+FracReduct([nOpr2s(ops,Arri(m,0)),l])];
+
+					R=[V.join(ops[0])+' = '+frac(m[0][0],m[0][1],'')+opr+frac(m[1][0],m[1][1],'')+' = '+frac(Arri(m,0).join(ops[0]),l,'')+ ' = '+FracReduct([fracOpr(ops[0],Arri(m,0)[0],Arri(m,0)[1]),l])];
 				}else{//比较大小
 					
 
@@ -1402,7 +1407,6 @@ a b c d
 		);
 	}
 
-
 	if(sel(uriA,'Numerical Calculator JS Native')){
 		rS=rS.concat(
 			Arrf(function(s){
@@ -1410,7 +1414,16 @@ a b c d
 				return s+' ≈ '+t
 		},VA));
 	}
-	
+	if(sel(uriA,'Big Integer Simplify')){
+		rS=rS.concat(
+			Arrf(function(s){
+				var t=eval(bigintsim(s));
+				return bigintsim(s,1)+' = '+t.toString();
+		},VA));
+	}
+
+
+	/*
 	if(sel(uriA,'Numerical Calculator')){
 		rS=rS.concat(
 			Arrf(function(s){
@@ -1418,6 +1431,7 @@ a b c d
 				return t+' ≈ '
 		},VA));
 	}
+	*/
 	if(sel(uriA,'Symbolic Calculator')){
 		//十二分之五加十四分之三加十二分之一
 		rS=rS.concat(

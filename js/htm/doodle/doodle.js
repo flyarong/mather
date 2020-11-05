@@ -5,8 +5,17 @@
  */
 var svgid = '#svgShape svg[id', strk, slid, dsh, shps,
 	Colors = '000000,F5F5F5,ffffff,FFFAFA;4682B4,87CEFA,87CEFA,FFF5EE;FA8072,F8F8FF,FFB6C1,FFC0CB;ffffff,DCDCDC,000000,696969;8B0000,B22222,CD5C5C,F08080', 
-	cap0='<canvas id=caps hidden></canvas><img id=capsimg /><div hidden id=capsdiv>' + dc;
-
+	cap0='<canvas id=caps hidden></canvas><img id=capsimg /><div hidden id=capsdiv>' + dc, reCanvasCode;
+	L.canvasCode=L.canvasCode||'';
+	L.legoCode=L.legoCode||'';
+	L.roughCode=L.roughCode||'';
+	L.FGC=/#/.test(L.FGC)?L.FGC:'#000000';
+	L.BGC1=/#/.test(L.BGC1)?L.BGC1:'#F5F5F5';
+	L.BGC=/#/.test(L.BGC)?L.BGC:'#ffffff';
+	L.BGC2=/#/.test(L.BGC2)?L.BGC2:'#FFFAFA';
+	L.FGC1=L.BGC1;
+	L.FGC2=L.BGC2;
+	
 $(function () {
 
 
@@ -18,7 +27,7 @@ $(function () {
 	L.drawCopy = '';
 
 	//var cvs = $('#caps')[0], capctx = cvs.getContext('2d');
-	var x='<div id=Caps hidden>'+cap0+(L.cap0||'')+dc;
+	var x='<div id=Caps hidden>'+cap0+dc;//+(L.cap0||'')
 	if($('#splash').length){
 
 		$('#splash').after(x)
@@ -28,13 +37,24 @@ $(function () {
 
 	caps=new ctt('#caps');
 
+	reCanvasCode=function(){
+
+		Arrf(function(x){
+			if(L[x+'Code']){
+				var c=caps.ctx;
+				eval(L[x+'Code']);
+			}
+		}, ZLR('canvas lego rough'));
+
+	};
+
 	setTimeout(function () {
 
 		//$('#Pointer').click();
 		//$('#allEraser').click();
 		//$('#LayerToggle').click();
 
-		$('#color' + (L.night == 'false' ? 0 : 3)).click();
+		//$('#color' + (L.night == 'false' ? 0 : 3)).click();
 
 		if ($('#svgs').length < 1) {
 
@@ -46,6 +66,7 @@ $(function () {
 
 		}
 
+		reCanvasCode();
 		$('#caps').nextAll().hide();
 	}, 100)
 
@@ -79,6 +100,343 @@ $(function () {
 						gM('W')+num('0" title=px id="scrW',1)+
 						gM('H')+num('0" title=px id="scrH',1)+dc+
 				
+
+
+
+					DCtv('hidden" id="allEraserCanvas',DCtv('pd10" id="canvasMenu',
+						itv('" id=bg tip="bg','photo_size_select_actual')+
+						itv('" id=grid tip="Grid','grid_on')+
+						itv('" id=shape tip="Shape','panorama_fish_eye')+
+						itv('" id=text tip="Text','title')+
+						itv('" id=clear tip="Clear','backspace')
+						//itv('" id=ani tip="Animation','movie')
+					)+
+					'<div for=bg>'+
+						'<div>'+spanmi('gradient',gM('BGC'),'" id="bggrad')+
+							'<span for=bggrad><label>'+strchkbx0+'id=bggradOn class=on /></label>'+
+								'<span for=bggradOn>'+
+									DCtv('fill',
+										'<label hidden>'+gM('Fill')+strchkbx0+'class=fillon'+chked+' /></label>'+
+										'<input type=color value="#eeeeee" class=color />'+
+										'<label>'+gM('Gradient')+strchkbx0+'class=gradon /></label>'+br+
+										gM('Gradient Color')+strtxt+'placeholder="0 color,0.5 color,1 color" class=gradcolor />'+br+
+										gM('Linear / Radial')+strtxt+'placeholder="x0 y0 (r0) x1 y1 (r1)" class=grad />'
+									)+
+								sc+
+							sc+dc+
+						'<div>'+spanmi('landscape',gM('Image'),'" id="bgimg')+
+							'<span for=bgimg><label>'+strchkbx0+'id=bgimgOn class=on /></label>'+
+								'<span for=bgimgOn>'+
+									DCtv('multi',
+										'<div>'+gM('Import')+'<input type=file class=imgurlfile placeholder="drop & drag" />'+dc+
+										'<div>'+gM('Image URL')+'<input type=url class=imgurl placeholder="image URL/Clipboard" />'+dc+
+										'<div>'+gM('Cut Position and Size')+strtxt+'class=poswh placeholder="sx,sy,swidth,sheight" />'+dc+
+										'<div>'+gM('Paste Position and Size')+strtxt+'class=poswh placeholder="x,y,width,height" />'+dc+
+										'<div>'+itv('Add','add')+itv('Del','clear')+dc
+					
+									)+
+								sc+
+							sc+dc+
+					dc+
+					
+					
+					
+					
+					'<div for=grid>'+
+						'<div>'+spanmi('filter_tilt_shift',gM('Origin'),'" id="orig')+
+							'<span><label>x='+num('600" id="Ox')+'</label>'+
+								'<label>y='+num('400" id="Oy')+'</label>'+sc+
+						dc+
+						'<div>'+spanmi('radio_button_checked',gM('Point'),'" id="dot')+
+							'<span for=dot><label>'+strchkbx0+'id=dotOn class=on /></label>'+
+					
+								'<span for=dotOn>'+
+									DCtv('multi',
+										'<div><span>'+gM('Coordinate')+strtxt+'class=pos placeholder="20 20,30 30" />'+sc+
+											'<span>'+gM('Color')+'<input type=color value="#000000" class=color />'+sc+
+											itv('Add','add')+itv('Del','clear')+
+										dc
+									)+
+								sc+
+							sc+dc+
+					
+						'<div>'+spanmi('add_circle_outline',gM('Axis'),'" id="axis')+
+							'<span for=axis><label>'+strchkbx0+'id=axisOn class=on /></label>'+
+								'<span for=axisOn>'+
+									'<span>'+gM('Range')+strtxt+'value="" id=axisRange placeholder="-360,360;-240,240 || 360;240 || 360" />'+sc+
+									'<div>'+gM('Arrow')+'分类 (左右下上，各取1个数字【0:无, 1:个字形, 2:空心闭合, 3:实心闭合】) '+strtxt+'value="0101" id=axisArrowType placeholder="0101" />'+dc+
+									'<div>'+gM('Arrow')+'参数 (侧翼点长,宽;箭尾点偏移) '+strtxt+'value="8,4" id=axisArrowPoints placeholder="8,4;-2" />'+dc+
+									'<span>'+gM('Color')+'<input type=color value="#000000" class=color />'+sc+
+								sc+
+							sc+dc+
+						'<div>'+spanmi('graphic_eq',gM('Tick'),'" id="tick')+
+							'<span for=tick><label>'+strchkbx0+'id=tickOn class=on /></label>'+
+								'<span for=tickOn>'+
+									'<span>'+
+										gM('Range')+strtxt+'value="" id=tickRange placeholder="-100,100;-50,50 || 100;50 || 100" />'+
+									sc+
+									DCtv('multi',
+										'<div><span>'+gM('Tick Length')+' (负号表示负轴方向) '+strtxt+'value="-5,-5" class=tickLength placeholder="-5,-5" size=10 />'+sc+
+											'<span>'+gM('Spacing')+strtxt+'value=20 class=tickSpacing placeholder="20,20" size=10 />'+sc+
+											'<span>'+gM('Color')+'<input type=color value="#000000" class=color />'+sc+
+											itv('Add','add')+itv('Del','clear')+
+										dc
+									)+
+					
+								sc+
+							sc+dc+
+						'<div>'+spanmi('border_all',gM('Cartesian Grid'),'" id="gridCross')+
+							'<span for=gridCross><label>'+strchkbx0+'id=gridCrossOn class=on /></label>'+
+								'<span for=gridCrossOn>'+
+									SCtv('orig',
+										'<span>'+gM('Range')+strtxt+'value="" id=gridCrossRange placeholder="-700,700;-500,500 || 700;500 || 700" />'+sc+
+										'<label>'+gM('Origin')+strchkbx0+'id=gridCrossOrigOn class=on />'+'</label>'+
+										'<span for=gridCrossOrigOn>'+
+											'<label>x='+num('600" class="Ox')+'</label>'+
+											'<label>y='+num('400" class="Oy')+'</label>'+sc
+					
+									)+
+									DCtv('primary',
+										'<span>'+gM('Primary Grid Spacing')+strtxt+'value=200 id=gridCrossSpacing placeholder="200,200" size=10 />'+sc+
+										'<span>'+gM('Primary Grid Dash')+strtxt+'class=dash placeholder="2,4,2" size=10 />'+sc+
+										br+
+										'<span>'+gM('Primary Grid Color')+'<input type=color value="#a0a0a0" class=color />'+sc
+									)+
+									DCtv('secondary',
+										'<span>'+gM('Secondary Grid Spacing')+strtxt+'value=40 id=gridCross2Spacing placeholder="40,40" size=10 />'+sc+
+										'<span>'+gM('Secondary Grid Dash')+strtxt+'class=dash placeholder="2,4,2" value=5 size=10 />'+sc+
+										br+
+										'<span>'+gM('Secondary Grid Color')+'<input type=color value="#cecece" class=color />'+sc
+									)+
+								sc+
+							sc+dc+
+					
+						'<div>'+spanmi('location_searching',gM('Polar Grid'),'" id="gridPolar')+
+							'<span for=gridPolar><label>'+strchkbx0+'id=gridPolarOn class=on /></label>'+
+								'<span for=gridPolarOn>'+
+									SCtv('orig',
+										'<span>'+gM('Range Radii')+num('0" id="gridPolarRange')+sc+
+										'<label>'+gM('Origin')+strchkbx0+'id=gridPolarOrigOn class=on /></label>'+
+										'<span for=gridPolarOrigOn>'+
+											'<label>x='+num('600" class="Ox')+'</label>'+
+											'<label>y='+num('400" class="Oy')+'</label>'+sc
+									)+
+									DCtv('primary',
+										'<span>'+gM('Primary Grid Spacing')+' r '+num('200" id="gridPolarxSpacing')+sc+
+										'<span>'+gM('Primary Grid')+'角等分线数'+num('1" id="gridPolaryNum')+sc+
+										'<span>'+gM('Primary Grid Dash')+strtxt+'class=dash placeholder="2,4,2" size=10 />'+sc+
+										br+
+										'<span>'+gM('Primary Grid Color')+'<input type=color value="#a0a0a0" class=color />'+sc
+					
+									)+
+									DCtv('secondary',
+										'<span>'+gM('Secondary Grid Spacing')+' r '+num('0" id="gridPolar2xSpacing')+sc+
+										'<span>'+gM('Secondary Grid')+'角等分线数'+num('0" id="gridPolar2yNum')+sc+
+										'<span>'+gM('Secondary Grid Dash')+strtxt+'class=dash placeholder="2,4,2" value=5 size=10 />'+sc+
+										br+
+										'<span>'+gM('Secondary Grid Color')+'<input type=color value="#cecece" class=color />'+sc
+									)+
+								sc+
+							sc+
+						dc+
+					dc+
+					'<div for=shape>'+
+					
+					
+					
+						'<div>'+spanmi('radio_button_unchecked',gM('Circle'),'" id="circle')+
+							'<span for=circle><label>'+strchkbx0+'id=circleOn class=on /></label>'+
+								'<span for=circleOn>'+
+									DCtv('multi',
+										'<div>'+gM('Centroid Coordinate')+strtxt+'class=pos placeholder="200 200,300 300" />'+dc+
+										'<div>'+gM('Radii')+strtxt+'class=rad placeholder="15,10" />'+dc
+					
+									)+
+								sc+
+							sc+dc+
+					
+						'<div>'+spanmi('vignette',gM('Ellipse'),'" id="ellipse')+
+							'<span for=ellipse><label>'+strchkbx0+'id=ellipseOn class=on /></label>'+
+								'<span for=ellipseOn>'+
+									DCtv('multi',
+										'<div>'+strchkbx0+'class=multinput'+chked+' />'+
+											'<span>'+
+												gM('Centroid Coordinate')+strtxt+'class=pos placeholder="200 400;" />'+
+											sc+
+											'<span>'+
+												gM('Radii')+' (半长轴,半短轴,半焦距 3选2) '+strtxt+'class=rad placeholder="ra50 rb30;rc40 ra50;rb30 rc40" />'+
+											sc+
+											'<span>'+
+												gM('Rotate')+'°'+strtxt+'class=rot placeholder="45,-30" />'+
+											sc+
+										dc+
+										'<div>'+strchkbx0+'class=multinput />'+
+											'<span>'+
+												gM('Foci Coordinate')+strtxt+'class=pos placeholder="300 400,380 400;" />'+
+											sc+
+											'<span>'+
+												gM('Radii')+' (半长轴,半短轴 2选1) '+strtxt+'class=rad placeholder="ra50;rb30" />'+
+											sc+
+										dc+
+										'<div>'+strchkbx0+'class=multinput />'+
+											'<span>'+
+												gM('Vertex Coordinate')+strtxt+'class=pos placeholder="150 400,400 360,650 400,400 440;" size=50 />'+
+											sc+
+										dc+
+										'<div>'+strchkbx0+'class=multinput />'+
+											'<span>'+
+												gM('CircumRectangle')+
+												gM('Vertex Coordinate')+strtxt+'class=pos placeholder="box150 360,250 360,250 440,150 440;" size=50 />'+
+											sc+
+										dc
+					
+									)+
+								sc+
+							sc+dc+
+					
+					
+						'<div>'+spanmi('crop_landscape',gM('Rectangle'),'" id="rect')+
+							'<span for=rect><label>'+strchkbx0+'id=rectOn class=on /></label>'+
+								'<span for=rectOn>'+
+									DCtv('multi',
+										'<div>'+gM('Vertex Coordinate')+' ('+gM('Left Top')+') '+strtxt+'class=pos placeholder="200 400;" size=50 />'+dc+
+										'<div>'+gM('Length Width')+strtxt+'class=rad placeholder="300 200;" />'+dc
+									)+
+								sc+
+							sc+dc+
+					
+						'<div>'+spanmi('power_input',gM('Polyline Polygon'),'" id="line')+
+							'<span for=line><label>'+strchkbx0+'id=lineOn class=on /></label>'+
+								'<span for=lineOn>'+
+									DCtv('multi',
+										'<div>'+gM('Vertex Coordinate')+' (或斜°长) '+strtxt+'class=pos placeholder="200 200,300 300,d45 l100;" size=60 />'+dc+
+										'<div>'+gM('Round Corner')+ gM('Radii')+strtxt+'class=rad2 placeholder="0,10" />'+dc+
+										'<div><label>'+gM('Closed')+' ('+gM('Polygon')+') '+strchkbx0+'class=close /></label>'+dc
+									)+
+					
+								sc+
+							sc+dc+
+					
+					
+						'<div>'+spanmi('brightness_low',gM('Regular Polygon'),'" id="isogon')+
+							'<span for=isogon><label>'+strchkbx0+'id=isogonOn class=on /></label>'+
+								'<span for=isogonOn>'+
+									DCtv('multi',
+										'<div>'+strchkbx0+'class=multinput'+chked+' />'+
+											'<span>'+gM('Centroid Coordinate')+strtxt+'class=pos placeholder="200 400;" />'+sc+
+											'<span>'+gM('Radii')+strtxt+'class=rad placeholder="50;" />'+sc+
+											'<span>'+gM('Rotate')+'° ('+gM('Start Radius offset x-axis')+') '+strtxt+'class=rot placeholder="45,-30" />'+sc+
+										dc+
+										'<div>'+strchkbx0+'class=multinput />'+
+											'<span>'+gM('Start Point')+' '+gM('Coordinate')+strtxt+'class=pos placeholder="200 400;" />'+sc+
+											'<span>'+gM('Side Length')+strtxt+'class=rad placeholder="50;" />'+sc+
+											'<span>'+gM('Rotate')+'° ('+gM('Start side offset x-axis')+') '+strtxt+'class=rot placeholder="45,-30" />'+sc+
+											'<label>'+gM('Counterclockwise')+' ('+gM('Direction')+') '+strchkbx0+'class=dir'+chked+' />'+'</label>'+
+										dc+
+					
+										'<div>'+gM('Round Corner Radii')+strtxt+'class=rad2 placeholder="0,0,5;10;" />'+dc+
+										'<div>'+gM('Sides')+strtxt+'class=line placeholder="3,4,5" value=3 />'+dc
+					
+									)+
+								sc+
+							sc+dc+
+					
+					
+						'<div>'+spanmi('all_inclusive',gM('Bezier Curve'),'" id="bezier')+
+							'<span for=bezier><label>'+strchkbx0+'id=bezierOn class=on /></label>'+
+								'<span for=bezierOn>'+
+									DCtv('multi',
+										'<div>'+
+											gM('Point Coordinate')+' ('+gM('Start Point')+','+gM('Control Point')+'1、2;' +gM('End Point')+ 
+											') '+strtxt+'class=pos placeholder="20 20,30 50;80 60" size=50 />'+
+										dc+
+										'<div><label>'+gM('Closed')+strchkbx0+'class=close /></label>'+dc
+					
+									)+
+					
+								sc+
+							sc+dc+
+						'<div>'+spanmi('gesture',gM('Curve'),'" id="path')+
+							'<span for=path><label>'+strchkbx0+'id=pathOn class=on /></label>'+
+								'<span for=pathOn>'+
+									DCtv('multi',
+										'<div>SVG命令 (MLHVAQC) '+strtxt+'class=svg placeholder="M20 20L30 50" size=50 />'+dc+
+										'<div><label>'+
+												gM('Closed')+strchkbx0+'class=close />'+
+											'</label>'+dc
+					
+									)+
+								sc+
+							sc+dc+
+					dc+
+					'<div for=text>'+
+					
+						'<div>'+spanmi('text_format',gM('Text'),'" id="txt')+
+							'<span for=txt><label>'+strchkbx0+'id=txtOn class=on /></label>'+
+					
+								'<span for=txtOn>'+
+									DCtv('multi',
+										'<span>'+
+											gM('Coordinate')+strtxt+'class=pos placeholder="200 400;" />'+
+										sc+
+										strtxt+'class=value size=80 />'+
+										'<div><label>'+
+												gM('Font')+' '+strtxt+'class=font placeholder="normal italic oblique / small-caps / bold bolder lighter | italic small-caps bold 32px 微软雅黑" />'+
+											'</label>'+
+											'<label>'+gM('Horizontal Align')+' <select class=halign>'+Options(ZLR('center end left right start'),1).join('')+'</select></label>'+
+											'<label>'+gM('Vertical Align')+' <select class=valign>'+Options(ZLR('alphabetic top hanging middle ideographic bottom'),1).join('')+'</select></label>'+
+										dc
+					
+									)+
+								sc+
+							sc+dc+
+					
+					dc+
+					'<div for=ani>'+
+						'<div id=aniControl>'+
+							itv('" id=aniPlay tip="Play','play_arrow')+
+							itv('" id=aniStop tip="Stop','stop')+
+							itv('" id=aniShot tip="Shot','camera_alt')+
+							itv('" id=aniClear tip="Clear','close')+
+							itv('" id=aniInput tip="Import','file_upload')+
+							itv('" id=aniOutput tip="Export','file_download')+
+					
+						dc+
+						'<div>'+spanmi('stay_current_landscape',gM('Scene'),'" id="scene')+
+							'<span for=scene><label>'+strchkbx0+'id=sceneOn class=on /></label>'+
+					
+								'<span for=sceneOn>'+
+									DCtv('multi',
+										'<span>'+gM('Time')+' (ms) '+strtxt+'class=times size=80 placeholder="0 1500" />'+sc+
+										'<div>Frame '+txa('','json" placeholder="每一场初始静态化数据')+dc
+									)+
+								sc+
+							sc+dc+
+					
+						'<div>'+spanmi('directions_run',gM('Action'),'" id="act')+
+							'<span for=act><label>'+strchkbx0+'id=actOn class=on /></label>'+
+					
+								'<span for=actOn>'+
+									DCtv('multi',
+										'<span>'+gM('Time')+' (ms) '+strtxt+'class=times size=80 placeholder="0 1000" />'+sc+
+										'<div>JS '+txa('','js" placeholder="动作指令JS代码')+dc
+									)+
+								sc+
+							sc+dc+
+					
+					
+					dc)+
+
+
+
+
+
+
+
+
+
+
+
 					'<div id=copyOpt>'+gM('Copy')+' '+gM('Direction')+
 						'<p><select id=copyDir multiple=multiple class=hmulti size=1 title=Ctrl>'+Options(seqA(0, 10), '←→↑↓↖↗↙↘↥↧'.split('')).join('')+'</select></p>'+
 						'<p>'+SCtv('','×')+num('1" id="copyn',1)+
@@ -95,347 +453,31 @@ $(function () {
 					detail('<input type=button id=clrTextBox value="'+gM('Clear')+'" />'+
 						'<select id=TextBoxType>'+Options(ZLR('LaTeX Markdown HTML SVG CSS Canvas Echarts'),'','LaTeX').join('')+'</select>'+strbtn+' OK " id=TextBoxGo />'+strbtn+' + " id=TextBoxGo2 />',
 						txa('','" id="TextBox')+
-						detail(gM('Editor'),
+						detail(gM('Editor')+SCtv('ediHot" for="HTML',Arrf(function(x){return strbtn+gM(x)+'" data-v='+x+' />'},ZLR('widget editor document slide index')).join('')),
 						
 						DCtv('hidden" for="HTML', [].concat(
-							'iframe: ','<input type=text class="iframesrc" value="" placeholder="solve.html?" />',
+							'iframe URL: ',strtxt+'class="iframesrc" value="" placeholder="solve.html?" />',
 							Arrf(function(x){return XML.wrapE('label',x)}, zlrA3('<input type=',['radio name=name1','checkbox'],' />')).join('')+meter(50),
 							rng(5,0,10),
 							num(0,0,'9" step="1')+XML.wrapE('select',Options([1,2,3,4]).join(''))+XML.wrapE('select',Options(['A','B','C','D']).join('')),
-
-							zlrA3('<input type=',['color','time','date','text','button value="'+gM('Button')+'"'],' />'),
+							mark(gM('Mark'))+colorbx('#112233')+scib('URL')+del(gM('Del')),
+							zlrA3('<input type=',['time','button value="'+gM('Button')+'"'],' />').join(''),
+							zlrA3('<input type=',['date'],' />'),
+							zlrA3('<input type=',['text value="'+gM('Text')+'"'],' />'),
+							txtreadonly(gM('Readonly')),
 							
-							XML.wrapE('textarea')
+							txa(gM('Textarea')),
+							Arrfc([scib,gM],ZLR('ol ul')).join('')+
+							Arrfc([scib,gM],ZLR('dl Table')).join('')
+							+hr
+							+detail(gM('Summary'),gM('Details'))
+							+refer([1,2])
+							+fieldset(gM('Summary'),gM('Details')),
 						).join(br)
 						
 						)+
 						
-						DCtv('hidden" for="Canvas',tooltip.Canvas+
-DCtv('pd10" id="canvasMenu',
-	itv('" id=bg tip="bg','photo_size_select_actual')+
-	itv('" id=grid tip="Grid','grid_on')+
-	itv('" id=shape tip="Shape','panorama_fish_eye')+
-	itv('" id=text tip="Text','title')+
-	itv('" id=clear tip="Clear','backspace')
-	//itv('" id=ani tip="Animation','movie')
-)+
-'<div for=bg>'+
-	'<div>'+spanmi('gradient',gM('BGC'),'" id="bggrad')+
-		'<span for=bggrad><label>'+strchkbx0+'id=bggradOn class=on /></label>'+
-			'<span for=bggradOn>'+
-				DCtv('fill',
-					'<label hidden>'+gM('Fill')+strchkbx0+'class=fillon'+chked+' /></label>'+
-					'<input type=color value="#eeeeee" class=color />'+
-					'<label>'+gM('Gradient')+strchkbx0+'class=gradon /></label>'+br+
-					gM('Gradient Color')+'<input type=text placeholder="0 color,0.5 color,1 color" class=gradcolor />'+br+
-					gM('Linear / Radial')+'<input type=text placeholder="x0 y0 (r0) x1 y1 (r1)" class=grad />'
-				)+
-			sc+
-		sc+dc+
-	'<div>'+spanmi('landscape',gM('Image'),'" id="bgimg')+
-		'<span for=bgimg><label>'+strchkbx0+'id=bgimgOn class=on /></label>'+
-			'<span for=bgimgOn>'+
-				DCtv('multi',
-					'<div>'+gM('Image URL')+'<input type=url class=imgurl placeholder="" />'+dc+
-					'<div>'+gM('Cut Position and Size')+'<input type=text class=poswh placeholder="sx,sy,swidth,sheight" />'+dc+
-					'<div>'+gM('Paste Position and Size')+'<input type=text class=poswh placeholder="x,y,width,height" />'+dc+
-					'<div>'+itv('Add','add')+itv('Del','clear')+dc
-
-				)+
-			sc+
-		sc+dc+
-dc+
-
-
-
-
-'<div for=grid>'+
-	'<div>'+spanmi('filter_tilt_shift',gM('Origin'),'" id="orig')+
-		'<span><label>x='+num('600" id="Ox')+'</label>'+
-			'<label>y='+num('400" id="Oy')+'</label>'+sc+
-	dc+
-	'<div>'+spanmi('radio_button_checked',gM('Point'),'" id="dot')+
-		'<span for=dot><label>'+strchkbx0+'id=dotOn class=on /></label>'+
-
-			'<span for=dotOn>'+
-				DCtv('multi',
-					'<div><span>'+gM('Coordinate')+'<input type=text class=pos placeholder="20 20,30 30" />'+sc+
-						'<span>'+gM('Color')+'<input type=color value="#000000" class=color />'+sc+
-						itv('Add','add')+itv('Del','clear')+
-					dc
-				)+
-			sc+
-		sc+dc+
-
-	'<div>'+spanmi('add_circle_outline',gM('Axis'),'" id="axis')+
-		'<span for=axis><label>'+strchkbx0+'id=axisOn class=on /></label>'+
-			'<span for=axisOn>'+
-				'<span>'+gM('Range')+'<input type=text value="" id=axisRange placeholder="-360,360;-240,240 || 360;240 || 360" />'+sc+
-				'<div>'+gM('Arrow')+'分类 (左右下上，各取1个数字【0:无, 1:个字形, 2:空心闭合, 3:实心闭合】) <input type=text value="0101" id=axisArrowType placeholder="0101" />'+dc+
-				'<div>'+gM('Arrow')+'参数 (侧翼点长,宽;箭尾点偏移) <input type=text value="8,4" id=axisArrowPoints placeholder="8,4;-2" />'+dc+
-				'<span>'+gM('Color')+'<input type=color value="#000000" class=color />'+sc+
-			sc+
-		sc+dc+
-	'<div>'+spanmi('graphic_eq',gM('Tick'),'" id="tick')+
-		'<span for=tick><label>'+strchkbx0+'id=tickOn class=on /></label>'+
-			'<span for=tickOn>'+
-				'<span>'+
-					gM('Range')+'<input type=text value="" id=tickRange placeholder="-100,100;-50,50 || 100;50 || 100" />'+
-				sc+
-				DCtv('multi',
-					'<div><span>'+gM('Tick Length')+' (负号表示负轴方向) <input type=text value="-5,-5" class=tickLength placeholder="-5,-5" size=10 />'+sc+
-						'<span>'+gM('Spacing')+'<input type=text value=20 class=tickSpacing placeholder="20,20" size=10 />'+sc+
-						'<span>'+gM('Color')+'<input type=color value="#000000" class=color />'+sc+
-						itv('Add','add')+itv('Del','clear')+
-					dc
-				)+
-
-			sc+
-		sc+dc+
-	'<div>'+spanmi('border_all',gM('Cartesian Grid'),'" id="gridCross')+
-		'<span for=gridCross><label>'+strchkbx0+'id=gridCrossOn class=on /></label>'+
-			'<span for=gridCrossOn>'+
-				SCtv('orig',
-					'<span>'+gM('Range')+'<input type=text value="" id=gridCrossRange placeholder="-700,700;-500,500 || 700;500 || 700" />'+sc+
-					'<label>'+gM('Origin')+strchkbx0+'id=gridCrossOrigOn class=on />'+'</label>'+
-					'<span for=gridCrossOrigOn>'+
-						'<label>x='+num('600" class="Ox')+'</label>'+
-						'<label>y='+num('400" class="Oy')+'</label>'+sc
-
-				)+
-				DCtv('primary',
-					'<span>'+gM('Primary Grid Spacing')+'<input type=text value=200 id=gridCrossSpacing placeholder="200,200" size=10 />'+sc+
-					'<span>'+gM('Primary Grid Dash')+'<input type=text class=dash placeholder="2,4,2" size=10 />'+sc+
-					br+
-					'<span>'+gM('Primary Grid Color')+'<input type=color value="#a0a0a0" class=color />'+sc
-				)+
-				DCtv('secondary',
-					'<span>'+gM('Secondary Grid Spacing')+'<input type=text value=40 id=gridCross2Spacing placeholder="40,40" size=10 />'+sc+
-					'<span>'+gM('Secondary Grid Dash')+'<input type=text class=dash placeholder="2,4,2" value=5 size=10 />'+sc+
-					br+
-					'<span>'+gM('Secondary Grid Color')+'<input type=color value="#cecece" class=color />'+sc
-				)+
-			sc+
-		sc+dc+
-
-	'<div>'+spanmi('location_searching',gM('Polar Grid'),'" id="gridPolar')+
-		'<span for=gridPolar><label>'+strchkbx0+'id=gridPolarOn class=on /></label>'+
-			'<span for=gridPolarOn>'+
-				SCtv('orig',
-					'<span>'+gM('Range Radii')+num('0" id="gridPolarRange')+sc+
-					'<label>'+gM('Origin')+strchkbx0+'id=gridPolarOrigOn class=on /></label>'+
-					'<span for=gridPolarOrigOn>'+
-						'<label>x='+num('600" class="Ox')+'</label>'+
-						'<label>y='+num('400" class="Oy')+'</label>'+sc
-				)+
-				DCtv('primary',
-					'<span>'+gM('Primary Grid Spacing')+' r '+num('200" id="gridPolarxSpacing')+sc+
-					'<span>'+gM('Primary Grid')+'角等分线数'+num('1" id="gridPolaryNum')+sc+
-					'<span>'+gM('Primary Grid Dash')+'<input type=text class=dash placeholder="2,4,2" size=10 />'+sc+
-					br+
-					'<span>'+gM('Primary Grid Color')+'<input type=color value="#a0a0a0" class=color />'+sc
-
-				)+
-				DCtv('secondary',
-					'<span>'+gM('Secondary Grid Spacing')+' r '+num('0" id="gridPolar2xSpacing')+sc+
-					'<span>'+gM('Secondary Grid')+'角等分线数'+num('0" id="gridPolar2yNum')+sc+
-					'<span>'+gM('Secondary Grid Dash')+'<input type=text class=dash placeholder="2,4,2" value=5 size=10 />'+sc+
-					br+
-					'<span>'+gM('Secondary Grid Color')+'<input type=color value="#cecece" class=color />'+sc
-				)+
-			sc+
-		sc+
-	dc+
-dc+
-'<div for=shape>'+
-
-
-
-	'<div>'+spanmi('radio_button_unchecked',gM('Circle'),'" id="circle')+
-		'<span for=circle><label>'+strchkbx0+'id=circleOn class=on /></label>'+
-			'<span for=circleOn>'+
-				DCtv('multi',
-					'<div>'+gM('Centroid Coordinate')+'<input type=text class=pos placeholder="200 200,300 300" />'+dc+
-					'<div>'+gM('Radii')+'<input type=text class=rad placeholder="15,10" />'+dc
-
-				)+
-			sc+
-		sc+dc+
-
-	'<div>'+spanmi('vignette',gM('Ellipse'),'" id="ellipse')+
-		'<span for=ellipse><label>'+strchkbx0+'id=ellipseOn class=on /></label>'+
-			'<span for=ellipseOn>'+
-				DCtv('multi',
-					'<div>'+strchkbx0+'class=multinput'+chked+' />'+
-						'<span>'+
-							gM('Centroid Coordinate')+'<input type=text class=pos placeholder="200 400;" />'+
-						sc+
-						'<span>'+
-							gM('Radii')+' (半长轴,半短轴,半焦距 3选2) <input type=text class=rad placeholder="ra50 rb30;rc40 ra50;rb30 rc40" />'+
-						sc+
-						'<span>'+
-							gM('Rotate')+'°<input type=text class=rot placeholder="45,-30" />'+
-						sc+
-					dc+
-					'<div>'+strchkbx0+'class=multinput />'+
-						'<span>'+
-							gM('Foci Coordinate')+'<input type=text class=pos placeholder="300 400,380 400;" />'+
-						sc+
-						'<span>'+
-							gM('Radii')+' (半长轴,半短轴 2选1) <input type=text class=rad placeholder="ra50;rb30" />'+
-						sc+
-					dc+
-					'<div>'+strchkbx0+'class=multinput />'+
-						'<span>'+
-							gM('Vertex Coordinate')+'<input type=text class=pos placeholder="150 400,400 360,650 400,400 440;" size=50 />'+
-						sc+
-					dc+
-					'<div>'+strchkbx0+'class=multinput />'+
-						'<span>'+
-							gM('CircumRectangle')+
-							gM('Vertex Coordinate')+'<input type=text class=pos placeholder="box150 360,250 360,250 440,150 440;" size=50 />'+
-						sc+
-					dc
-
-				)+
-			sc+
-		sc+dc+
-
-
-	'<div>'+spanmi('crop_landscape',gM('Rectangle'),'" id="rect')+
-		'<span for=rect><label>'+strchkbx0+'id=rectOn class=on /></label>'+
-			'<span for=rectOn>'+
-				DCtv('multi',
-					'<div>'+gM('Vertex Coordinate')+' ('+gM('Left Top')+') <input type=text class=pos placeholder="200 400;" size=50 />'+dc+
-					'<div>'+gM('Length Width')+'<input type=text class=rad placeholder="300 200;" />'+dc
-				)+
-			sc+
-		sc+dc+
-
-	'<div>'+spanmi('power_input',gM('Polyline Polygon'),'" id="line')+
-		'<span for=line><label>'+strchkbx0+'id=lineOn class=on /></label>'+
-			'<span for=lineOn>'+
-				DCtv('multi',
-					'<div>'+gM('Vertex Coordinate')+' (或斜°长) <input type=text class=pos placeholder="200 200,300 300,d45 l100;" size=60 />'+dc+
-					'<div>'+gM('Round Corner')+ gM('Radii')+'<input type=text class=rad2 placeholder="0,10" />'+dc+
-					'<div><label>'+gM('Closed')+' ('+gM('Polygon')+') '+strchkbx0+'class=close /></label>'+dc
-				)+
-
-			sc+
-		sc+dc+
-
-
-	'<div>'+spanmi('brightness_low',gM('Regular Polygon'),'" id="isogon')+
-		'<span for=isogon><label>'+strchkbx0+'id=isogonOn class=on /></label>'+
-			'<span for=isogonOn>'+
-				DCtv('multi',
-					'<div>'+strchkbx0+'class=multinput'+chked+' />'+
-						'<span>'+gM('Centroid Coordinate')+'<input type=text class=pos placeholder="200 400;" />'+sc+
-						'<span>'+gM('Radii')+'<input type=text class=rad placeholder="50;" />'+sc+
-						'<span>'+gM('Rotate')+'° ('+gM('Start Radius offset x-axis')+') <input type=text class=rot placeholder="45,-30" />'+sc+
-					dc+
-					'<div>'+strchkbx0+'class=multinput />'+
-						'<span>'+gM('Start Point')+' '+gM('Coordinate')+'<input type=text class=pos placeholder="200 400;" />'+sc+
-						'<span>'+gM('Side Length')+'<input type=text class=rad placeholder="50;" />'+sc+
-						'<span>'+gM('Rotate')+'° ('+gM('Start side offset x-axis')+') <input type=text class=rot placeholder="45,-30" />'+sc+
-						'<label>'+gM('Counterclockwise')+' ('+gM('Direction')+') '+strchkbx0+'class=dir'+chked+' />'+'</label>'+
-					dc+
-
-					'<div>'+gM('Round Corner Radii')+'<input type=text class=rad2 placeholder="0,0,5;10;" />'+dc+
-					'<div>'+gM('Sides')+'<input type=text class=line placeholder="3,4,5" value=3 />'+dc
-
-				)+
-			sc+
-		sc+dc+
-
-
-	'<div>'+spanmi('all_inclusive',gM('Bezier Curve'),'" id="bezier')+
-		'<span for=bezier><label>'+strchkbx0+'id=bezierOn class=on /></label>'+
-			'<span for=bezierOn>'+
-				DCtv('multi',
-					'<div>'+
-						gM('Point Coordinate')+' ('+gM('Start Point')+','+gM('Control Point')+'1、2;' +gM('End Point')+ 
-						') <input type=text class=pos placeholder="20 20,30 50;80 60" size=50 />'+
-					dc+
-					'<div><label>'+gM('Closed')+strchkbx0+'class=close /></label>'+dc
-
-				)+
-
-			sc+
-		sc+dc+
-	'<div>'+spanmi('gesture',gM('Curve'),'" id="path')+
-		'<span for=path><label>'+strchkbx0+'id=pathOn class=on /></label>'+
-			'<span for=pathOn>'+
-				DCtv('multi',
-					'<div>SVG命令 (MLHVAQC) <input type=text class=svg placeholder="M20 20L30 50" size=50 />'+dc+
-					'<div><label>'+
-							gM('Closed')+strchkbx0+'class=close />'+
-						'</label>'+dc
-
-				)+
-			sc+
-		sc+dc+
-dc+
-'<div for=text>'+
-
-	'<div>'+spanmi('text_format',gM('Text'),'" id="txt')+
-		'<span for=txt><label>'+strchkbx0+'id=txtOn class=on /></label>'+
-
-			'<span for=txtOn>'+
-				DCtv('multi',
-					'<span>'+
-						gM('Coordinate')+'<input type=text class=pos placeholder="200 400;" />'+
-					sc+
-					'<input type=text class=value size=80 />'+
-					'<div><label>'+
-							gM('Font')+' <input type=text class=font placeholder="normal italic oblique / small-caps / bold bolder lighter | italic small-caps bold 32px 微软雅黑" />'+
-						'</label>'+
-						'<label>'+gM('Horizontal Align')+' <select class=halign>'+Options(ZLR('center end left right start'),1).join('')+'</select></label>'+
-						'<label>'+gM('Vertical Align')+' <select class=valign>'+Options(ZLR('alphabetic top hanging middle ideographic bottom'),1).join('')+'</select></label>'+
-					dc
-
-				)+
-			sc+
-		sc+dc+
-
-dc+
-'<div for=ani>'+
-	'<div id=aniControl>'+
-		itv('" id=aniPlay tip="Play','play_arrow')+
-		itv('" id=aniStop tip="Stop','stop')+
-		itv('" id=aniShot tip="Shot','camera_alt')+
-		itv('" id=aniClear tip="Clear','close')+
-		itv('" id=aniInput tip="Import','file_upload')+
-		itv('" id=aniOutput tip="Export','file_download')+
-
-	dc+
-	'<div>'+spanmi('stay_current_landscape',gM('Scene'),'" id="scene')+
-		'<span for=scene><label>'+strchkbx0+'id=sceneOn class=on /></label>'+
-
-			'<span for=sceneOn>'+
-				DCtv('multi',
-					'<span>'+gM('Time')+' (ms) <input type=text class=times size=80 placeholder="0 1500" />'+sc+
-					'<div>Frame '+txa('','json" placeholder="每一场初始静态化数据')+dc
-				)+
-			sc+
-		sc+dc+
-
-	'<div>'+spanmi('directions_run',gM('Action'),'" id="act')+
-		'<span for=act><label>'+strchkbx0+'id=actOn class=on /></label>'+
-
-			'<span for=actOn>'+
-				DCtv('multi',
-					'<span>'+gM('Time')+' (ms) <input type=text class=times size=80 placeholder="0 1000" />'+sc+
-					'<div>JS '+txa('','js" placeholder="动作指令JS代码')+dc
-				)+
-			sc+
-		sc+dc+
-
-
-dc
-				
-				),'','id=TextBoxTool hidden'),
-						1,'id=svgTEXTBox')+
+						DCtv('hidden" for="Canvas',tooltip.Canvas),'','id=TextBoxTool hidden'),	1,'id=svgTEXTBox')+
 				
 					'<div id=svgSel>'+
 						detail('<select id=svgText>'+Options(seqA(0,11),ZLR(
@@ -457,11 +499,11 @@ dc
 						detail(gM('FontSize')+num('24" id=fontSize title="px',12)+
 							gM('center')+rng('','','2" step=1 tip=center id="tileFontCenter'),
 							'<div id=fontCSS>'+SCtv('bold" title="B')+SCtv('italic" title="I')+SCtv('underline')+SCtv('overline')+SCtv('through')+dc+
-							'<div>'+gM('fonT')+'<input type=text id=font list=CSS_fontfamily />'+dc,
+							'<div>'+gM('fonT')+strtxt+'id=font list=CSS_fontfamily />'+dc,
 							'','id=Font hidden')+
 							
 						'<div id=Dash hidden>'+
-							gM('dash')+'<input type=text id=strkDash />'+
+							gM('dash')+strtxt+'id=strkDash />'+
 							gM('offset')+num('1" id="strkDashOffset')+dc+
 				
 						detail('<label id=SIDES>'+gM('Sides') + '× '+num('5" id="Sides',3)+'</label>'+
@@ -498,7 +540,16 @@ dc
 							
 							),'','id=bW')+
 				
+						DCtv('lightgray" id="gridType',
 				
+
+							'<label><input type=radio name=gridType value=Cartesian'+chked+' /></label>'+							
+							'<label><input type=radio name=gridType value=Circle /></label>'+
+							'<label><input type=radio name=gridType value=Elliptic /></label>'+
+							'<label><input type=radio name=gridType value=Affine /></label>'+
+							'<label><input type=radio name=gridType value=Triangle /></label>'
+	
+						)+
 						DCtv('lightgray" id="MarginCopyOpt',
 				
 							'<label hidden><input type=radio name=MarginCopyOpt value=nest />'+
@@ -554,10 +605,10 @@ sc,
 DCtv('lightgray" id="CssTransform',
 	DCtv('lightgray" hidden id="CssTransOpt',
 		'<div>'+gM('Perspective')+num('0" title=px id="cssPerspec')+
-			gM('Origin')+'<input type=text id=cssPerspecOrig value="50% 50%" placeholder="[xy]=left center right length %" title="x y" />'+
+			gM('Origin')+strtxt+'id=cssPerspecOrig value="50% 50%" placeholder="[xy]=left center right length %" title="x y" />'+
 		dc+
 		'<div><label>'+gM('Preserve 3D')+strchkbx0+'id=cssTranStyle /></label>'+
-			gM('Origin')+'<input type=text id=cssTransOrig value="50% 50% 0" placeholder="[xy]=left center right length %; [z]=length" title="x y z" />'+
+			gM('Origin')+strtxt+'id=cssTransOrig value="50% 50% 0" placeholder="[xy]=left center right length %; [z]=length" title="x y z" />'+
 		dc+
 		'<div><label>'+gM('backvisi')+strchkbx0+'id=cssBackVisi'+chked+ ' /></label>'+
 		dc
@@ -568,7 +619,7 @@ DCtv('lightgray" id="CssTransform',
 		'<span id=cssTransOpt>'+gM('Opts')+sc+
 	dc+
 
-	'<div id=cssMatrix3D hidden><input type=text id=cssMatrix3d placeholder="n,n...{6|16}" />'+
+	'<div id=cssMatrix3D hidden>'+strtxt+'id=cssMatrix3d placeholder="n,n...{6|16}" />'+
 	dc+
 
 	'<div id=CssScale><img class=scale>'+gM('Scale')+
@@ -602,7 +653,7 @@ DCtv('lightgray" id="CssTransform',
 		'</label>'+dc+
 		
 		'<div id=CssRotate3d><label><input type=radio value=cssRotate3d />'+
-			'<img class=rotate1>'+gM('Rotate')+' 3D<input type=text id=cssRotate3d placeholder="x,y,z,angle" /></label>'+
+			'<img class=rotate1>'+gM('Rotate')+' 3D'+strtxt+'id=cssRotate3d placeholder="x,y,z,angle" /></label>'+
 		dc+
 
 	dc
@@ -613,13 +664,27 @@ DCtv('lightgray" id="CssTransform',
 '','id=svgCssTransform')+
 
 detail(
-'<input type=text id=color0 title="Snow" readonly />'+
-'<input type=text id=color1 title="Blue Sky" readonly />'+
-'<input type=text id=color2 title="Pink Girl" readonly />'+
-'<input type=text id=color3 title="Black Rhythm" readonly />'+
-'<input type=text id=color4 title="Red Charm" readonly />'+
-'<input type=text id=color5 tip="Random Color" value="?" readonly />'+
-'<input type=text id=RandomColorson tip="Inner-Random Colors" value="#" class="tool seled" readonly />',
+	'<select id=roughStyle>'+Options(['rough','hachure','solid','zigzag','cross-hatch','dots','dashed','zigzag-line'],1).join('')+'</select>'+
+	gM('Roughness')+' '+num(1,0,2),
+	[
+		gM('Bowing')+' '+num(1,0,1)+gM('Curve Fitting')+' '+num(0.95,0,1),
+		gM('Simplification')+' '+num(0.5,0,1)+gM('Seed')+' '+num(0),
+		gM('Fill Weight')+' '+num(1)+gM('Gap')+' '+num(8),
+		gM('Dash Offset')+' '+num()+gM('Hachure Angle')+' '+num(60),
+		gM('Curve Step Count')+' '+num(9),
+		gM('Fill Line Dash')+strtxt+'value="" placeholder="2,5" />',
+		'<label>'+gM('Disable Multi Fill')+strchkbx0+' class=roughMulti /></label><label>'+gM('Disable Multi Stroke')+strchkbx0+' class=roughMulti /></label>'
+	].join(br),
+	'','id=svgRough'
+)+
+detail(
+	txtreadonly('','color0" title="Snow')+
+	txtreadonly('','color1" title="Blue Sky')+
+	txtreadonly('','color2" title="Pink Girl')+
+	txtreadonly('','color3" title="Black Rhythm')+
+	txtreadonly('','color4" title="Red Charm')+
+	txtreadonly('?','color5" title="Random Color')+
+	txtreadonly('#','RandomColorson" tip="Inner-Random Colors" class="tool seled'),
 
 
 '<div id=Color>'+Arrf(function (X) {
@@ -673,7 +738,22 @@ dc+
 
 
 				dc+
-				'<div>'+
+			DCtv('svgTool2',
+				svgf.id('SVGshift" tip="Shift',svgf.path('M8 17 L15 10 22 17 M8 21 H22'))+
+
+				svgf.id('D2on" tip="2D Flatten',svgf.text('2D',[22,4,16]))+
+
+				svgf.id('Roughon" tip="Rough',svgf.path('M8 22 L22 8 M8 15 L15 8 M15 22 L22 15'))+
+
+				svgf.id('Legoon" tip="Lego',svgf.rect(7,7,16,16)+svgf.circle(15,15,4,'','white'))+
+
+				svgf.id('Zdogon" tip="3D (Zdog)',svgf.text('3D',[22,4,16]))
+
+
+
+
+			)+
+				DCtv('pg1',[
 					svgf.id('Freelin',svgf.path('M12 24 L13 25 13 24 13 23 13 21 15 18 16 17 18 12 18 10 18 9 18 7 18 5 18 4 18 3 18 2'))+
 					svgf.id('Text" hotkey="A',svgf.text('A',[25,5,28]))+
 					svgf.id('ArectNote" tip="Note" hotkey="',svgf.path('M8 20 L7 25 13 20 H20 A5 5 0 0 0 25 15 V10 A5 5 0 0 0 20 5 H10 A5 5 0 0 0 5 10 V15 A5 5 0 0 0 8 20z'))+
@@ -681,20 +761,21 @@ dc+
 
 
 					svgf.id('ellipseNote',svgf.path('M8 18 L7 25 13 20 A10 8 0 1 0 8 18z'))+
-					svgf.id('Lattice',svgf.path('M4 11 H26 M4 18 H26 M11.5 25 V4 M18.5 25 V4 M4 4 H26 V26 H4 V4 Z'))+
+					svgf.id('Lattice',svgf.path('M4 11 H26 M4 18 H26 M11.5 25 V4 M18.5 25 V4 M4 4 H26 V26 H4 V4 Z')),
 
 
-				dc+
-				'<div>'+
+
+					
 					svgf.id('LRect',svgf.rect(5,7,20,16))+
 					svgf.id('LRectSq',svgf.rect(5,5,20,20))+
 					svgf.id('ARect" tip="Round Corner" hotkey="R',svgf.rect(5,6,20,'18" rx=5 ry="5'))+
 					svgf.id('ARectSq',svgf.rect(5,5,20,'20" rx=5 ry="5'))+
 					svgf.id('Ellipse',svgf.ellipse(15,15,12,10))+
-					svgf.id('EllipseSq',svgf.circle(15,15,10))+
+					svgf.id('EllipseSq',svgf.circle(15,15,10)),
 
-				dc+
-				'<div>'+
+
+
+
 					svgf.id('diagon',svgf.polygon('7,15 15,5 23,15 15,25'))+
 
 					svgf.id('diagonSq',svgf.polygon('5,15 15,5 25,15 15,25'))+
@@ -702,11 +783,9 @@ dc+
 					svgf.id('SLNoteRnd',svgf.path('M11 7 L5 13 V23 H25 V7 z'))+
 					svgf.id('SANoteRnd',svgf.path('M12 7 A7 7 0 0 0 5 14 V23 H25 V7 z'))+
 					svgf.id('DLNoteRnd',svgf.path('M11 7 L5 13 V23 H25 V13 L19 7 z'))+
-					svgf.id('DANoteRnd',svgf.path('M12 7 A7 7 0 0 0 5 14 V23 H25 V14 A7 7 0 0 0 18 7 z'))+
+					svgf.id('DANoteRnd',svgf.path('M12 7 A7 7 0 0 0 5 14 V23 H25 V14 A7 7 0 0 0 18 7 z')),
 
-				dc+
 
-				'<div>'+
 
 
 					svgf.id('TriangonH',svgf.polygon('8,25 12,5 22,25'))+
@@ -719,52 +798,51 @@ dc+
 
 					svgf.id('PentagonT',svgf.polygon('15,2 27,12 23,26 7,26 3,12'))+
 
-					svgf.id('LGonRndSq',svgf.path('M3 15 L9 26 H21 L27 15 21 4 H9 z'))+
-
-				dc+
+					svgf.id('LGonRndSq',svgf.path('M3 15 L9 26 H21 L27 15 21 4 H9 z')),
 
 
-				'<div>'+
+
+
 					svgf.id('Quo',svgf.path('M5 12 A2 2 0 0 0 7 15 H13 A2 2 0 0 1 15 18 2 2 0 0 1 17 15 H23 A2 2 0 0 0 25 12'))+
 					svgf.id('Polylin',svgf.path('M6 24 L13 9 17 21 24 6'))+
 					svgf.id('PolyGon',svgf.path('M5 20 L20 25 25 10 15 5z'))+
 					svgf.id('HeartNote',svgf.path('M15 8 C15 7 14 5 10 5 C4 5 4 10 4 10 C4 16 8 20 15 24 C22 20 26 16 26 12 C26 12 26 5 20 5 C17 5 15 7 15 8z'))+
 					svgf.id('PentagonX',svgf.polygon('15,3 18,12 27,12 21,18 24,27 15,21 6,27 9,18 3,12 12,12'))+
-					svgf.id('Regulargon',svgf.path('M3 15 L9 26 H21 L27 15 21 4 H9 L3 15 H27 M9 26 L21 4 M9 4 L21 26" stroke-linejoin="round'))+
+					svgf.id('Regulargon',svgf.path('M3 15 L9 26 H21 L27 15 21 4 H9 L3 15 H27 M9 26 L21 4 M9 4 L21 26" stroke-linejoin="round'))
+					
+				]).join('')+
 
-				dc+
-				'<div id=svgLines>'+
+				DCtv('pg1 svgLine',	
+					svgf.id('Line" hotkey="L',
+					'<defs>'+
+						svgf.marker('ArwE0Line',2,5,4,4,'',svgf.path(''))+
+						svgf.marker('ArwS0Line',8,5,4,4,'',svgf.path(''))+
+						svgf.marker('ArwE1Line',7,5,4,4,'',svgf.path('M1 1 L9 5 1 9'))+
+						svgf.marker('ArwS1Line',3,5,4,4,'',svgf.path('M9 1 L1 5 9 9'))+
+						svgf.marker('ArwE2Line',7,5,4,4,'',svgf.path('M1 1 L9 5 1 9z'))+
+						svgf.marker('ArwS2Line',3,5,4,4,'',svgf.path('M9 1 L1 5 9 9z'))+
+						svgf.marker('ArwE3Line',8,5,4,4,'',svgf.path('M1 5 L5 1 9 5 5 9z'))+
+						svgf.marker('ArwS3Line',2,5,4,4,'',svgf.path('M1 5 L5 1 9 5 5 9z'))+
+						svgf.marker('ArwE4Line',8,5,4,4,'',svgf.path('M2 2 L2 8 8 8 8 2z'))+
+						svgf.marker('ArwS4Line',2,5,4,4,'',svgf.path('M2 2 L2 8 8 8 8 2z'))+
+						svgf.marker('ArwE5Line',8,5,4,4,'',svgf.circle(5,5,4))+
+						svgf.marker('ArwS5Line',2,5,4,4,'',svgf.circle(5,5,4))+
+					'</defs>'+
+					svgf.line(11,24,19,'6" marker-end="url(#ArwE6Line)')
+					)+
+				
+					svgf.id('LineSq',svgf.line(6,24,24,6))+
+				
+					svgf.id('line1tick',svgf.path('M4 16 H26 M15 16 V11 M4 16 H26'))+
+					svgf.id('line2tick',svgf.path('M9 4 V22 M9 15 H5 M15 21 V25 M9 21 H26'))+
+				
+					svgf.id('linecurveH',svgf.path('M5 20 Q15 5 25 20'))+
+					svgf.id('linecurveV',svgf.path('M20 5 Q5 15 20 25'))
+				)+
 
-					'<div>'+
-					
-						svgf.id('Line" hotkey="L',
-							'<defs>'+
-								svgf.marker('ArwE0Line',2,5,4,4,'',svgf.path(''))+
-								svgf.marker('ArwS0Line',8,5,4,4,'',svgf.path(''))+
-								svgf.marker('ArwE1Line',7,5,4,4,'',svgf.path('M1 1 L9 5 1 9'))+
-								svgf.marker('ArwS1Line',3,5,4,4,'',svgf.path('M9 1 L1 5 9 9'))+
-								svgf.marker('ArwE2Line',7,5,4,4,'',svgf.path('M1 1 L9 5 1 9z'))+
-								svgf.marker('ArwS2Line',3,5,4,4,'',svgf.path('M9 1 L1 5 9 9z'))+
-								svgf.marker('ArwE3Line',8,5,4,4,'',svgf.path('M1 5 L5 1 9 5 5 9z'))+
-								svgf.marker('ArwS3Line',2,5,4,4,'',svgf.path('M1 5 L5 1 9 5 5 9z'))+
-								svgf.marker('ArwE4Line',8,5,4,4,'',svgf.path('M2 2 L2 8 8 8 8 2z'))+
-								svgf.marker('ArwS4Line',2,5,4,4,'',svgf.path('M2 2 L2 8 8 8 8 2z'))+
-								svgf.marker('ArwE5Line',8,5,4,4,'',svgf.circle(5,5,4))+
-								svgf.marker('ArwS5Line',2,5,4,4,'',svgf.circle(5,5,4))+
-							'</defs>'+
-							svgf.line(11,24,19,'6" marker-end="url(#ArwE6Line)')
-						)+
-					
-						svgf.id('LineSq',svgf.line(6,24,24,6))+
-					
-						svgf.id('line1tick',svgf.path('M4 16 H26 M15 16 V11 M4 16 H26'))+
-						svgf.id('line2tick',svgf.path('M9 4 V22 M9 15 H5 M15 21 V25 M9 21 H26'))+
-					
-						svgf.id('linecurveH',svgf.path('M5 20 Q15 5 25 20'))+
-						svgf.id('linecurveV',svgf.path('M20 5 Q5 15 20 25'))+
-					dc+
-					
-					'<div>'+
+				
+
+				DCtv('pg2 svgLine',	[
 					
 						svgf.id('SLlineH',svgf.path('M6 6 V24 H20'))+
 						svgf.id('SLlineSqH',svgf.path('M6 6 V24 H24'))+
@@ -773,28 +851,22 @@ dc+
 						svgf.id('SAlineSqH',svgf.path('M6 6 V20 A4 4 0 0 0 10 24 H24'))+
 					
 						svgf.id('linearcH',svgf.path('M6 10 A18 5 0 1 1 6 20'))+
-						svgf.id('linearcV',svgf.path('M10 24 A5 18 0 1 1 20 24'))+
+						svgf.id('linearcV',svgf.path('M10 24 A5 18 0 1 1 20 24')),
 					
-					dc+
-					
-					
-					'<div>'+
+
 					
 						svgf.id('ZLlineV',svgf.path('M6 6 V15 H24 V24'))+
 						svgf.id('ZAlineV',svgf.path('M6 6 V11 A4 4 0 0 0 10 15 H20 A4 4 0 0 1 24 19 V24'))+
-					
-					
+										
 						svgf.id('ZLlineH',svgf.path('M6 6 H15 V24 H24'))+
 						svgf.id('ZAlineH',svgf.path('M6 6 H11 A4 4 0 0 1 15 10 V20 A4 4 0 0 0 19 24 H24'))+
-					
-					
+										
 						svgf.id('linearc',svgf.path('M6 22 A22 12 0 0 1 24 8'))+
 					
-						svgf.id('linearcSq',svgf.path('M10 5 A10 10 0 0 1 10 25'))+
-					dc+
-					
-					'<div>'+
-					
+						svgf.id('linearcSq',svgf.path('M10 5 A10 10 0 0 1 10 25')),
+
+
+
 						svgf.id('LineCross',svgf.line([[6,15,24,15],[15,10,15,20]]))+
 					
 						svgf.id('LineSqCross',svgf.line([[3,15,27,15],[15,3,15,27]]))+
@@ -803,11 +875,11 @@ dc+
 						svgf.id('DLlineSqH',svgf.path('M24 6 H6 V24 H24'))+
 					
 						svgf.id('DAlineH',svgf.path('M24 10 H10 A4 4 0 0 0 6 14 V16 A4 4 0 0 0 10 20 H24'))+
-						svgf.id('DAlineSqH',svgf.path('M24 6 H10 A4 4 0 0 0 6 10 V20 A4 4 0 0 0 10 24 H24'))+
+						svgf.id('DAlineSqH',svgf.path('M24 6 H10 A4 4 0 0 0 6 10 V20 A4 4 0 0 0 10 24 H24')),
+
+
 					
-					dc+
-					
-					'<div>'+
+
 						svgf.id('LineX',svgf.line([[6,20,24,10],[6,10,24,20]]))+
 						svgf.id('LineSqX',svgf.line([[5,25,25,5],[5,5,25,25]]))+
 					
@@ -815,13 +887,13 @@ dc+
 						svgf.id('DLlineSqV',svgf.path('M6 24 V6 H24 V24'))+
 					
 						svgf.id('DAlineV',svgf.path('M10 24 V10 A4 4 0 0 1 14 6 H16 A4 4 0 0 1 20 10 V24'))+
-						svgf.id('DAlineSqV',svgf.path('M6 24 V10 A4 4 0 0 1 10 6 H20 A4 4 0 0 1 24 10 V24'))+
+						svgf.id('DAlineSqV',svgf.path('M6 24 V10 A4 4 0 0 1 10 6 H20 A4 4 0 0 1 24 10 V24')),
 					
 					
-					dc+
 					
 					
-					'<div>'+
+					
+					
 						svgf.id('Line3TH',svgf.line([[5,15,5,8],[5,15,5,22],[5,15,25,15]]))+
 						svgf.id('Line3TV',svgf.line([[15,8,3,8],[15,8,27,8],[15,8,15,22]]))+
 					
@@ -829,14 +901,12 @@ dc+
 						svgf.id('Line3YEqui',svgf.line([[15,15,3.7,21.5],[15,15,26.3,21.5],[15,15,15,2]]))+
 					
 						svgf.id('Line3YRight',svgf.line([[15,15,28,15],[15,15,15,6],[15,15,6,24]]))+
-						svgf.id('Line3YRightSq',svgf.line([[15,15,28,15],[15,15,15,2],[15,15,6,24]]))+
-					
-					dc+
+						svgf.id('Line3YRightSq',svgf.line([[15,15,28,15],[15,15,15,2],[15,15,6,24]])),
 					
 					
 					
 					
-					'<div>'+
+					
 						svgf.id('lineangleH',svgf.path('M28 22 H4 L28 10'))+
 						svgf.id('lineangleV',svgf.path('M11 25 V5 L20 25'))+
 					
@@ -844,43 +914,42 @@ dc+
 						svgf.id('lineIsoV',svgf.path('M6 24 L15 6 24 24'))+
 					
 						svgf.id('Line3EH',svgf.line([[2,15,28,15],[2,15,28,5],[2,15,28,25]]))+
-						svgf.id('Line3EV',svgf.line([[15,2,15,28],[15,2,5,28],[15,2,25,28]]))+
+						svgf.id('Line3EV',svgf.line([[15,2,15,28],[15,2,5,28],[15,2,25,28]]))
 					
-					dc+
+				]).join('')+
 					
-					'<div>'+
+				DCtv('pg3 svgLine',	[
 						svgf.id('lineangle30',svgf.path('M25 24 L7 24 25 14')+svgf.text('30°',[15,2,10]))+
 						svgf.id('lineangle45',svgf.path('M25 24 L7 24 25 6')+svgf.text('45°',[15,2,10]))+
 						svgf.id('lineangle60',svgf.path('M24 24 L6 24 16 6')+svgf.text('60°',[20,14,10]))+
 						svgf.id('lineangle120',svgf.text('120°',[20,2,12]))+
 						svgf.id('lineangle135',svgf.text('135°',[20,2,12]))+
-						svgf.id('lineangle150',svgf.text('150°',[20,2,12]))+
-					
-					dc+
+						svgf.id('lineangle150',svgf.text('150°',[20,2,12])),
 					
 					
 					
-					'<div>'+
+					
+					
+					
 						svgf.id('lineIso30',svgf.path('M25 15 L7 20 25 25')+svgf.text('30°',[15,2,10]))+
 						svgf.id('lineIso45',svgf.path('M25 10 L7 17.5 25 25')+svgf.text('45°',[14,2,10]))+
 						svgf.id('lineIso60',svgf.path('M22 4.6 L4 15 22 25.4')+svgf.text('60°',[19,14,10]))+
 					
 						svgf.id('lineIso120',svgf.text('120°',[20,2,12]))+
 						svgf.id('lineIso135',svgf.text('135°',[20,2,12]))+
-						svgf.id('lineIso150',svgf.text('150°',[20,2,12]))+
-					dc+
-				dc+
-				'<div>'+
+						svgf.id('lineIso150',svgf.text('150°',[20,2,12]))
+				]).join('')+
+				
+				DCtv('pg3',	[
 					svgf.id('MoonNote',svgf.path('M5 20 A11 11 0 0 1 25 20 z'))+
 					svgf.id('MoonNoteEqui',svgf.path('M5 20 A10 10 0 0 1 25 20 z'))+
 					svgf.id('LfanNoteV',svgf.path('M15 20 L25 10 A15 15 0 0 0 5 10 z'))+						
 					svgf.id('LfanNoteH',svgf.path('M20 15 L10 25 A15 15 0 0 1 10 5 z'))+
 					svgf.id('AfanNoteV',svgf.path('M10 22 A13 13 0 0 1 20 22 L27 12 A15 15 0 0 0 3 12 z'))+
-					svgf.id('AfanNoteH',svgf.path('M22 10 A13 13 0 0 0 22 20 L12 27 A15 15 0 0 1 12 3 z'))+
-				dc+
+					svgf.id('AfanNoteH',svgf.path('M22 10 A13 13 0 0 0 22 20 L12 27 A15 15 0 0 1 12 3 z')),
+				
 
-
-				'<div>'+
+				
 					svgf.id('TriangonIsoV',svgf.polygon('8,25 15,5 22,25'))+
 					svgf.id('TriangonIsoH',svgf.polygon('5,22 25,15 5,8'))+
 
@@ -890,10 +959,9 @@ dc+
 
 					svgf.id('TriangonIso120',svgf.text('120°',[20,2,12]))+
 
-					svgf.id('TriangonIso150',svgf.text('150°',[20,2,12]))+
+					svgf.id('TriangonIso150',svgf.text('150°',[20,2,12])),
 
-				dc+
-				'<div>'+
+				
 
 
 					svgf.id('TriangonRighttH',svgf.polygon('7,5 7,25 23,25'))+
@@ -904,10 +972,10 @@ dc+
 
 					svgf.id('TriangonRighttEqui',svgf.polygon('5,5 5,25 25,25'))+
 
-					svgf.id('TriangonH',svgf.polygon('8,25 12,5 22,25'))+
-				dc+
+					svgf.id('TriangonH',svgf.polygon('8,25 12,5 22,25')),
+				
 
-				'<div>'+
+				
 
 
 					svgf.id('TriangonRightxH',svgf.polygon('5,20 25,20 20,11'))+
@@ -918,25 +986,22 @@ dc+
 
 					svgf.id('TriangonRightxEqui',svgf.polygon('2,21 28,22 15,8'))+
 
-					svgf.id('TriangonV',svgf.polygon('5,22 25,18 5,8'))+
-				dc+
+					svgf.id('TriangonV',svgf.polygon('5,22 25,18 5,8'))
+				]).join('')+
 
 
 
 
-				'<div>'+
+				DCtv('pg4',	[
 
 					svgf.id('LStarNote',svgf.path('M7 15 A8 10 0 0 1 15 25 8 10 0 0 1 23 15 8 10 0 0 1 15 5 8 10 0 0 1 7 15 z'))+
 					svgf.id('LStarNoteSq',svgf.path('M5 15 A10 10 0 0 1 15 25 10 10 0 0 1 25 15 10 10 0 0 1 15 5 10 10 0 0 1 5 15 z'))+
 					svgf.id('AStarNote',svgf.path('M8 15 L13 17 15 25 17 17 22 15 17 13 15 5 13 13 z'))+
-					svgf.id('AStarNoteSq',svgf.path('M5 15 L13 17 15 25 17 17 25 15 17 13 15 5 13 13 z'))+
+					svgf.id('AStarNoteSq',svgf.path('M5 15 L13 17 15 25 17 17 25 15 17 13 15 5 13 13 z')),
 
 
-				dc+
-
-
-
-				'<div>'+
+				
+				
 
 					svgf.id('LIGonRndT',svgf.path('M5 18 H12 V23 H18 V18 H25 V12 H18 V7 H12 V12 H5 z'))+
 					svgf.id('LIGonRndSqT',svgf.path('M6 18 H12 V24 H18 V18 H24 V12 H18 V6 H12 V12 H6 z'))+
@@ -946,10 +1011,10 @@ dc+
 					svgf.id('AIGonRndSqT',svgf.path('M8 12 A3 3 0 0 0 8 18 H12 V22 A3 3 0 0 0 18 22 V18 H22 A3 3 0 0 0 22 12 H18 V8 A3 3 0 0 0 12 8 V12 z'))+
 
 					svgf.id('LOGonRnd',svgf.path('M5 18 H10 V23 H20 V18 H25 V12 H20 V7 H10 V12 H5 z'))+
-					svgf.id('LOGonRndSq',svgf.path('M5 20 H10 V25 H20 V20 H25 V10 H20 V5 H10 V10 H5 z'))+
-				dc+
+					svgf.id('LOGonRndSq',svgf.path('M5 20 H10 V25 H20 V20 H25 V10 H20 V5 H10 V10 H5 z')),
+				
 
-				'<div>'+
+				
 					svgf.id('LIGonRndX',svgf.path('M5 11 L10 15 5 19 8 23 15 18 22 23 25 19 20 15 25 11 22 7 15 12 8 7 z'))+
 					svgf.id('LIGonRndSqX',svgf.path('M5 10 L10 15 5 20 10 25 15 20 20 25 25 20 20 15 25 10 20 5 15 10 10 5 z'))+
 					svgf.id('AIGonRndSqX',svgf.path('M5 10 L10 15 5 20 A3.5 3.5 0 0 0 10 25 L 15 20 20 25 A3.5 3.5 0 0 0 25 20 L 20 15 25 10 A3.5 3.5 0 0 0 20 5 L 15 10 10 5 A3.5 3.5 0 0 0 5 10z'))+
@@ -957,13 +1022,11 @@ dc+
 					svgf.id('DdartNoteF',svgf.path('M5 10 L10 15 5 20 H25 L20 15 25 10 H5 z'))+
 
 					svgf.id('QIGonRnd',svgf.path('M5 11 Q10 15 5 19 L8 23 Q15 18 22 23 L25 19 Q20 15 25 11 L22 7 Q15 12 8 7z'))+
-					svgf.id('QIGonRndSq',svgf.path('M5 10 Q10 15 5 20 L10 25 Q15 20 20 25 L25 20 Q20 15 25 10 L20 5 Q15 10 10 5z'))+
+					svgf.id('QIGonRndSq',svgf.path('M5 10 Q10 15 5 20 L10 25 Q15 20 20 25 L25 20 Q20 15 25 10 L20 5 Q15 10 10 5z')),
 
 
-
-				dc+
-
-				'<div>'+
+		
+		
 
 
 					svgf.id('DdartNoteM',svgf.path('M10 9 L5 15 10 21 H20 L25 15 20 9 z'))+
@@ -973,25 +1036,25 @@ dc+
 					svgf.id('AGonRndSq',svgf.path('M5 20 A5 5 0 0 1 10 25 H20 A5 5 0 0 1 25 20 V10 A5 5 0 0 1 20 5 H10 A5 5 0 0 1 5 10 z'))+
 
 					svgf.id('AOGonRnd',svgf.path('M5 18 H10 V23 Q15 20 20 23 V18 H25 Q22 15 25 12 H20 V7 Q15 9 10 7 V12 H5 Q7 15 5 18z'))+
-					svgf.id('AOGonRndSq',svgf.path('M5 20 H10 V25 Q15 22 20 25 V20 H25 Q22 15 25 10 H20 V5 Q15 7 10 5 V10 H5 Q7 15 5 20 z'))+
+					svgf.id('AOGonRndSq',svgf.path('M5 20 H10 V25 Q15 22 20 25 V20 H25 Q22 15 25 10 H20 V5 Q15 7 10 5 V10 H5 Q7 15 5 20 z')),
 
-				dc+
+				
 
 
-				'<div>'+
+				
 					svgf.id('dartNote',svgf.path('M5 7 L13 15 5 23 H17 L25 15 17 7 H5 z'))+
 					svgf.id('SdartNoteM',svgf.path('M5 7 V23 H17 L25 15 17 7 H5 z'))+
 					svgf.id('SdartNoteF',svgf.path('M5 7 L13 15 5 23 H25 V7 z'))+
 					svgf.id('Sarrow',svgf.path('M5 11 V19 H15 V25 L25 15 15 5 V11 H5z'))+
 					svgf.id('Darrow',svgf.path('M10 12 V7 L3 15 10 23 V18 H20 V23 L27 15 20 7 V12 H10z'))+
-					svgf.id('Xarrow',svgf.path('M5 11 L9 15 5 19 H15 V25 L25 15 15 5 V11 H5z'))+
+					svgf.id('Xarrow',svgf.path('M5 11 L9 15 5 19 H15 V25 L25 15 15 5 V11 H5z')),
 
 
-				dc+
+				
 
 
 
-				'<div>'+
+				
 					svgf.id('CurveDbl',svgf.path('M5 15 Q10 7 15 15 20 7 25 15'))+
 					svgf.id('SCurveWav',svgf.path('M5 15 Q10 5 15 15 T 25 15'))+
 					svgf.id('DCurveWav',svgf.path('M5 15 Q10 5 15 15 T 25 15 M5 15 Q10 25 15 15 T 25 15'))+
@@ -999,10 +1062,10 @@ dc+
 					svgf.id('StriLinWav',svgf.path('M4 21 L10 10 15 20 20 10 26 21'))+
 					svgf.id('DtriLinWav',svgf.path('M5 21 L15 9 25 21 M25 9 L15 21 5 9'))+
 
-					svgf.id('rectLinWav',svgf.path('M5 22 V10 H10 V21 H15 V10 H20 V21 H25'))+
-				dc+
+					svgf.id('rectLinWav',svgf.path('M5 22 V10 H10 V21 H15 V10 H20 V21 H25'))
+				]).join('')+
 
-				'<div>'+
+				DCtv('pg5',	[
 					svgf.id('SLinWavH',svgf.path('M5 21 L25 9 M15 15 H22 M5 21 H12'))+
 					svgf.id('SLinWavV',svgf.path('M5 21 L25 9 M15 15 V20 M25 9 V14'))+
 					svgf.id('DLinWavH',svgf.path('M5 21 L25 9 M8 15 H22'))+
@@ -1010,11 +1073,11 @@ dc+
 
 					svgf.id('ShvLinWav',svgf.path('M7 23 V18 H13 V13 H19 V8 H25'))+
 
-					svgf.id('DhvLinWav',svgf.path('M7 23 V18 H13 V13 H19 V8 H25 V13 H19 V18 H13 V23 H7 Z'))+
+					svgf.id('DhvLinWav',svgf.path('M7 23 V18 H13 V13 H19 V8 H25 V13 H19 V18 H13 V23 H7 Z')),
 
-				dc+
+				
 
-				'<div>'+
+				
 
 
 					svgf.id('LinWavX',svgf.path('M5 21 L25 9 M5 15 L15 21 M15 9 L25 15'))+
@@ -1024,11 +1087,11 @@ dc+
 
 					svgf.id('LatticeInner',svgf.path('M4 11 H26 M4 18 H26 M11 25 V4 M18 25 V4'))+
 
-					svgf.id('Grid',svgf.rect(5,7,20,16)+svgf.line([[15,7,15,23],[5,15,25,15]]))+
-				dc+
+					svgf.id('Grid',svgf.rect(5,7,20,16)+svgf.line([[15,7,15,23],[5,15,25,15]])),
+				
 
 
-				'<div>'+
+				
 
 					svgf.id('cuboid',svgf.path('M3 13 V23 H20 V13 H3 M3 13 L10 8 H27 L20 13 M20 23 L27 18 V8" class=dash stroke-linejoin="round')+
 						svgf.path('M10 8 V18 H27 M10 18 L3 23" class=dash stroke-dasharray="3,1'))+
@@ -1041,10 +1104,10 @@ dc+
 						svgf.path('M15 5 A2 5 0 0 1 15 25 M3 15 A12 2 0 0 1 27 15" class=dash stroke-dasharray="3,1'))+
 					svgf.id('EllipsoidSq',svgf.circle(15,15,10)+
 						svgf.path('M15 5 A1 5 0 0 0 15 25 M5 15 A5 1 0 0 0 25 15')+
-						svgf.path('M15 5 A1 5 0 0 1 15 25 M5 15 A5 1 0 0 1 25 15" class=dash stroke-dasharray="3,1'))+
-				dc+
+						svgf.path('M15 5 A1 5 0 0 1 15 25 M5 15 A5 1 0 0 1 25 15" class=dash stroke-dasharray="3,1')),
+				
 
-				'<div>'+
+				
 
 
 					svgf.id('cylinderoidV',svgf.ellipse(15,6,10,4)+
@@ -1058,34 +1121,31 @@ dc+
 					svgf.id('conoidOH',svgf.path('M2 15 L22 5 A2 5 0 0 1 22 25 L2 15')+
 						svgf.path('M22 5 A2 5 0 0 0 22 25" class=dash stroke-dasharray="3,1'))+
 					svgf.id('conoidIV',svgf.path(['M15 2 L5 22 A5 2 0 0 1 25 22 L15 2','M5 22 A5 2 0 0 0 25 22']))+
-					svgf.id('conoidIH',svgf.path(['M2 15 L22 5 A2 5 0 0 0 22 25 L2 15','M22 5 A2 5 0 0 1 22 25']))+
-				dc+
+					svgf.id('conoidIH',svgf.path(['M2 15 L22 5 A2 5 0 0 0 22 25 L2 15','M22 5 A2 5 0 0 1 22 25'])),
+				
 
-				'<div>'+
+				
 					svgf.id('fx',svgf.text('ƒ',[22,9,24]))+
-					svgf.id('capctx',svgf.text('JS',[24,4,22]))+
-				dc+
+					svgf.id('capctx',svgf.text('JS',[24,4,22]))
+				]).join('')+
+				
 			dc+
 
+			DCtv('svgTool2',
 
-			'<div id=svgTool2>'+
-				svgf.id('SVGshift" tip="Shift',svgf.path('M8 17 L15 10 22 17 M8 21 H22'))+
-				svgf.id('Zdogon" tip="3D (Zdog)',svgf.text('3D',[22,4,16]))+
-
-				svgf.id('LayerToggle" tip="Layer Toggle',svgf.path('M8 22 L22 8 M8 15 L15 8 M15 22 L22 15'))+
+				svgf.id('LayerToggle" tip="Layer Toggle',svgf.path('M5 7 V23 H27','white" stroke-dasharray="3,1')+svgf.rect(9,7,18,12))+
 
 
 				svgf.id('CanvasToggle" tip="Background Canvas Toggle',svgf.path('M5 28 L25 2')+svgf.rect(5,7,20,16))+
-
 
 
 				svgf.id('Crop" hotkey="C',svgf.path('M5 12 V7 H10 M20 7 H25 V12 M25 18 V23 H20 M10 23 H5 V18'))+
 				
 				svgf.id('allEraser" tip="bg',svgf.rect(5,7,20,16,'','white'))+
 
-				svgf.id('noteEraser" tip="Del Layer" hotkey="Shift+Delete(D)',svgf.path('M10 20 L20 10 M10 10 L20 20')+svgf.rect(5,7,20,16))+
+				svgf.id('noteEraser" tip="Del Layer" title="Shift+Delete(D)\n'+gM('2D on → Erase All'),svgf.path('M10 20 L20 10 M10 10 L20 20')+svgf.rect(5,7,20,16))
 			
-			dc+
+			)+
 			'<div id=svgTog>'+
 				svgf.id('svgPg1',svgf.line(10,15,20,15))+
 				svgf.id(zlrA('svgPg',seqA(2,4)),svgf.circle(15,15,5)).join('')+
@@ -1112,6 +1172,7 @@ dc+
 					SCtv('tool radio seled" name=codeout id="code_API','API')+
 					SCtv('tool radio" name=codeout id="code_Native',gM('Native'))+
 					SCtv('tool radio" name=codeout id="code_UserInput',gM('User Input'))+
+					SCtv('tool radio" name=codeout id="code_Canvas',gM('Canvas'))+
 
 					detail(gM('Option'),[
 						'<label>'+strchkbx0+'id=ignoreHiddenElement'+chked+' />'+gM('ignoreHiddenElement')+'</label>',
@@ -1134,9 +1195,9 @@ dc+
 
 
 
-	caps=new ctt('#caps');
+	//caps=new ctt('#caps');
 
-	$('#svgTog ~ *, #svgLines div:gt(0), #svgLines ~ div, span[for]').hide();
+	$('#svgTog ~ *, .pg1 ~ div, span[for], #Legoon, #Roughon').hide();
 
 
 
@@ -1182,31 +1243,31 @@ dc+
 			'<label>'+gM('Stroke')+strchkbx0+'class=strokeon'+chked+' /></label>'+
 			'<input type=color value="#000000" class=color />'+
 			'<label>'+gM('Gradient')+strchkbx0+'class=gradon /></label>'+br+
-			gM('Color')+'<input type=text placeholder="0 color,0.5 color,1 color" class=gradcolor />'+
-			gM('Linear / Radial')+'<input type=text placeholder="x0 y0 (r0) x1 y1 (r1)" class=grad />'
+			gM('Color')+strtxt+'placeholder="0 color,0.5 color,1 color" class=gradcolor />'+
+			gM('Linear / Radial')+strtxt+'placeholder="x0 y0 (r0) x1 y1 (r1)" class=grad />'
 
 		)+DCtv('fill',
 			'<label>'+gM('Fill')+strchkbx0+'class=fillon /></label>'+
 			'<input type=color value="#000000" class=color />'+
 			'<label>'+gM('Gradient')+strchkbx0+'class=gradon /></label>'+br+
-			gM('Color')+'<input type=text placeholder="0 color,0.5 color,1 color" class=gradcolor />'+
-			gM('Linear / Radial')+'<input type=text placeholder="x0 y0 (r0) x1 y1 (r1)" class=grad />'
+			gM('Color')+strtxt+'placeholder="0 color,0.5 color,1 color" class=gradcolor />'+
+			gM('Linear / Radial')+strtxt+'placeholder="x0 y0 (r0) x1 y1 (r1)" class=grad />'
 
 		)+DCtv('shadow',
 			'<label>'+gM('dropShadow')+strchkbx0+'class=shadowon /></label>'+
 			'<input type=color value="#000000" class=color />'+
 			gM('Blur')+num('0" class="blur')+
-			gM('Offset')+'<input type=text placeholder="0 0" class=offset />'
+			gM('Offset')+strtxt+'placeholder="0 0" class=offset />'
 		)+'<div>'+itv('Add','add')+itv('Del','clear')+dc;
 
 	$('div[for=text] .multi').append(colorTmpl);
 	$('div[for=shape] .multi').append(
 		'<div>'+gM('Overlap')+'<select class=comp>'+Options(['source-over','source-atop','source-in','source-out','destination-over','destination-atop','destination-in','destination-out','lighter','copy','xor']).join('')+'</select>'+
-			gM('Dash')+'<input type=text class=dash placeholder="2,4,2" />'+dc+colorTmpl
+			gM('Dash')+strtxt+'class=dash placeholder="2,4,2" />'+dc+colorTmpl
 
 	);
 
-	$('.color').after(function(){return '<input type=text value="'+$(this).val()+'" class=colorhex size=4 />'+gM('opa')+num('1" step=.1 class="opa',0,1)});
+	$('.color').after(function(){return strtxt+'value="'+$(this).val()+'" class=colorhex size=4 />'+gM('opa')+num('1" step=.1 class="opa',0,1)});
 
 	//val
 
@@ -1245,12 +1306,12 @@ dc+
 
 
 	$('#TextBoxType').on('change',function(){
-		var f=$('#TextBoxTool > div[for]').hide().filter('[for="'+this.value+'"]');
+		var f=$('#TextBoxTool > div[for]').hide().filter('[for="'+this.value+'"]'), ediHot=$('#TextBoxTool summary .ediHot').hide().filter('[for="'+this.value+'"]');
 		if(f.length){
 			f.show().parent().show()
-
+			ediHot.show();
 		}else{
-			f.parent().hide()
+			f.parent().hide();
 		}
 	})
 	;
@@ -1291,28 +1352,96 @@ dc+
 	});
 
 
-	$('#TextBoxTool [for=HTML]').on('click','input, select,textarea,label,meter',function(){
-		var me=$(this),pa=me.parent(), t=this.outerHTML;
+	$('#TextBoxTool div[for=HTML]').on('click','input, select,textarea,label,meter, table,hr,details,fieldset,span.bdb,mark,del',function(){
+		var me=$(this),pa=me.parent(), t=this.outerHTML, shifton=$('#SVGshift path').attr('stroke')=='yellow';
+		//console.log(t);
 		if(pa.is('label')){
 			t=XML.wrapE('label', t.replace(/input /, '$&'+(!me.prop('checked')?'checked ':'')));
 		}else if(me.is('label')){
 			t=t.replace(/input /, '$&'+(!me.children().prop('checked')?'checked ':''));
 
+		}else if(me.is('mark') & shifton){
+			t="mark('"+gM('Mark')+"')";
+		}else if(me.is('del') & shifton){
+			t="del('"+gM('Del')+"')";
+
+		}else if(me.is('.bdb')){
+			var mt=me.text();
+			if(mt=='URL'){
+				t="href('URL','"+gM('Text')+"')";
+			}else if(mt==gM('dl')){
+				t="dl([1,2],[1.1,2.1])";
+			}else if(mt==gM('ol')){
+				t="ol([1,2])";
+			}else if(mt==gM('ul')){
+				t="ul([1,2])";
+			}else if(mt==gM('Table')){
+				t="Table('',[[1,2],[3,4]],'TBrc')";
+			}
+
+			if(!shifton){
+				t=eval(t)
+			}
+
+		}else if(me.is(':number') & shifton){
+			t="num("+me.val()+",0,100)";
+
+		}else if(me.is(':range') & shifton){
+			t="rng("+me.val()+",0,100)";
+
+		}else if(me.is(':color') & shifton){
+			t="colorbx('"+me.val()+"')";
+
+		}else if(me.is(':text') & shifton){
+			t="txtreadonly('"+me.val()+"')";
+
+
+
 		}else if(me.is('input')){
 			if(me.is('.iframesrc')){
-				t='<iframe src="'+$(this).val()+'" width=300 height=600 style="border:0"></iframe>'
+				t='<iframe src="'+H_a($(this).val(),location.origin+location.pathname)+'" width=300 height=600 style="border:0"></iframe>'
+
+
 			}else{
 				t=/value/.test(t)?t.replace(/value="[^"]*"/, 'value="'+me.val()+'"'):t.replace(/input /, '$&value="'+me.val()+'" ');
 			}
 			
 		}else if(me.is('select')){
-			t=t.replace('value="'+me.val()+'"', 'value="'+me.val()+'" selected');
+			if(shifton){
+				t="XML.wrapE('select',Options([1,2],[1,2]).join(''))"
+			}else{
+
+				t=t.replace('value="'+me.val()+'"', 'value="'+me.val()+'" selected');
+			}
+
+		}else if(me.is('textarea')){
+			if(shifton){
+				t="txa("+me.val()+")"
+			}else{
+				t=txa(me.val());
+
+			}
+
+		}else if(me.is('details')){
+			if(shifton){
+				if(me.children('summary').text()==gM('Reference')){
+					t="refer([1,2])"
+				}else{
+					t="detail("+gM('summary')+","+gM('details')+")"
+
+				}
+			}
+
+		}else if(me.is('fieldset')){
+			if(shifton){
+				t="fieldset("+gM('summary')+","+gM('details')+")"
+			}
 		}
 		
 		$('#TextBox').val(t);
 
 	});
-	$('#TextBoxTool [for=Canvas]').on('click','.mi-span',function(){
+	$('#allEraserCanvas').on('click','.mi-span',function(){
 		var me=$(this),id=this.id,pa=me.parent(),tog=me.toggleClass('toggle').is('.toggle'),nx=me.next('[for='+id+']');
 		
 		if(nx.length){
@@ -1385,7 +1514,48 @@ dc+
 		psib.find('input').not('.multinput').attr('disabled','disabled');
 		pa.find('input').removeAttr('disabled');
 
-	}).on('change keyup mouseup','input,select',function(e){//keyup mouseup
+	}).on('paste','.imgurl',function(e){
+
+		var ts=e.originalEvent.clipboardData.items, me=$(this), id=this.id, p=me.parent(), pp=p.parent(),
+	
+		cb=function(){
+			scrn('eraser');
+			loadCaps();
+			caps.repaint();
+		};
+		if(ts.length){
+			for(var i=0;i<ts.length;i++){
+				if(ts[i].kind == 'file'){
+					pp.find(':file').val('');
+					
+					var blob = ts[i].getAsFile(),reader=new FileReader();
+					//console.log(ts[i]);  DataTransferItem {type: "image/png", kind: "file"}
+					reader.onload = function(event){
+						//console.log(event);
+						var src = event.target.result; //webkitURL.createObjectURL(blob);
+
+						
+						var sne=picSrcNameExt(src), img=new Image();
+						me.val(' ').css('background','url('+src+') bottom right/contain no-repeat')
+							.attr({'data-name':'clipboard','data-no':0,'data-size':0,'data-sz':0,'data-ext':'other','data-bg':src,'data-src':src});
+						img.onload=function(){
+							var w=this.width;
+							var h=this.height;
+							var s=w+'×'+h;
+							$('.imgurl[data-bg="'+this.src+'"]').attr({'data-w':w,'data-h':h,'data-wxh':s});
+							$(this).attr({'data-wxh':s, 'data-src':this.src});
+							cb();
+						};
+						img.src=src;
+						
+
+					};
+					reader.readAsDataURL(blob);
+					break;
+				}
+			}
+		}
+	}).on('change keyup mouseup','input:not(.imgurl,.imgurlfile),select',function(e){//keyup mouseup
 		var me=$(this);
 
 		e.stopPropagation();
@@ -1402,7 +1572,19 @@ dc+
 		if(me.is('.on')){
 			var on=me.prop('checked');
 			me.parent().next().toggle(on);
+
+			if(me.is('#bgimgOn')){
+				if(on){
+
+					loadCaps()
+				}else{
+					scrn('eraser');
+					caps.repaint();
+				}
+			}
 		}
+
+
 
 		$('#TextBox').val('');
 		$('#TextBoxGo').click();
@@ -1418,6 +1600,18 @@ dc+
 
 
 
+	$('.ediHot :button').on('click', function () {
+		var me=$(this),tp=me.parent().attr('for'),v=me.attr('data-v'),t='';
+		if(tp=='HTML'){
+			t='<iframe src="'+H_a(v+'.html',location.origin+location.pathname)+'" width=300 height=600 style="border:0"></iframe>';
+			//console.log(t);
+			$('#TextBox').val(t);
+			$('#TextBoxGo2').click();
+			
+		}
+
+
+	});
 
 	$('#OtherOpts :checkbox').on('click', function () {
 
@@ -1441,22 +1635,33 @@ dc+
 		$('#Caps > .effects').remove();
 		$('#caps ~ canvas').remove();
 
+		scrn('eraser');
 		caps.repaint();
-		//scrn('eraser');
 
 	});
 	$('#clrTextBox').on('click', function () {
 		$('#Caps .cap'+$('#TextBoxType').val()).remove();
+		if($('#allEraser rect').attr('stroke')=='yellow'){
+			L.canvasCode='';
+			L.legoCode='';
+			L.roughCode='';
+			scrn('eraser');
+			caps.repaint(1);
+		}
 	});
 
 
 
 
-	$('#SVGhide').on('click',function(){
+	$('#SVGhide').on('click',function(e){
+		var shft=e.shiftKey || $('#SVGshift path').attr('stroke')=='yellow';
 		if($('#svgs').is('.toggle')){
 			if($('#tileTool').is(':visible')){
-
-				$('#tileTool').fadeOut()
+				$('#tileTool').fadeOut();
+				if(shft){
+					//parent.document.getElementById
+					//$("iframe[src*=doodle]",parent.document).hide()	CORS blocked
+				}
 			}else{
 				$('#svgs').click();
 			}
@@ -1566,6 +1771,10 @@ dc+
 
 	$('#copyDir').val(['1']);
 
+	$('[name=gridType]').after(function () {
+		var v = this.value;
+		return gM(v)
+	});
 	$('[name=MarginCopyOpt]').after(function () {
 		var v = this.value;
 		return { w: gM('w') + ' (' + gM('Margin') + ')', copy: gM('Copy') + ' (' + gM('Spacing') + ')' }[v]
@@ -1598,7 +1807,7 @@ dc+
 		$('#ArwS' + i + 'Line').clone().appendTo('#Line defs').attr('id', 'ArwS' + (i + 4) + 'Line').children().attr('fill', 'white');
 	}
 
-	$('#Line defs').clone().prependTo('#svgLines svg:not(#Line)').children().attr('id', function (i, v) { return v.replace('Line', '') + $(this).parent().parent().attr('id') });
+	$('#Line defs').clone().prependTo('.svgLine svg:not(#Line)').children().attr('id', function (i, v) { return v.replace('Line', '') + $(this).parent().parent().attr('id') });
 
 
 
@@ -1620,8 +1829,8 @@ dc+
 		mp.prev('summary').toggleClass('seled', c);
 		if (mpn.filter('#sgcs').length) {
 
+			scrn('eraser');
 			caps.repaint();
-			//scrn('eraser');
 			
 		} else {
 			if (c) {
@@ -1641,8 +1850,8 @@ dc+
 		pp.nextAll('.' + (v == 'Linear' ? 'Radial' : 'Linear')).hide();
 
 		if (me.is('[name=SGradType]')) {
+			scrn('eraser');
 			caps.repaint();
-			//scrn('eraser');
 
 		} else {
 			refreshFilter();
@@ -1654,31 +1863,58 @@ dc+
 
 
 	$('#RandomColorson').on('click', function () {
-		var c = $(this).toggleClass('seled'), shp = $('#' + (L.drawShape || 'unknown')), shpN = $('#' + (L.drawShapeNow || 'unknown'));
+		var c = $(this), shp = $('#' + (L.drawShape || 'unknown')), shpN = $('#' + (L.drawShapeNow || 'unknown'));
 		if (L.drawShape == 'allEraser') {
-
+			scrn('eraser');
 			caps.repaint();
-			//scrn('eraser');
+			reCanvasCode();
 			
-		} else if (!shp.parent().is('#svgTool,#svgTool2') || shp.is('#Pointer')) {
+		} else if (!shp.parent().is('#svgTool,.svgTool2') || shp.is('#Pointer')) {
 			RndColors(shpN);
 		}
 	});
 
 
 
-	$('#svgShape svg[id], #svgTool2 svg[id]').on('click', function (e) {
+	$('#svgShape svg[id], .svgTool2 svg[id]').on('click', function (e) {
 
 
-		var id = this.id, pa = $(this).parent(), isCopy = /Copy/.test(id), isTxt = /Text/.test(id);
+		var me=$(this),id = this.id, pa = $(this).parent(), isCopy = /Copy/.test(id), isTxt = /Text/.test(id),
+			isNarrow=$('#tileToolCap').is('.Narrow'),
+			shifton=$('#SVGshift path').attr('stroke')=='yellow',
+			D2on=$('#D2on text').attr('fill')=='yellow',
+			Legoon=$('#Legoon rect').attr('stroke')=='yellow',
+			D3on=$('#Zdogon text').attr('fill')=='yellow',
+			Roughon=$('#Roughon path').attr('stroke')=='yellow';
 		Scroll('scrollT');
+
+		if(/SVGshift|D2on|Zdogon|Roughon|LayerToggle|CanvasToggle/.test(id) && isNarrow && !/Pointer|Copy|Eraser/.test(L.drawShape)){
+			var pg=($('#'+L.drawShape).parent().attr('class')||'').replace(/\D/g,'');
+			$('#svgPg'+pg).siblings().hide();
+
+			$('.pg'+pg).children().not('#'+L.drawShape).hide();
+
+		}
 		if(id=='Narrow'){
 
 			var w=$('#tileTool')[0].style.width;
 			$('#tileTool')[0].style.width=(w?'':'5rem');
 			$(this).children('path').attr('d', w?'M10 20 L15 15 10 10 M18 9 V21':'M20 20 L15 15 20 10 M12 9 V21');
 			//console.log(w);
-			$('#svgToolOpt').toggleClass('Narrow',w=='');
+			$('#svgToolOpt,#tileToolCap').toggleClass('Narrow',w=='');
+			if(w){
+				$('#svgShape svg,#svgTog svg').show()
+			}else{
+				var pg=($('#svgTog svg').filter(function(){return $(this).children().attr('stroke')=='yellow'}).attr('id')||'').replace(/\D/g,'');
+
+				$('#svgPg'+pg).siblings().hide();
+	
+				if(!/Pointer|Copy|Eraser/.test(L.drawShape)){
+					$('.pg'+pg).children().not($('#'+L.drawShape)).hide();
+				}
+				
+			}
+			
 			
 			return
 		}
@@ -1693,14 +1929,62 @@ dc+
 			
 			return
 		}
+		if(id=='Roughon'){
+			$(this).children('path').attr('stroke',function(){var istog=$(this).attr('stroke')=='white';
+				if(istog){
+					$('#Legoon').children('path').attr('stroke','white');
+					$('#Legoon').children('circle').attr('fill','white')
+				}
+				return istog?'yellow':'white'});
+			if(L.drawShapeNow){
+				mUp(e,1,L.drawShapeNow.replace(/\d+$/,''))
+			}
+			return
+		}
+
+
 		if(id=='Zdogon'){
 			$(this).children('text').attr('fill',function(){var istog=$(this).attr('fill')=='white';
 				$('.zdog').children().attr('spinning',istog);
 				return istog?'yellow':'white'
 			});
+			if(L.drawShapeNow && !/Zdog_/.test(L.drawShapeNow)){
+				mUp(e,1,L.drawShapeNow.replace(/\d+$/,''))
+			}
+			return
+		}
+		if(id=='D2on'){
+			$(this).children('text').attr('fill',function(){var istog=$(this).attr('fill')=='white';
+				//$('.zdog').children().attr('spinning',istog);
+				$('#Legoon,#Roughon').toggle(istog);
+				return istog?'yellow':'white'
+			});
+
+			if(L.drawShapeNow){
+				mUp(e,1,L.drawShapeNow.replace(/\d+$/,''))
+			}
 			
 			return
 		}
+
+		if(id=='Legoon'){
+			$(this).children().attr('stroke',function(){var istog=$(this).attr('stroke')=='white';
+				if($(this).is('circle')){
+					$(this).attr('fill',istog?'yellow':'white')
+				}
+				if(istog){
+					$('#Roughon').children('path').attr('stroke','white')
+				}
+				return istog?'yellow':'white'
+			});
+
+			if(L.drawShapeNow){
+				mUp(e,1,L.drawShapeNow.replace(/\d+$/,''))
+			}
+			
+			return
+		}
+
 
 		if(id=='LayerToggle'){
 			$('#capsimg ~ *').toggle();
@@ -1735,29 +2019,24 @@ dc+
 
 		$('[name=MarginCopyOpt][value=copy]').prop('checked', true).parent().toggle(true);
 
-		if(id=='allEraser'){
-			tileToolCap(id, true);
+		tileToolCap(id);
+
 	
-		}else{
-			tileToolCap(id);
-
-		}
-
 
 
 		$('#caps').css('cursor', 'crosshair')
 //		$('#caps').css('cursor', 'default');
 
-		$('#svgSel').toggle(!pa.is('#svgTool,#svgTool2,#svgTog'));
+		$('#svgSel').toggle(!pa.is('#svgTool,.svgTool2,#svgTog'));
 
-		$('#svgCssTransform').toggle(!pa.is('#svgTool,#svgTool2,#svgTog') || isCopy);
+		$('#svgCssTransform,#svgRough').toggle(!pa.is('#svgTool,.svgTool2,#svgTog') || isCopy);
 		$('#copyOpt').toggle(isCopy);
 
 
 
 
 
-		var scr = /scr/.test(id), note = /note/.test(id), all = /all/.test(id), Cd = $('#Color details');
+		var scr = /scr/.test(id), all = /all/.test(id), Cd = $('#Color details');
 
 		if (/Pointer|Eraser|scr|Copy|Undo|Redo/.test(id)) {
 
@@ -1805,9 +2084,6 @@ dc+
 				$('#Pointer').click()
 			}
 
-			if(id=='noteEraser'){
-				L.cap0=getcap0();
-			}
 
 
 			if (scr || all) {
@@ -1821,6 +2097,7 @@ dc+
 				$('#scrH').val(hv ? w : h);
 
 				if (all) {
+					/*
 					var dtl = Cd.eq(2), isGrad = dtl.find('.Grad').prop('checked');
 				//	dtl.show().siblings().hide();
 					if (isGrad) {
@@ -1832,23 +2109,62 @@ dc+
 						var c = RandomColor();
 						$('#SGC').val(c).attr('title', c + '\n' + hex2rgba(c, $('#OpaSGC').val()))
 					}
-
+*/
+					scrn('eraser');
 					caps.repaint();
-					//scrn('eraser');
 					
 				} else {
 					scrn(id.substr(3).toLowerCase());
 				}
 				if (scr) { $('#Pointer').click() }
 			}
-			if (note) {
-				drawClr();
-				$('.clrCanvas').click();
+
+			if(id=='noteEraser'){
+
+				if(D2on){
+					L.canvasCode='';
+					L.legoCode='';
+					L.roughCode='';
+					caps.repaint(1);
+				}
+
+				if(D3on){
+					$('#Caps > .zdog').remove()
+				}
+
+				if(Roughon){
+					$('#Caps > .rough').remove()
+				}	
+
+				if(!D2on && !D3on || shifton){
+					
+					
+					if(shifton){
+						drawClr();
+						$('.clrCanvas').click();
+						L.cap0=getcap0();
+					}else{
+						$('#Caps > div').nextAll().not('.zdog').remove()
+
+					}
+				}
+
 
 			}
 
 
 		} else {
+			var pg=(me.parent().attr('class')||'').replace(/\D/g,'');
+			$('#svgPg'+pg).siblings().toggle(!isNarrow);
+
+			if(isNarrow){
+				$('.pg'+pg).children().not(me).toggle();
+
+
+			}else{
+				$('.pg'+pg).children().not(me).show();
+			}
+			
 
 			$('#capsimg ~ *').css('cursor', 'auto');
 
@@ -1897,7 +2213,7 @@ dc+
 	});
 
 	$('#svgTog svg[id^=svgPg]').on('click', function () {
-		var me = $(this), id = me.attr('id');
+		var me = $(this), id = me.attr('id'), isNarrow=$('#tileToolCap').is('.Narrow');
 
 		me.html(svgf.line(10,15,20,15,'yellow','yellow'));
 		me.siblings().html(svgf.circle(15,15,5));
@@ -1907,6 +2223,9 @@ dc+
 
 		divs.not(divi).hide();
 		divi.show();
+
+		me.siblings().show();
+		
 	});
 	$('#svgPg1').eq(0).click();
 
@@ -1958,26 +2277,47 @@ dc+
 */
 
 		
-	}).on('mousemove touchmove', 'svg, textarea, span[id]', function (e) {consolelog('#Caps');mMv(e);
+	}).on('mousemove touchmove', 'svg, textarea, span[id]', function (e) {mMv(e);
 	/*
 		e.preventDefault && e.preventDefault();
 		e.returnValue=false;
 		e.stopPropagation && e.stopPropagation();
 		return false;
 		*/
-	}).on('mouseup touchend', 'svg, textarea, span[id]', function (e) {consolelog('#Caps');mUp(e);	
+	}).on('mouseup touchend', 'svg, textarea, span[id]', function (e) {mUp(e);	
 	/*
 		e.preventDefault && e.preventDefault();
 		e.returnValue=false;
 		e.stopPropagation && e.stopPropagation();
 		return false;
 		*/
+	}).on('dblclick','.capfromTextarea, #caps ~ textarea', function (e) {
+		var me=$(this).filter('.capfromTextarea');
+		if($('#Text text').attr('fill')=='yellow'){
+			$('#Pointer').click();
+			me.removeClass('resize');
+		}else{
+			$('#Text').click();
+			me.addClass('resize')
+		}
+
+	}).on('mousewheel','#capsdiv~*', function (e) {
+		var me=$(this),id=this.id, z=+(this.style.transform||'').replace(/.*rotateZ\(([-\d\.]+)deg\).*/,'$1')||0;
+		var delta = (e.originalEvent.wheelDelta && (e.originalEvent.wheelDelta > 0 ? 1 : -1)) ||  // chrome & ie
+                  (e.originalEvent.detail && (e.originalEvent.detail > 0 ? -1 : 1)); // firefox
+
+		if(L.drawShapeNow==id){
+			this.style.transform='rotateZ('+parseInt(z+delta)+'deg)';
+			e.stopPropagation();
+		}
+		
 	});
 
 
 
+
 // || !(act=='DIV' && eos.id && eos.id=='oHTML')
-	$('#caps,#oHTML').on('mousedown touchstart', function (e) {consolelog('caps');
+	$('#caps,#oHTML').on('mousedown touchstart', function (e) {
 
 		mDn(e);
 		if(!/Pointer|noteEraser|allEraser/.test(L.drawShape)){
@@ -1996,7 +2336,7 @@ dc+
 
 		}
 		
-	}).on('mousemove touchmove', function (e) {consolelog('caps'); mMv(e);
+	}).on('mousemove touchmove', function (e) {mMv(e);
 		if(!/Pointer|noteEraser|allEraser/.test(L.drawShape)){
 			e.preventDefault && e.preventDefault();
 			e.returnValue=false;
@@ -2005,7 +2345,7 @@ dc+
 		}
 
 		
-	}).on('mouseup touchend', function (e) {consolelog('caps'); mUp(e);
+	}).on('mouseup touchend', function (e) {mUp(e);
 		if(!/Pointer|noteEraser|allEraser/.test(L.drawShape)){
 			e.preventDefault && e.preventDefault();
 			e.returnValue=false;
@@ -2019,10 +2359,11 @@ dc+
 
 
 
-	var t = zlr('#url', 'Img Cap', ',') + ',#Caps textarea, .urlImg';
+	var t = zlr('#url', 'Img Cap', ',') + ',#Caps textarea, .imgurl';
 
 	$('body').on('keydown', function (e) {
-		var k = e.keyCode, act = document.activeElement, acti = act.tagName.toLowerCase(), shft = e.shiftKey, ctrl = e.ctrlKey, alt = e.altKey, isTxt = acti == 'textarea';
+		var k = e.keyCode, act = document.activeElement, acti = act.tagName.toLowerCase(), 
+			shft=e.shiftKey || $('#SVGshift path').attr('stroke')=='yellow', ctrl = e.ctrlKey, alt = e.altKey, isTxt = acti == 'textarea';
 
 		if (ctrl) {
 
@@ -2116,19 +2457,21 @@ dc+
 
 
 
-	}).on('paste', t, function (e) {
+	}).on('paste', '.imgurl,#Caps textarea', function (e) {
 		//console.log(e);
-		var ts = e.originalEvent.clipboardData.items, me = $(this), id = this.id, p = me.parent(), pp = p.parent(), sm = pp.prevAll('summary'), c = sm.find(':checked').length,
+		var ts = e.originalEvent.clipboardData.items, me = $(this), id = this.id, p = me.parent(), pp = p.parent(),
 
-			cb = function () {
-				loadCaps()
-			};
+		cb = function () {
+			scrn('eraser');
+			loadCaps();
+			caps.repaint(1);
+		};
 		if (ts.length) {
 			for (var i = 0; i < ts.length; i++) {
 				if (ts[i].kind == 'file') {
-					p.find(':file').add(pp.find(':file')).val('');
+					pp.find(':file').val('');
 
-					blob = ts[i].getAsFile(), reader = new FileReader();
+					var blob = ts[i].getAsFile(), reader = new FileReader();
 					//console.log(ts[i]);  DataTransferItem {type: "image/png", kind: "file"}
 					reader.onload = function (event) {
 						//console.log(event);
@@ -2142,7 +2485,7 @@ dc+
 							var w = this.width;
 							var h = this.height;
 							var s = w + '×' + h;
-							$('.urlImg[data-bg="' + this.src + '"]').attr({ 'data-w': w, 'data-h': h, 'data-wxh': s });
+							$('.imgurl[data-bg="' + this.src + '"]').attr({ 'data-w': w, 'data-h': h, 'data-wxh': s });
 							$(this).attr({ 'data-wxh': s, 'data-src': this.src });
 
 						};
@@ -2150,26 +2493,23 @@ dc+
 
 
 
-						loadCaps()
+						cb();
 					};
 					reader.readAsDataURL(blob);
 					break;
 				}
 			}
 		}
-	}).on('change keyup mouseup', t, function (e) {//textarea
-		var me = $(this), id = this.id, src = me.val(), src0 = me.attr('data-bg') || '', cnged = src0 != src && src != ' ', p = me.parent(), pp = p.parent(), sm = pp.prevAll('summary'), c = sm.find(':checked').length,
-			cap=id=='urlCap',
-			cb = function () {
-				/*
-				if (til) { loadTiles() }
-				if (imr) { $('#count').click() }
-				*/
-				if (cap) { loadCaps() }
-			};
+	}).on('change keyup mouseup', '.imgurl,#Caps textarea', function (e) {//textbox
+		var me = $(this), id = this.id, src = me.val(), src0 = me.attr('data-bg') || '', cnged = src0 != src && src != ' ', p = me.parent(), pp = p.parent(),
+		cb = function () {
+			scrn('eraser');
+			loadCaps();
+			caps.repaint(1);
+		};
 
 		imgPreRe.lastIndex = 0;
-		if (imgPreRe.test(src) || src == '') {
+		if (imgPreRe.test(src) || src == '' || src) {
 			p.find(':file').add(pp.find(':file')).val('');
 
 			if (cnged) {
@@ -2187,10 +2527,10 @@ dc+
 						var w = this.width;
 						var h = this.height;
 						var s = w + '×' + h;
-						$('.urlImg[data-bg="' + this.src + '"]').attr({ 'data-w': w, 'data-h': h, 'data-wxh': s });
+						$('.imgurl[data-bg="' + this.src + '"]').attr({ 'data-w': w, 'data-h': h, 'data-wxh': s });
 						$(this).attr({ 'data-wxh': s, 'data-src': this.src });
 
-
+						cb;
 					};
 					img.onerror = function () {
 						me.val(src);
@@ -2198,15 +2538,13 @@ dc+
 					img.src = src;
 
 
-					loadCaps()
+					
 				}
 
 			}
 
-		} else if ($('#inFile').val() == 'capcanvasAPI') {
-			scrn('canvasAPI');
-
 		}
+		
 		e.stopPropagation();
 
 	}).on('dragover', t, function (e) {
@@ -2218,7 +2556,7 @@ dc+
 	}).on('drop', t, function (e) {
 		e.stopPropagation(); e.preventDefault(); $(this).removeClass('drop');
 		var me = $(this), id = this.id, pp = me.parent().parent(), src = me.val();;
-		if (/url/.test(id)) { $('#' + id.replace('rl', 'p')).val('') }
+		//if (/url/.test(id)) { $('#' + id.replace('rl', 'p')).val('') }
 		var f = e.originalEvent.dataTransfer.files[0];
 		if (!f || f.type.indexOf('image') < 0) { return }
 		//console.log(f); File {webkitRelativePath: "", lastModifiedDate: xxx, name: "VIP.png", type: "image/png", size: 10628}
@@ -2226,8 +2564,9 @@ dc+
 		var reader = new FileReader();
 		reader.onload = function (event) {
 			var src = this.result;
+			//console.log(this);
 			me.val(' ').css('background', 'url(' + src + ') bottom right/contain no-repeat').attr({ 'data-bg': src, 'data-src': src });
-			loadCaps()
+			loadCaps();
 		};
 		reader.readAsDataURL(f);
 
@@ -2250,14 +2589,15 @@ dc+
 	}).on('click', '#tileTool .sbsTbl td, #tileTool .sbsTbl .td', function (e) {
 		sbsTbltd(this, e, 'TextBox');
 
-	}).on('change', '#tileTool :file:not([webkitdirectory])', function (e) {
-		var me = $(this), id = this.id || '', v = me.val(), p = me.parent(), sm = p.prevAll('summary'), c = sm.find(':checked').length, uI = me.nextAll('.urlImg').add(p.find('.urlImg')),
+	}).on('change', '.imgurlfile', function (e) {//#tileTool :file:not([webkitdirectory])
+		var me = $(this), id = this.id || '', v = me.val(), p = me.parent(), uI = p.parent().find('.imgurl'),
 
-		cap=id=='urlCap',
-			cb = function () {
-				loadCaps()
-			};
-
+		cb = function () {
+			scrn('eraser');
+			loadCaps();
+			caps.repaint(1);
+		};
+//console.log(v, uI.length);
 		if (v) {
 			var files = this.files, fl = files.length;
 			for (var i = 0; i < fl; i++) {
@@ -2265,7 +2605,7 @@ dc+
 
 
 				if (/^image[/]/.test(f.type)) {
-					if (!s || weib) { s = '?KB' } else {
+					if (!s) { s = '?KB' } else {
 						s = s / 1024;
 						if (s >= 1024) { s = (s / 1024).toFixed(1) + 'MB' } else { s = s.toFixed(1) + 'KB' }
 					}
@@ -2279,31 +2619,31 @@ dc+
 								var w = this.width;
 								var h = this.height;
 								var s = w + '×' + h;
-								$('.urlImg[data-bg="' + this.src + '"]').attr({ 'data-w': w, 'data-h': h, 'data-wxh': s });
+								$('.imgurl[data-bg="' + this.src + '"]').attr({ 'data-w': w, 'data-h': h, 'data-wxh': s });
 								$(this).attr({ 'data-wxh': s, 'data-src': this.src });
-
-
+								cb();
 							};
 							img.src = src;
-							loadCaps()
+							
 						};
 						reader.readAsDataURL(f);
 					} else {
 						var src = (URL || webkitURL).createObjectURL(f);
+						//console.log(src);
 						uI.val(' ').css('background', 'url(' + src + ') bottom right/contain no-repeat')
 							.attr({ 'data-name': f.name, 'data-no': 0, 'data-size': f.size, 'data-sz': s, 'data-ext': ext, 'data-bg': src, 'data-src': src });
 						img.onload = function () {
 							var w = this.width;
 							var h = this.height;
 							var s = w + '×' + h;
-							$('.urlImg[data-bg="' + this.src + '"]').attr({ 'data-w': w, 'data-h': h, 'data-wxh': s });
+							$('.imgurl[data-bg="' + this.src + '"]').attr({ 'data-w': w, 'data-h': h, 'data-wxh': s });
 							$(this).attr({ 'data-wxh': s, 'data-src': this.src });
-
+							cb();
 
 						};
 						img.src = src;
 
-						loadCaps()
+						
 					}
 				} else if (cap && $('#inFile').val() == 'capcanvasAPI') {
 					//console.log(f);
@@ -2322,11 +2662,15 @@ dc+
 	});
 
 	window.addEventListener('orientationchange', function() {  
-		consolelog(window.innerWidth); 
+		//console.log(window.innerWidth); 
 		setTimeout(function() {  
-			consolelog(window.innerWidth,innerHeight); 
+			//console.log(window.innerWidth,innerHeight); 
 			caps.ini(innerWidth,innerHeight);
+
+			scrn('eraser');
 			caps.repaint();
+
+
 		}, 300);  
 	}, false);
 
@@ -2340,7 +2684,7 @@ dc+
 		});
 
 
-	toggleColor();
+	//toggleColor();
 
 
 
@@ -2373,7 +2717,7 @@ dc+
 
 function cng_cap(obj) {
 	var me = $(obj), id = me.attr('id'), v = me.val();
-consolelog(id);
+//console.log(id);
 	if (/^css/.test(id) || id == 'capType' || id == 'svgTexts' || id == 'svgText') { cng_popout(obj); return }
 	if (/scr[WH]$/.test(id)) {
 		var cvs = $('#caps')[0], w = +$('#scrW').val(), h = +$('#scrH').val();
@@ -2383,9 +2727,9 @@ consolelog(id);
 			cvs.width = w;
 			cvs.height = h;
 
-
+			scrn('eraser');
 			caps.repaint();
-			//scrn('eraser');
+			
 			
 		}
 		if (/Crop/.test(L.drawShape)) {
@@ -2416,7 +2760,7 @@ consolelog(id);
 	if (/svgArw/.test(id)) {
 		toggleSvg();
 		var mk = /E/.test(id) ? 'end' : 'start';
-		$('#svgLines svg' + (shpN ? ', #' + shpN + '[id*=ine]' : '')).children('line, path').attr('marker-' + mk, function () {
+		$('.svgLine svg' + (shpN ? ', #' + shpN + '[id*=ine]' : '')).children('line, path').attr('marker-' + mk, function () {
 			return 'url(#' +
 				$(this).prevAll('defs').children('[id^=Arw' + id.substr(-1) + ']').eq(+v).attr('id') + ')'
 		});
@@ -2651,9 +2995,11 @@ function clk_popout(obj) {
 		}
 	}
 	if (id == 'TextBoxGo' || id == 'TextBoxGo2') {
-		var iT = $('#TextBoxType').val(), it = iT.toLowerCase(),v = $('#TextBox').val().trim(), shpNid = L.drawShapeNow || 'unknown', shpN = $('#' + shpNid), frTextarea, 
-		//A = [100, 200, 300, 200];
-		A = [$('#cssX').val(),$('#cssY').val(),$('#ContainerW').val(),$('#ContainerH').val()];
+		var iT = $('#TextBoxType').val(), it = iT.toLowerCase(),v = $('#TextBox').val().trim(),
+			shpNid = L.drawShapeNow || 'unknown', shpN = $('#' + shpNid), frTextarea, 
+			//A = [100, 200, 300, 200];
+			A = [$('#cssX').val(),$('#cssY').val(),$('#ContainerW').val(),$('#ContainerH').val()],
+			shifton=$('#SVGshift path').attr('stroke')=='yellow';
 
 		if(!shpN.length){
 			shpNid='unknown';
@@ -2687,7 +3033,8 @@ function clk_popout(obj) {
 				});
 			}
 			if(iT=='HTML'){
-				$e.html(v)
+
+				$e.html(shifton && v[0]!='<'?eval(v):v)
 			}
 			if(iT=='Markdown'){
 				$e.html(md2html(v))
@@ -2734,8 +3081,9 @@ function toggleColor() {
 
 	if (L.drawShape == 'allEraser') {
 
+		scrn('eraser');
 		caps.repaint();
-		//scrn('eraser');
+		reCanvasCode();
 		return
 	}
 	refreshFilter();
@@ -2837,11 +3185,9 @@ function cng_popout(obj) {
 	if (id == 'inFile') {
 
 		if (v == 'capcanvasAPI') {
-			$('#upCap').removeAttr('accept');
-			$('#urlCap').attr('placeholder', 'canvas API');
+
 		} else {
-			$('#upCap').attr('accept', 'image/*');
-			$('#urlCap').attr('placeholder', gM('urlImg'));
+
 		}
 
 	}
@@ -2852,8 +3198,7 @@ function cng_popout(obj) {
 		var shpN = L.drawShapeNow || 'unknown', isTxt = /Text/.test(shpN), sp = $('#' + shpN);
 
 
-		var pid = me.prevAll('span[id]').attr('id');
-		if (/DropShadow/.test(id)) { pid = 'dropShadow' }
+		var pid = (me.parent().attr('id')||me.parent().parent().attr('id')||'').replace(/Css./,function(x){x.substr(-1).toLowerCase()});
 
 
 
@@ -3060,13 +3405,126 @@ function cng_popout(obj) {
 
 
 function errPath(t) {
-	return (t||'').replace(/^.*M *[LZ].+$/i,'').replace(/.+[ML] *z*$/i,'')
+	return (t||'').replace(/NaN/g,0).replace(/^.*M *[LZ].+$/i,'').replace(/.+[ML] *z*$/i,'')
 }
 
 function getcap0(){
 	var t='';
 	$('#capsdiv').nextAll().each(function(){
+		var me=$(this);
+		if(me.is('textarea')){
+			me.text(me.val());
+		}
 		t+=this.outerHTML;
 	});
 	return t
+}
+
+
+function loadCaps(){
+	if(!$('#bgimgOn').prop('checked')){
+		return
+	}
+$('span[for=bgimgOn] .multi').each(function(){
+
+
+	var iu=$(this).find('.imgurl'), pwh=$(this).find('.poswh'),pwh0=pwh.eq(0).val().split(','),pwh1=pwh.eq(1).val().split(','),
+		bg=iu.attr('data-bg'), infile='capscr', ext,
+		cvs=$('#caps')[0], capctx=cvs.getContext('2d'), img, 
+		w=+iu.attr('data-w')||0, h=+iu.attr('data-h')||0;
+	if(!bg){
+		if(/capscr/.test(infile)){scrn('eraser')}
+		return;
+	}
+
+	if(bg.substr(0,11)=='data:image/'){
+		ext=bg.replace(/[;,].*/,'').split('/')[1].toLowerCase().replace('x-icon','ico').replace('+xml','');
+		if(ext=='svg'){
+			bg=Base64.decode(bg.replace("data:image/svg+xml;base64,",''));
+			if(bg.indexOf('desc name="zzllrr Imager Geek"')>0){
+				var tArr=bg.split('<foreignObject x='), Scr=/<image x=/.test(tArr[0]), Note=tArr.length==2;
+				if(!Note && !Scr){return}
+				if(Scr && infile!='capnote'){
+					var imgs=tArr[0].split('" xlink:href="'), wh=imgs[0].split('" height="');
+					h=+wh[1];
+					w=+wh[0].split(' width="')[1];
+					img=imgs[1].split('"></image>')[0];
+				}
+				if(Note && infile!='capscr'){
+					tArr[1]=tArr[1].split('</body')[0].split('zig()">')[1];
+					var Txt=/<textarea id=/.test(tArr[1]);
+					if(Txt){
+						var txts=tArr[0].split('".split("Text"),B="');
+						var A=txts[0].split('var A="')[1].split('Text'), B=txts[1].split('"')[0].split(',');
+					}
+					var last=$('#Caps').children().last(), tim=Time.now5();
+					last.after(tArr[1]);
+					if(Txt){
+						for(var i=0;i<A.length;i++){
+							last.nextAll('#Text'+A[i]).val(unescape(B[i]));
+						}
+					}
+					last.nextAll().css({'z-index':function(i,v){return +v+$(this).index()*100}}).find('[id]').add(last.nextAll()).attr('id',function(){return this.id+tim});
+				}
+
+			}else{
+				if(infile=='capscr'){
+					img=iu.attr('data-bg');
+				}else{
+					bg=bg.substr(bg.indexOf('<svg')-4);
+					bg=bg.substr(0,bg.lastIndexOf('</svg')+6);
+					bg=bg.replace(/<title>.*<[/]title>/g,'').replace(/<desc>.*<[/]desc>/g,'');
+					var last=$('#Caps').children().last(), tim=Time.now5();
+					last.after('<svg id=SVG'+tim+'>'+bg+'</svg>');
+					last.next().css({'z-index':$('#Caps').children('svg, textarea, span').length+2001,position:'absolute',left:0,top:0})
+				}
+			}
+		}else{
+			img=bg;
+		}
+	}else{
+		img=bg;
+	}
+//console.log(img,iu[0].outerHTML);
+	if(img){
+		var Img=new Image();
+		Img.onload=function(){
+			if(infile){
+				/*
+				cvs.width=this.width;
+				cvs.height=this.height;
+				*/
+
+//console.log(this,pwh0,pwh1,w,h);
+				var sx=+pwh0[0]||0, sy=+pwh0[1]||0, sw=+pwh0[2]||w, sh=+pwh0[3]||h, x=+pwh1[0]||0, y=+pwh1[1]||0, w1=+pwh1[2]||sw||w, h1=+pwh1[3]||sh||h;
+				capctx.drawImage(this,sx,sy,sw,sh,x,y,w1,h1);
+
+				//capctx.drawImage(this,0,0);
+				/*
+				$('#svgShape svg[id]').eq(0).mouseout();
+				$('#tileTool').show('fast',function(){
+					if(this.width+$('#tileTool').width()>$(window).width()){CapsTip()}
+				});
+				*/
+			}
+		}
+		Img.src=img;
+	}
+});
+}
+
+function randomCanvas(w,h,x,y){
+	var c=(new ctt('#caps')).ctx, d=c.createImageData(w,h);
+	for(var i=0;i<h;i++){
+		for(var j=0;j<w;j++){
+			var ij=(i*w+j)*4;
+			//console.log(ij);
+			d.data[ij+0]=Random(256)-1;
+			d.data[ij+1]=Random(256)-1;
+			d.data[ij+2]=Random(256)-1;
+			d.data[ij+3]=Random(256)-1;
+		}
+	}
+	//console.log(d.data);
+	c.putImageData(d,x||0,y||0);
 }

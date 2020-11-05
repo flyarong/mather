@@ -60,12 +60,14 @@ solves={index:['Number','Sequence','Series','Function','Permutation','Vector','M
 			
 			{'Natural':[
 				{'排列组合':['Permutation Number','Combination Number']},
-				{'Factorial':['$n!$—n最大9648','$n!!$—双阶乘', '$n!的末零数$…n']},
+				{'Factorial':['$n!$—n最大9648或9675','$n!!$—双阶乘', '$n!的末零数$…n']},
+
 				{'Digit':['数根dr']},
 			]},
 
 			{'Integer':[
 				'竖式计算…算式&保留小数位数“124/3&3',
+				'Big Integer Simplify',
 			]},
 
 			{'Fraction':[
@@ -193,15 +195,34 @@ solves={index:['Number','Sequence','Series','Function','Permutation','Vector','M
 			'Domain',
 			'Range…f(x),D',
 			'Limit…f,a',
-			'Derivative',
-			'Partial Derivative…f,[xy]',
-			'Directional Derivative…f,φ',
-			'Grad',
-			'Differential',
-			'Partial Differential',
+			'Simplify',
+			'Rationalize',
+
+		]},
+		{'Differential':[
+			'Derivative…f&x&阶数&x0',
+			'Partial Derivative…f;fname&x,y&阶数&x0,y0',
+			'Grad…f&x,y&φ&x0,y0',
+			'Directional Derivative…f&x,y&φ&x0,y0',
+	
+		]},
+		{'Integral':[
+			{'Line Integral':[
+				{'Green.1 Formula':[
+					'路径无关'
+				]},
+				{'Stokes Formula':[
+					'路径无关'
+				]},
+				'Contour Integral',
+			]},
+			{'Surface Integral':[
+				'Gauss Formula'
+			]},
 			'Indefinite Integral',
-			'Definite Integral']
-		}
+			'Definite Integral',
+		]},
+
 	],
 
 
@@ -246,8 +267,8 @@ solves={index:['Number','Sequence','Series','Function','Permutation','Vector','M
 			'向量夹角…α\nβ',
 			'$α×β$…α\nβ—Vector Cross Product',
 			'混合积…a\nb\nc',
-			'双重矢性积…a\nb\nc'
-
+			'双重矢性积…a\nb\nc',
+			'子空间内射影…行向量组A\n行向量b'
 		]},
 	],
 
@@ -279,7 +300,7 @@ solves={index:['Number','Sequence','Series','Function','Permutation','Vector','M
 			'$A^T$—Transpose','$A^H$—Hermitian','$-A$',
 
 			'$A_{ij}$…A&索引\n一阶i1,j2（或缩写为1,2）\n多阶i1,i2,j1,j2\ni1（按第1行）\nj1（按第1列）\n多个用;分开—Algebraic Cofactor“1234&i1',
-			'$A^*$—Adjoint Matrix',
+			'$A^*$…A&1使用逆矩阵求—Adjoint Matrix',
 			"$$kxf('r')$(A)$—Rank",
 			"$$kxf('tr')$(A)$—Trace",
 			
@@ -323,7 +344,7 @@ solves={index:['Number','Sequence','Series','Function','Permutation','Vector','M
 			'$|AP|$…P&|A|“1234&2456',
 			
 			'By Definition',
-			'代数余子式之和…A&i4&系数“1234&i2&-1,1',
+			'代数余子式之和…A或a_i&i4&系数或余子式“1234&i2&-1,1',
 			'Laplace Expansion',
 			'对角线法则',
 			'Block Matrix',
@@ -346,11 +367,11 @@ solves={index:['Number','Sequence','Series','Function','Permutation','Vector','M
 
 
 
-		{'Eigen Value':[
+		{'Eigen':[
 			{'Eigen Vector':[
 				'Eigen Vector…A&'+gM('Eigen Value'),
-				'Eigen Vector Orthogonalize',
-				'Eigen Vector Gram-Schmidt',
+				'Orthogonalize',
+				'Gram-Schmidt',
 				'Eigen Matrix'
 			]},
 			'Eigen Polynomial',
@@ -371,8 +392,8 @@ solves={index:['Number','Sequence','Series','Function','Permutation','Vector','M
 			
 			{'Diagonalize':[
 				'对角化求幂…A&'+gM('Power')+'&'+gM('Eigen Value'),
-				'对角化求幂PA=ΛP…P\nΛ\nn\nA的多项式',
-				'对角化求幂AP=PΛ…P\nΛ\nn\nA的多项式'
+				'对角化求幂PA=ΛP…P\nΛ&B\nn\nA的多项式',
+				'对角化求幂AP=PΛ…P\nΛ&B\nn\nA的多项式'
 			]},
 
 			'$A^2$…A—Square','$A^n$…A&n—Power',

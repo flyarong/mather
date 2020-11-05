@@ -10,7 +10,7 @@
 
 
 var SBSi=[zlr('Num',' 1 2 3'),
-	zlr('ABC',' 1 2'),
+	zlr('ABC',' 1 2 3'),
 	zlr('DEF',' 1 2 3'),
 	zlr('Operator',' 1 2'),
 	zlr('Relation',' 1 2'),
@@ -59,7 +59,7 @@ SBS={
 	//	Arrf(fCC,[seqA(65,26),seqA(97,26)]),
 	//	Arrf(fCC,[seqA(8560,16),seqA(8544,16)]),
 
-		['ℵℶℷℸ℘°℃℉ð₴','∞∝∅⍉⌀'],
+		['ℵℶℷℸ℘°℃℉ð₴','∞∝∅⍉⌀∂∇¬∀∃'],
 		['ƒℎæœＣ₵açþÞ','ℲℏÆŒϹ∁āÇÐß'],
 
 	],
@@ -70,8 +70,8 @@ SBS={
 		['ⅰⅱⅲⅳⅴⅺⅻ','ⅵⅶⅷⅸⅹⅼⅽⅾⅿ'],
 		['ⅠⅡⅢⅣⅤⅪⅫ','ⅥⅦⅧⅨⅩⅬⅭⅮⅯ'],
 		['ℂℍℙℚ ℭℌℑℜ','ℕℝℤℨ'],
-		['ℬℰℱℋ ℯℊℴ','ℐℒℳℛ'],
-		['⍶⍺ϐϒϕ⍳⍸⍴ϱ','ϵ⍷ℇϑϴ⍵⍹ϖ'],
+		['ℬℰℱℋ ℯℊℴℓ','ℐℒℳℛ'],
+		['⍶⍺ϐϒϕ⍳⍸⍴ϱ','ϵ⍷ℇϑϴ⍵⍹ϖ∂∇'],
 
 	
 		//	['+-	=.%|\\$<>,;^_~\'"&*/:?@#!删空',' '],		ℏ
@@ -90,9 +90,15 @@ SBS={
 
 		['⒜⒝⒞⒟⒠⒦⒧⒨⒩⒪⒰⒱⒲⒳⒴','⒡⒢⒣⒤⒥⒫⒬⒭⒮⒯⒵'],
 		['ⓐⓑⓒⓓⓔⓚⓛⓜⓝⓞⓤⓥⓦⓧⓨ','ⓕⓖⓗⓘⓙⓟⓠⓡⓢⓣⓩ'],
-		['ⒶⒷⒸⒹⒺⓀⓁⓂⓃⓄⓊⓋⓌⓍⓎ','ⒻⒼⒽⒾⒿⓅⓆⓇⓈⓉⓏ']
+		['ⒶⒷⒸⒹⒺⓀⓁⓂⓃⓄⓊⓋⓌⓍⓎ','ⒻⒼⒽⒾⒿⓅⓆⓇⓈⓉⓏ'],
 	],
 
+	ABC3:[
+		['ᴬᴮᒼᴰᴱᴷᴸᴹᴺᴼᵁ៴ᵂ  ',' ᴳᴴᴵᴶᴾ ᴿ  ᙆ'],
+		['ᵃᵇᶜᵈᵉᵏˡᵐⁿᵒᵘᵛʷˣʸ','ᶠᵍʰⁱʲᵖ ʳˢᵗz'],
+		['ₐ ₑₒᵣᵪᵧ','  ᵤᵥₓ'],
+		['␆␇␈␘␍␛␗␃␌␜␞␏␎␁␠','␡␐␙␅␄␝␉␊␕␤␂␚␖␟␋'],
+	],
 
 	DEF:[
 		['āáǎàaēéěèeūúǔùu','ōóǒòoīíǐìiǖǘǚǜü'],
@@ -116,38 +122,38 @@ SBS={
 	DEF3:Arrf(function(x,i){return [fCC(seqA(x,10)),fCC(seqA(x+10,(i==4?4:10)).concat(i==4?seqA(13169,6):[]))]},seqA(13184,5,'',20)),
 
 	Operator:[
-		['∑∏∐⋀⋂∮∯∰⨁⨂','∫∬∭⋁⋃∱∲∳⨀◯'],//⨌
-		['′″‴! ¬∀∃∄ ∟√∛∜','‵‶‷‼ ∠∂∇†'],
-		['+×±⊕ ∧∨∩∪','-÷∓⊗'],
+		['∑∏∐⋀⋂∮∯∰⨁⨂','∫∬∭⋁⋃∱∲∳⨀⨌'],
+		['′″‴!† ¬∀∃∄√∛∜⨳','‵‶‷‼‡∂∇✓※'],
+		['+×±⊕ ∧∨∩∪','-÷∓⊗∖'],
 		[ ZLR('() [] {} <> 〈〉 ⁽⁾ ┌┐ ⌈⌉ ⎰⎱ ⟦⟧ ║║ ||'),
 		ZLR('(,) [,] {,} <,> ⟨⟩ ₍₎ └┘ ⌊⌋ (,] [,)')],//⟮⟯
 	],
 
 	Operator1:[
-		['+∓⍅⍏⌿⌗†⌶','⊹±⍆⍖⍀⋕#'],
+		['+∓⍅⍏⌿⌗†⌶','⊹±⍆⍖⍀⋕#‡'],
 		['‐‑‒−⁃¦∣∤','–—―－'],
 		['‾∓∔∸∺∻÷∹⍎','_±‗⍘⍙⍚⍛⍜⍕'],
 			
 		['×⨉∕╱','╳⋇∖╲'],
 			
-		['⊕⨁⨂⊖⊗⦿⊙⨀⊚⌾','⊘⌽⊜⊝ ⍟⊛⌻⌼'],//⧀⧁
+		['⊕⨁⨂⊖⊗⦿⊙⨀⊚⌾','⊘⌽⊜⊝⍟⧀⧁⊛⌻⌼'],
 	],
 
 	Operator2:[
 		
-		['∧⋀⌃⌅⊼⌆⋋⋏⨇','∨⋁⌄‸⊻⊽⋌⋎⨈'],
+		['∧⋀⌃⌅⊼⌆⩞⋋⋏⨇','∨⋁⌄‸⊻ ⊽⋌⋎⨈'],
 		['∩⋂⋓⋔ ⨃⨄⨅⊓','∪⋃⋒ ⊌⊍⊎⨆⊔'],
 
-		['∡∠','∢∟⊾⊿'],//⦛⦣⦤⦥⦟⦞ ⦠⦢⦡⦜⦝
-		['⊞⊠⍁⌸⊡⍃⍄⌺⍐⍍⍓⍌⍰','⊟⌹⍂⍯⍠⍇⍈⍞⍗⍔'],
-		['≖⋄','']
+		['∡∠⦛⦣⦤⦠⦟⦞','∢⊿⊾⦢⦥⦡∟⦜⦝'],
+		['⊞⊠⍁⌸⊡⍃⍄⌺⍐⍍⍓⍌⍰□■','⊟⌹⍂⍯⍠⍇⍈⍞⍗⍔'],
+		['≖⋄','◯']
 
 	],
 
 	Relation:[
 
 		['⋅∙•‧․∘°','⋆∗⁂⁑'],
-		[':‥∷  ⋯⋰∵','∶¨⁞  ⋮⋱∴'],
+		[':‥∷∟∠⋯⋰∵∦⊥','∶¨⁞⦜△⋮⋱∴▱◇'],
 		['＝≡≣≗≘≙≚≛≜≝','≠≢≐≑≓≒≔≕≟≞'],
 		['∼≈≋≀⌇≌⋍≃≅≊','≁≉⍭∾∿∽≂≄≇≆'],
 
@@ -384,8 +390,9 @@ SBS={
 'ℎ':'mathit{h}',//mathnormal 
 'Ｃ':'mathbf{C}',
 'Ϲ':'mathsf{C}',
-'∁':'mathtt{C}',
-	
+'∁':'mathtt{C}',	// complement
+
+'⊺':'intercal',
 'a':'mathrm{a}',
 	
 	
@@ -401,6 +408,73 @@ SBS={
 'ă':'breve{a}',
 
 
+'†':'dag',
+'‡':'ddag',
+
+'∡':'measuredangle',
+'∢':'sphericalangle',
+'⋄':'diamond',
+'◊':'Diamond',	//lozenge
+'⧫':'blacklozenge',
+'♢':'diamonds',	//diamondsuit	
+
+'♣':'clubs',	//clubsuit
+'♠':'spades',
+'♡':'hearts',
+'✠':'maltese',
+
+'♮':'natural',
+'♯':'sharp',
+'♭':'flat',
+
+'⋆':'star',
+'★':'bigstar',
+
+'∙':'bullet',
+
+'℧':'mho',
+'╱':'diagup',
+'╲':'diagdown',
+'∖':'setminus',
+
+'⟨':'langle',
+'⟩':'rangle',
+
+'{':'lbrace',
+'}':'rbrace',
+
+'[':'lbrack',
+']':'rbrack',
+
+'|':'lvert',
+'|':'llvert',
+
+'∧':'land',
+'∨':'lor',
+'¬':'neg',	//lnot
+
+'⊼':'barwedge',
+'⩞':'doublebarwedge',
+
+'¥':'yen',
+'£':'pounds',
+
+'⊛':'circledast',
+'⊚':'circledcirc',
+'⊝':'circleddash',
+'®':'circledR',
+'Ⓢ':'circledS',
+'§':'text{\\S}',
+'¶':'text{\\P}',
+
+'■':'blacksquare',
+'□':'square',	// Box
+'⊡':'boxdot',
+'⊟':'boxminus',
+'⊞':'boxplus',
+'⊠':'boxtimes',
+
+'≀':'wr',
 
 '⅟':kfrac('1/n').substr(1),
 '½':kfrac('1/2').substr(1),
@@ -425,8 +499,8 @@ SBS={
 'func_tri':[zlr2('sech csch cth th sh ch','⁻¹'),'sech csch cth th sh ch',
 		zlr('arc','sin cos tan cot sec csc'),'sin cos tan cot sec csc'
 		],
-//'func':'# & % exp log ln lg arg gcd lcm mod max min sup inf lim limsup liminf sin cos tan cot sec csc sh ch th cth tg ctg cotg tanh cosec arcsin arccos arctan arccot arctg arcctg det dim deg hom ker Pr',
-'func':'# & % exp log ln lg arg gcd max min sup inf lim limsup liminf sin cos tan cot sec csc sh ch th cth tg ctg cotg tanh cosec arcsin arccos arctan arctg arcctg det dim deg hom ker Pr',
+		//injlim	
+'func':'# & % exp log ln lg arg gcd max min sup inf lim limsup liminf sin cos tan cot sec csc sh ch th cth tg ctg cotg tanh cosec arcsin arccos arctan arctg arcctg det dim deg hom ker Pr sinc si Si ci Ci Shi',
 
 /*
 'struc':{//结构
@@ -445,14 +519,25 @@ SBS={
 		'×':'times',
 		'÷':'div',
 
+		'⋇':'divideontimes',
 		'∣':'mid',
 		'∤':'nmid',
-		'⋅':'cdot',
+		'⋅':'cdot',	//cdotp centerdot
+
+
+
+
 		'∘':'circ',
 		'∗':'ast',
-		'⨀':'bigodot',//⨀
+		'⨀':'bigodot',
 		'⨂':'bigotimes',
 		'⨁':'bigoplus',
+
+		'⊕':'oplus',
+		'⊖':'ominus',
+		'⊗':'otimes',
+		'⊘':'oslash',
+		'⊙':'odot',
 
 		'≡':'equiv',
 		'≠':'ne',	// \ne \not= \neq
@@ -468,9 +553,8 @@ SBS={
 
 */
 
+		'✓':'checkmark',
 
-
-		'≐':'doteq', //	'dot=',
 
 		'≪':'ll',
 		'≫':'gg',
@@ -483,6 +567,11 @@ SBS={
 		'≦':'leqq',
 		'≧':'geqq',
 			
+		'└':'llcorner',
+		'┘':'lrcorner',
+
+		'⋉':'ltimes',
+		'⋊':'rtimes',
 
 		'≈':'approx',
 		'≃':'simeq',
@@ -509,7 +598,9 @@ SBS={
 		'⊃':'supset',
 		'⊆':'subseteq',
 		'⊇':'supseteq',
+		'⋒':'Cap',	// doublecap
 		'∩':'cap',
+		'⋓':'Cup',	// doublecup
 		'∪':'cup',
 		'⊓':'sqcap',
 		'⊔':'sqcup',
@@ -528,18 +619,22 @@ SBS={
 		'⋀':'bigwedge',
 		'⨄':'biguplus',
 		'⨆':'bigsqcup',
-		'∋':'ni',
+		'◯':'bigcirc',
+
 		
+		'.':'ldotp',
 		
-		'…':'ldots',
-		'⋯':'cdots',
+		'…':'ldots',	//dotsc	dotso
+		'⋯':'cdots',	//dotsb	dotsm	idotsint
 		'⋱':'ddots',
 		'⋮':'vdots',
+		'⋰':'iddots',
 
 		'∵':'because',
 		'∴':'therefore',
 		'∀':'forall',
 		'∃':'exists',
+		'∄':'nexists',
 
 		'≯':'not>',
 		'̸⊄':'not\\subset',
@@ -550,8 +645,8 @@ SBS={
 		'°':'^\\circ',
 		
 		'′':'prime',
-		'″‴':'\'\'',
-		'‴':'\'\'\'',
+		'″':"''",
+		'‴':"'''",
 		'‵':'backprime',
 		'∫':'int',
 		'∬':'iint',
@@ -737,6 +832,8 @@ SBS={
 '≏':'bumpeq',
 '≎':'Bumpeq',
 '≗':'circeq',
+
+':':'colon',
 ':≈':'colonapprox',
 '::≈':'Colonapprox',
 ':−':'coloneq',
@@ -748,11 +845,17 @@ SBS={
 '≅':'cong',
 '⋞':'curlyeqprec',
 '⋟':'curlyeqsucc',
+'⋎':'curlyvee',
+'⋏':'curlywedge',
+
 '⊣':'dashv',
 '::':'dblcolon',
 '≐':'doteq',
 '≑':'Doteq',
 '≑':'doteqdot',
+
+'∔':'dotplus',
+
 '≖':'eqcirc',
 '−:':'eqcolon',
 '−::':'Eqcolon',
@@ -772,6 +875,8 @@ SBS={
 '⋙':'ggg',
 '⋙':'gggtr',
 '>':'gt',
+
+'⋗':'gtrdot',
 '⪆':'gtrapprox',
 '⋛':'gtreqless',
 '⪌':'gtreqqless',
@@ -780,9 +885,10 @@ SBS={
 '∈':'in',
 '∈':'isin',
 '⋈':'Join',
-'≤':'le',
-'≤':'leq',
-'≦':'leqq',
+
+'<':'lt',
+'⋖':'lessdot',
+
 '⩽':'leqslant',
 '⪅':'lessapprox',
 '⋚':'lesseqgtr',
@@ -792,12 +898,12 @@ SBS={
 '≪':'ll',
 '⋘':'lll',
 '⋘':'llless',
-'<':'lt',
+
 '∣':'mid',
 '⊨':'models',
 '⊸':'multimap',
-'∋':'owns',
-'∥':'parallel',
+'∋':'owns',	//ni
+'‖':'parallel',
 '⊥':'perp',
 '⋔':'pitchfork',
 '≺':'prec',
@@ -808,7 +914,7 @@ SBS={
 '∝':'propto',
 '≓':'risingdotseq',
 '∣':'shortmid',
-'∥':'shortparallel',
+'∥':'lVert',	//shortparallel
 '∼':'sim',
 '≃':'simeq',
 '⌢':'smallfrown',
@@ -840,9 +946,22 @@ SBS={
 '≜':'triangleq',
 '⊵':'trianglerighteq',
 '∝':'varpropto',
-'△':'vartriangle',
-'⊲':'vartriangleleft',
-'⊳':'vartriangleright',
+'△':'vartriangle',	//bigtriangleup
+'▽':'triangledown',	//bigtriangledown
+'◃':'triangleleft',
+'▹':'triangleright',
+
+'⊲':'lhd',	//vartriangleleft
+'⊳':'rhd',	//vartriangleright
+
+'▲':'blacktriangle',
+'▼':'blacktriangledown',
+'◀':'blacktriangleleft',
+'▶':'blacktriangleright',
+
+'⋋':'leftthreetimes',
+'⋌':'rightthreetimes',
+
 ':':'vcentcolon',
 '⊢':'vdash',
 '⊨':'vDash',
@@ -921,40 +1040,50 @@ SBS={
 ]
 	
 ,FUNCS={
-	'Number Theory':['dr'],
-	'Arithmetic':['gcd log Arg mod sign','lcm ln arg exp'],// ㏒ ㏑
-	'Algebraic':['r tr det dim','hom ker Pr diag'],
+	'Number Theory':['dr Re Im rad ind'],
+	'Arithmetic':['gcd log exp Arg','lcm ln lg arg','mod sgn'],// ㏒ ㏑
+	'Algebraic':['rank diag tr det','adj dim hom ker per','span proj Pr'],
 	'Trigonometric':['sin tan sec','cos cot csc',
-		zlr('arc','sin tan sec'),zlr('arc','cos cot csc')],
+		zlr('arc','sin tan sec'),zlr('arc','cos cot csc'),
+		'Si si sinc cis','Ci ci Cin arccis'
+	],
 	'Hyperbolic':['sh th sech','ch cth csch',
-	zlr2('sh th sech','^{-1}'),zlr2('ch cth csch','^{-1}')],//⁻¹
+		zlr2('sh th sech','^{-1}'),zlr2('ch cth csch','^{-1}'),
+		'Shi','Chi'
 
-	'Analytical':['lim sup inf','limsup liminf'],
+	],//⁻¹
+
+	'Analytical':['lim sup inf grad','limsup liminf curl rot','inj~lim proj~lim div'],
 	'Set':[],
-	'Logistical':[],
-	'Probabilistic':[],
+	'Logistical':['OR AND XOR','NOR NAND XNOR'],
+	'Probabilistic':['Bin Geo'],
 	'Statistical':['min max'],
 
 	'Topological':[],
-	'Geometric':[]
+	'Geometric':['deg',],
+	'Combination':[],
 }
 
 
 ,STRUCi=[//
 
-	ZLR('Fraction Note Binom'),
-	ZLR('Subsup Root Size'),
-	['Parentheses','Big Parentheses','Color'],
+	ZLR('Fraction Equality Non-equality'),
+	ZLR('Subsup Root Differential'),
 
-	ZLR('Equality Non-equality Relation'),
-	ZLR('Sum Integral Limit'),
+	ZLR('Sum Limit Integral'),
+	
+
+	ZLR('Align Linebreak Define'),
 	ZLR('Matrix Det Summarize'),
+	['Parentheses','Big Parentheses','Binom'],
 
-	ZLR('Over Latin Linebreak'),
+	ZLR('Over Latin Color'),
 	['Lowercase Greek','Uppercase Greek','Hebrew'],
 	['Font','Math Font','Text Font'],
 
-	['Margin','Margin Value','Negative Margin'],
+	ZLR('Note Reasoning Relation'),
+	['Notes','Margin','Negative Margin'],
+	['Margin Space','Margin Value','Size'],
 
 ]
 	
@@ -962,26 +1091,22 @@ SBS={
 
 
 	'Fraction':[
-		$A(zlrA3("kfrac(",[
-			"'1/2'",
+		['1\\/2'].concat($A(zlrA3("kfrac(",[
 			"[3,4]",
 			"'1/2+3/4+5/6',1",
 			
-		],")")).concat('{$Random(100)$}\\/{$Random(100)$} $\'+-×÷\'[Random(4)-1]$ {$Random(100)$}\\/{$Random(100)$}'),
-		['1\\/2'].concat(zlrA3('\\',['','t'],'frac{1}{2}'),
+		],")"))).concat('{$Random(100)$}\\/{$Random(100)$} $\'+-×÷\'[Random(4)-1]$ {$Random(100)$}\\/{$Random(100)$}'),
+		["$kfrac('1/2')$"].concat(zlrA3('\\',['','t'],'frac{1}{2}'),
 		zlrA3('\\',['','t'],'frac{1}{1+\\frac{1}{2}}')),
+
+		[],
+		
 		[
 		"\\dfrac{1}{2}",
 		"\\cfrac{1}{1 + \\cfrac{1}{2}}",
 		"$mfracs([1,3,5],[2,4,6],'',1,'+','')$"
 		],
-		$A(zlrA3("difn('f','x',",[
-			"''",
-			"1",
-			"'',2",
-			"1,2"
-			],")")
-		)
+		
 	],
 
 
@@ -989,9 +1114,19 @@ SBS={
 		zlrA3("$eq(1,'",'→↔←↦'.split(''),"',2)$"),//katex 暂不支持 ⇆ ↤	//←↔→⇐⇔⇒=↩↪↞↠↼⇀↽⇁⇋⇌⇄↦
 		['\\stackrel{1}{\\longrightarrow}'].concat(zlrA3("$eq(1,'",'↩↪↞↠'.split(''),"',2)$")),
 		['\\stackrel{1}{\\longleftarrow}'].concat(zlrA3("$eq(1,'",'↼⇀↽⇁'.split(''),"',2)$")),
+	
+		
+	],
+
+
+	'Reasoning':[
 		zlrA3("$eq(1,'",'=⇒⇔⇐'.split(''),"',2)$"),//katex 暂不支持 ⇆ ↤
 		zlrA3("$eq(1,'",'⇋⇌⇄'.split(''),"',2)$"),
-		
+	],
+
+	'Define':[
+		['\\def\\zzllrr#1#2{{#1}+{#2}}\\zzllrr{\\pi}{4}',
+		'\\newcommand\\test[2]{\\color{#1}{\\heartsuit}\\color{#2}{\\heartsuit}} \\test{red}{blue}']
 	],
 
 
@@ -1010,16 +1145,18 @@ SBS={
 	
 
 
-	'Root':[$A(zlrA3("kroot('x'",['',',3',',4'],')').concat(
+	'Root':[['√2','∛3','∜4','√{ab}'].concat($A(
 		zlrA3('mroots(',ZLR("[2,3],['','x','y'],'','','+-',1"),",'')")
 	)),
-		$A(zlrA3("kfrac([",ZLR("kroot(2),2 kroot(5)+'-1','2' '-b±'+kroot('b^2-4ac'),'2a'"),'])')),
-
+		$A(zlrA3("kroot('x'",['',',3',',4'],')')
+			.concat(zlrA3("kfrac([",ZLR("kroot(2),2 kroot(5)+'-1','2'"),'])'))),
+		[],
+		$A(zlrA3("kfrac([",ZLR("'-b±'+kroot('b^2-4ac'),'2a'"),'])')),
 		$A(zlrA3('mroots(',ZLR("[2,3,4,5],['',1,10,100,1000],'',1,'+',1"),",'')"))
 	],
 
 	
-	'Equality':Arrf($A,[
+	'Equality':[['='].concat($A(
 		zlrA3("Eq([",[
 			"'x',''],'','line'",
 			"'x','y',2],'','line'",
@@ -1027,57 +1164,87 @@ SBS={
 			[
 				"eq0(['x','y'])",
 			]
+		))),
+
+		$A(zlrA3("aligned(['x','= 1','= 2']",[
+			"",
+			",1"
+		],")").concat("aligned(['~ \\\\quad x','= 1','= 2'])")).concat(
+			$A(zlrA3("Eq([",[
+				"['x','1'],'2']",
+				"'x','1','2']",
+				],')')
+			)
 		),
-		[
+
+		[],
+		$A([
 			"kmod('a','b',2)",
 			"eq0(['x','y'],3,5)",
-		],
-		
-		[
-			"eqM([1,-1],2)"
-		],
-		zlrA3("Eq([",[
-			"['x','1'],'2']",
-			"'x','1','2']",
+		]),
+
+		$A(zlrA3("Eq([",[
 			"['x','1'],'2'],'','','≡'",
 			"'x','1','2'],'','','≡'",
-			],')'),
-	]),
+			],')').concat([
+				"eqM([1,-1],2)"
+			])
+		),
+		
+		[],
 
-	'Non-equality':Arrf($A,[zlrA3("Eq([",[
+
+	],
+
+	'Non-equality':[['≤'].concat($A(zlrA3("Eq([",[
 		"'x',''],'','line',['≤']",
 		"'x','y',2],'','line',['=','≤']",
-		"'x','y',2],'','line',['=','≠']",
 
-		],')'),
-		[
-			"kmod('a','b',2,1)"
-		]
-	]),
+		],')'))),
+		['≥'].concat($A([
+
+			"Eq(['x','y',2],'','line',['=','≠'])",
+		])),
+		['≠'].concat($A([
+			"kmod('a','b',2,1)",
+		])),
+
+	],
 
 
-	'Summarize':Arrf($A,[
-		['piece([1,2])'].concat(
-			zlrA3("kx",[
-				"o('a+b+c','{'",
-				"o('a+b+c','{','note'",
-			],')')),
-		['piece([1,2],1)'].concat(
-			zlrA3("kx",[
-			"u('a+b+c','{'",
-			"u('a+b+c','{','note'"
-			],')')),
-		zlrA3('piece([',[
-			"[1,2],[3,4]]",
-			"[1,2],[3,4]],2",
+	'Summarize':Arrf(tinyA,[
+		
+		zlrA3("piece(",[
+			"[1,2]",
+			"[[1,2],[3,4]]",
+		],')').concat("mtrx([[1,2],[3,4]],'B','B','')"),
+		zlrA3('piece(',[
+			"[1,2],1",
+			"[[1,2],[3,4]],2",
 			],')'),
+		[],
 		[
 			"EqA(['1x+2y=3','4x-5y=6'])",
 			"EqA(['1x+2y>=3','4x-5y<=6'])",
 		]
 	]),
 
-	'Parentheses':Arrf($A,[zlrA3("zp('x'",[
+
+	'Notes':Arrf($A,[
+
+			zlrA3("kx",[
+				"o('a+b','{'",
+				"o('a+b','{','note'",
+			],')'),
+		
+			zlrA3("kx",[
+			"u('a+b','{'",
+			"u('a+b','{','note'"
+			],')'),
+
+	]),
+
+	'Parentheses':[zlrA3("$zp('x^2'",[
 		"",
 		",'<>'",
 		",'[]'",
@@ -1085,31 +1252,33 @@ SBS={
 	
 		",'/\\\\'",
 		
-		],')'),
-		zlrA3("zp('x'",[
+		],')$'),
+		zlrA3("$zp('x^2'",[
 		",'||'",
 		",'‖‖'",
 		",'⌊⌋'",
 		",'⌈⌉'",
 	
-		],')'),
-		zlrA3("zp('x'",[
+		],')$'),
+		zlrA3("$zp('x^2'",[
 	
 		",'↑↓'",
 		",'↕↕'",
 		",'⇑⇓'",
 		",'⇕⇕'",
-		],')'),
-		zlrA3("zp('x,y'",[
+		],')$'),
+		zlrA3("$zp('x,y'",[
 			",'','(','.'",
 			",'','.',')'",
 			",'(]'",
 			",'[)'",
 	
-		],')'),
-		["pp('x,y')",
-		"zp('x,y','','<','>')"],
-	]),
+		],')$'),
+		["$pp('x,y')$",
+		"$zp('x,y','','<','>')$",
+		"\\mathopen\\lt a\\mathclose\\gt",
+		'\\pod a'],
+	],
 
 	'Big Parentheses':Arrf($A,[
 		['big(0)+big(0,1)','big(1)+big(1,1)','big(2)+big(2,1)','big(3)+big(3,1)'],
@@ -1118,7 +1287,7 @@ SBS={
 	
 	]),
 
-	'Matrix':Arrf($A,[zlrA3("zmtrx([[1,2],[3,4]]",[
+	'Matrix':Arrf(tinyA,[zlrA3("zmtrx([[1,2],[3,4]]",[
 			"",
 			",'','.',''",
 			",'','p',''",
@@ -1128,44 +1297,74 @@ SBS={
 			"],[3,4]],'','r2c2'",
 			",3,4],[5,6,7,8]],'','c2'"
 		],')'),
-		zlrA3("mtrx([[1,2],[3,4]],'",[
+		[],
 
-		"B','B",
-		"V','V",
-
-		],"','')"),
-		
 		zlrA3("Eq([",[
 			"zmtrx([[1,2],[3,4]]),zmtrx([[5,6],[7,8]])],[['1','2']],'','→'",	//\\begin{aligned} & ~ \\\\quad x \\\\  & =1 \\\\  & =2 \\end{aligned}
 			"zmtrx([[1,2,3,4],[5,6,7,8]],'','c2'),zmtrx([[1,2,3,4],[5,6,7,8]],'','c2')],[['1','2']],'','→'"
-		],')')
+		],')'),
+		[],[],
+
+		zlrA3("zmtrx(Arrf(ZLR,",[
+			"['a_{11} a_{12} a_{13}','a_{21} a_{22} a_{23}','a_{31} a_{32} a_{33}']",
+			"['a_{11} a_{12} a_{13} ⋯ a_{1n}','a_{21} a_{22} a_{23} ⋯ a_{2n}','a_{31} a_{32} a_{33} ⋯ a_{3n}','⋮ ⋮ ⋮ ⋱ ⋮','a_{n1} a_{n2} a_{n3} ⋯ a_{nn}']",
+
+		],'))'),
+		[],[],
+
 	]),
 
-	'Det':Arrf($A,[
+
+
+
+	'Det':Arrf(tinyA,[
+
 		["kdet([[1,2],[3,4]])",
-		 "zdet(['1 2','3 4'])"],
+		 "zdet(['1 2','3 4'])",
+		 "mtrx([[1,2],[3,4]],'V','V','')",
+		],
+		
 		zlrA3("Eq([",[
 			"kdet([[1,2],[2,4]]),0],[['1st','2nd']]",
 			"kdet([[1,2],[3,4]]),kdet([[5,6],[7,8]])],[['1st','2nd']]",
-		],')')
+		],')'),
+		[],
+		
+		zlrA3("zdet(",[
+			"['a b   ','c a b  ',' ⋱ ⋱ ⋱ ','  c a b','   c a']",
+			"['a     b',' ⋱   ⋰ ','  a b  ','  c d  ',' ⋰   ⋱ ','c     d']",
+
+		],')'),[],[],
+
+		zlrA3("zdet(",[
+			"['a_{11} a_{12} a_{13} ⋯ a_{1n}','a_{21} a_{22} a_{23} ⋯ a_{2n}','a_{31} a_{32} a_{33} ⋯ a_{3n}','⋮ ⋮ ⋮ ⋱ ⋮','a_{n1} a_{n2} a_{n3} ⋯ a_{nn}']",
+			"['1 1 1 ⋯ 1','a_1 a_2 a_3 ⋯ a_n','a_1^2 a_2^2 a_3^2 ⋯ a_n^2','⋮ ⋮ ⋮ ⋱ ⋮','a_1^{n-1} a_2^{n-1} a_3^{n-1} ⋯ a_n^{n-1}'],2",
+
+		],')'),[],[],
+
 		
 		
 	]),
 
 
-	'Sum':[['\\sum','\\prod',"$Opr('','-','+','f','*')$"]].concat(
+
+	'Sum':[['\\Sigma','\\Pi','\\sum','\\prod']
+	].concat(
 		Arrf($A,[
-			zlrA3("sum('i',0,'+','f',",[0,1,3,6],",'')"),
-			zlrA3("prod('i',0,'+','f',",[0,1,4,8],",'')"),
-			["prod('i',0,'+','f',3,'')"]
-				.concat(zlrA3("sum('i',0,'+','f',",[4,5],",'')"))
-				.concat("prod('i',0,'+','f',7,'')"),
-			["sum('i',0,'+','f',2,'')"
-				].concat(zlrA3("prod('i',0,'+','f',",[5,6,2],",'')"))
+			zlrA3("sum('i',0,'+','f',",[0,1,3,6],",'')").concat("sum('','i+j=10','','f',0,'')"),
+
+			zlrA3("prod('i',0,'+','f',",[0,1,4,8],",'')").concat("prod('','i|24','','f',0,'')"),
+
+			zlrA3("prod('i',0,'+','f',",[3,7],",'')").concat("sum('',['i+j=10','i<j'],'','f',0,'')"),
+			
+			zlrA3("sum('i',0,'+','f',",[2,4,5],",'')"),
+			zlrA3("prod('i',0,'+','f',",[2,5,6],",'')"),
+			
+			["Opr('','-','+','f','*')"]
+			
 
 		])
 	),
-
 
 	'Limit':[['\\lim'].concat(
 			zlrA3("$lim('x','",[
@@ -1173,7 +1372,7 @@ SBS={
 				"-','f','",
 				],"','')$"
 			)
-		),
+		).concat('\\infty'),
 		zlrA3("$lim('x','0",[
 			"','f','",
 			"+','f','",
@@ -1181,18 +1380,52 @@ SBS={
 			"','f','d",
 			],"','')$"
 		),
-		
-		["e^x=$lim('n','',kfraczp('1+'+kfrac(['x','n']),'','n'),'','')$"]
+		[],
+		["e^x=$lim('n','',kfraczp('1+'+kfrac(['x','n']),'','n'),'','')$",
+			'\\lim\\limits_{\\substack{x→0\\\\y→0}}f(x,y)'
+		]
 	],
 	
 
-	
-	'Integral':[['\\int',"$intl('f','-1','1','x',0,'')$","$intl('f','-','+','x',6,'')$"]]
-		.concat(Arrf($A,[
+	'Differential':[
+		$A(["difn('f')"].concat(zlrA3("difn('f','x',",[
+			"''",
+			"1",
+			],")")
+		,"difn()","difn('','',1)")),
+		['\\d x','\\mathrm{d}y','∂x','\\d x∧\\d y','\\nabla'],
+		[],
+		$A(zlrA3("difn('f','x',",[
+			"'',2",
+			"1,2"
+			],")").concat(zlrA3("difn('f',['x','y']",['',',1'],")"))),
+		$A(["difn('(x,y)','(u,v)',1)", "zp(difn('(x,y)','(u,v)',1),'|')", "difn('f',['x','y','z'],1)"]),
+	],
 
-			zlrA3("intl('f','-','+','x",["',0","yz',3"],",'')"),
-			zlrA3("intl('f','-','+','xy',",[1,4],",'')"),
-			zlrA3("intl('f','-','+','x",["',2","yz',5"],",'')"),
+	'Integral':[['\\int','\\smallint','\\textstyle\\int',"\\int \\limits_{L}",
+				"$iint('','L','','s',1,1)$",
+				"$intl('F(x)','0','1','',-1)$"
+				]
+			].concat(Arrf($A,[
+			["intl('f','-1','1','x',0,'')", "intl('f','-','+','x',0,'')", "intl('f(t)','0','x','t',0,'')","orifun('0','2π')"],
+			[],
+
+			["iint(['P','+Q'],'L','','x;y',1,1)", "iint('ω','∂M','',' ',1,1)+'='+iint('','M','','ω',1,1)",
+				"intl('','0','2π','θ',0,'')+intl('f','0','1','ρ',0,'')"],
+			["oint(['P','+Q'],'L','','x;y',1,1)+'='+iint(zp(difn('Q','x',1)+'-'+difn('P','y',1)),'D','','x,y',2,1)",
+				"intl('','0','1','x',0,'')+intl('f','0','1','y',0,'')"],
+			[],
+
+
+			["iint('f','Σ','','',2,1)", "iint('f','Σ','','x,y',2,1)",  "iint('f','Σ','','φ,θ',2,1)", "iint('f',['x^2+y^2=1','x>=0'],'','x,y',2,1)"], 
+			["oint(['P','+Q','+R'],'Σ','','x,y;y,z;z,x',2,1)", "iint('f','Σ','','x, y',2,1)",],
+			[],
+			["iint('f','Ω','','',3,1)", "iint('f','Ω','','x,y,z',3,1)","intl('f','-','+','x',6,'')"],
+			["oint(['P','+Q'],'Ω','','x,y,z;y,z,t',3,1)","intl(intl(intl('f','0','R','r',0,''),'0','π','φ',0,''),'0','2π','θ',0,'')"],
+			[],
+			["intl('','0','1','x',0,'')+intl('','0','x','y',0,'')+intl('f(x,y,z)','0','z(x,y)','z',0,'')","intl('','0','2π','θ',0,'')+intl('f','0','θ','ρ',0,'')"],
+			["intl('','0','2π','θ',0,'')+intl('','0','π','φ',0,'')+intl('f(r,φ,θ)','0','R','r',0,'')","intl('','0','2π','θ',0,'')+intl('f(ρ,θ)','ρ=0','ρ=a','',-1)"],
+			[],
 	])),
 
 
@@ -1214,6 +1447,7 @@ SBS={
 		'_1',
 		]),
 		['{e}^{πi}','{r}e^{iθ}','{e}^{\\frac{iπ}2}','C_{n}^{m}'],
+		[],
 		['\\stackrel{1}{2}','\\overset{1}{2}','\\underset{2}{1}'],
 		zlrA3('1 \\',['atop','above{}','above{1pt}','above{2pt}'],2)
 	
@@ -1240,10 +1474,13 @@ SBS={
 
 
 //zlrA3("\\math",ZLR('rm bb it bf sf tt'),"{A}"),
-	'Font':Arrf($A,[zlrA3("kxc('",Arrf(function(x){return x+"','"+x},ZLR('Bbb bf frak it rm')),"','')"),
-		zlrA3("kxc('",Arrf(function(x){return x+"','"+x},ZLR('sf tt bm bold boldsymbol')),"','')"),
+	'Font':[zlrA3("$kxc('",Arrf(function(x){return x+"','"+x},ZLR('Bbb bf frak it rm')),"','')$"),
+		zlrA3("$kxc('",Arrf(function(x){return x+"','"+x},ZLR('sf tt bm bold')),"','')$"),
+		zlrA3("$kxc('",Arrf(function(x){return x+"','"+x},ZLR('boldsymbol')),"','')$").concat([
+			'a \\pmb b c'
+		]),
 	
-	]),
+	],
 	
 	'Math Font':Arrf($A,[zlrA3("kxc('math",Arrf(function(x){return x+"','"+x},ZLR('bb bf cal')),"')"),
 		zlrA3("kxc('math",Arrf(function(x){return x+"','"+x},ZLR('frak it rm')),"')"),
@@ -1257,9 +1494,11 @@ SBS={
 	
 	]),
 
-	'Hebrew':Arrf($A,[
-		zlrA3("kxc('",['A','B','C','D'],"','a')"),	
-	]),
+	'Hebrew':[
+		zlrA3("$kxc('",['A','B','C','D'],"','a')$"),
+		zlrA3('\\',ZLR('Ka La '),'TeX'),
+		['Q.~E.~D.~','Q.~E.~A.~'],
+	],
 
 	'Lowercase Greek':Arrf($A,[
 		zlrA3("kxc('",['a','b','c','d','e'],"','g')"),
@@ -1277,10 +1516,14 @@ SBS={
 		zlrA3("kxc('",['V','W','X','Y','Z'],"','g')"),
 	]),
 
-	'Margin':[zlrA('\\backslash',[',\\,',':\\:',';\\;']).concat('\\tilde~')
-			.concat(Arrf(function(x){return x+'\\'+x},['quad','qquad'])),
-		Arrf(function(x){return x+'\\'+x},zlrA2(ZLR('thin med thick en'),'space')),
-		Arrf(function(x){return x+'\\'+x},zlrA2(ZLR(' nobreak'),'space')),
+	'Margin':[zlrA('\\backslash',[',\\,',':\\:',';\\;']).concat('\\tilde~'),
+
+		Arrf(function(x){return x+'\\'+x},zlrA2(ZLR(' q'),'quad')),
+	],
+	'Margin Space':[
+		Arrf(function(x){return x+'\\'+x},zlrA2(ZLR('thin med thick'),'space')),
+		Arrf(function(x){return x+'\\'+x},zlrA2(ZLR(' en nobreak'),'space')),
+		['1\\mathinner{\\text{inner}}2','1\\mathpunct{.}2'],
 	],
 
 	'Margin Value':[zlrA3('\\',ZLR('mkern mskip hspace'),'{5mu}'),
@@ -1295,16 +1538,38 @@ SBS={
 		Arrf(function(x){return x+'\\'+x},zlrA3('neg',ZLR('thin med'),'space')),
 		zlrA3('\\math',ZLR('l c r'),'lap{A}')
 	],
-	
-	
-	'Linebreak':[$A(['kbr','kbr2']),
+
+
+	'Linebreak':[$A(['kbr','kbr2']).concat('\\sum_{\\substack{0<i<m\\\\0<j<n}}'),
 		ZLR('phantom\\phantom{A} hphantom$hp()$ vphantom\\vphantom{A}'),
+		ZLR('tag{1}{A} tag*{2}{B}'),
 	
 	],
 
+	'Align':Arrf($A,[
+
+		zlrA3("mtrx([[1,2],[3,4]],",[
+			"'small','small'",
+			"'.','.'"
+		],",'')").concat("zmtrx([['',0,1],[0,0,1],[1,1,0],],'','I1J1','.','.')"),
+
+
+		zlrA3("zmtrx([[1,2",[
+			"],[3,4]],'','r2c2'",
+			",3,4],[5,6,7,8]],'','c2'"
+		],",'.','.')"),
+		[],
+		zlrA3("aligned([1,2,3]",[
+			"",
+			",1"
+		],")"),
+		
+	]),//.concat(["\\def\\arraystretch{1.5}"+mtrx([[1,2],[3,4]],'.','.','')]),
+
+
 	'Latin':[zlrA3('\\',ZLR('vec dot ddot mathring'),'{a}'),
 		zlrA3('\\',ZLR('bar acute check grave'),'{a}'),
-		zlrA3('\\',ZLR('hat tilde'),'{a}').concat(['\\breve{a}']),
+		zlrA3('\\',ZLR('hat tilde breve'),'{a}').concat(['\\stackrel{a}{.}']),
 	
 	],
 
@@ -1323,6 +1588,7 @@ SBS={
 	
 		],")$"),
 	
+		[],
 	
 		zlrA3("$ksz('",[
 		"Large',2",
@@ -1342,7 +1608,9 @@ SBS={
 		"$fcb('red','yellow','A')$",
 		"\\colorbox{aqua}{A}"
 		],
-		$A(["kancel(1)","kancel(1,'-')","kbox(1)","kbox('F','frak','math')"])
+		zlrA3("$kancel(1",ZLR(" ,'-' ,'b' ,'x'"),')$'),
+		['\\not{1}'].concat($A(["kbox(1)","kbox('F','frak','math')"]),'\\fbox{A}'),
+		
 	]
 
 },SBSFn=[],
@@ -1483,7 +1751,9 @@ $2v=function(str,A){/*将含$字符串，替换为变量
 	return x.replace(/[]/g,'').replace(/​/g,'')	//不可见字符
 		.replace(/ |&#8194;/g,' ')	//非标空格
 		.replace(/[乘乖✖ⅹ╳‧][以于与]?/ig,'*').replace(/&#10008;/g,'*')
-		
+		.replace(/ʸ/g,'^y')
+		.replace(/不等于/g,'≠').replace(/等于|＝/g,'=')
+
 		.replace(/&#65409;&#10135;/g,'除').replace(/ﾁ7ￊ9|&#65409;7&#65482;9|&#10135;/g,'除').replace(/[除➗梅／][以于与]?/g,'/')
 		.replace(/[减減]去?|－/g,'-').replace(/[＋加]上?/g,'+')//.replace(/\+\-/g,'±').replace(/\-\+/g,'∓')
 		.replace(/（/g,'(').replace(/）/g,')').replace(/[·•。]/g,'.').replace(/[和与，、]/g,',').replace(/；/g,';')
@@ -1512,13 +1782,16 @@ $2v=function(str,A){/*将含$字符串，替换为变量
 		.replace(/\^?\*/g,'*')	//伴随矩阵
 		.replace(/^\(?⁻¹?\)?/g,'⁻')	//逆（广义逆）
 
-},opreplace3=function(x){//运算符规范化预处理	微积分运算
-	return x.replace(/[′']{3}/g,'‴').replace(/[′']+/g,'″').replace(/‵{3}/g,'‷').replace(/‵+/g,'″')
+},opreplace3=function(x, formathjs){//运算符规范化预处理	微积分运算	参数formathjs指定按mathjs的风格
+	var t=opreplace(x).replace(/[′']{3}/g,'‴').replace(/[′']+/g,'″').replace(/‵{3}/g,'‷').replace(/‵+/g,'″')
 		.replace(/∫{3}/g,'∭').replace(/∫+/g,'∬').replace(/∮{3}/g,'∰').replace(/∮+/g,'∯')
-		.replace(/d([xyt])/g,'ⅾ$1')//暂用罗马数字ⅾd，表示微分算符
+		//.replace(/d([xyt])/g,'ⅾ$1')//暂用罗马数字ⅾd，表示微分算符
 		.replace(/偏/g,'∂')
-		.replace(/o+/g,'∞')
+		.replace(/o{2,}/g,'∞')
+		.replace(/㏒_([\da-z]+)\^([\da-z]+)/ig, formathjs?'log ($2,$1)':'㏒($1,$2)');
 
+	return formathjs?t.replace(/[㏒㏑]/g,'log '):t
+		
 
 
 },opreplace6=function(x){//运算符规范化预处理	集合运算
@@ -1542,6 +1815,7 @@ $2v=function(str,A){/*将含$字符串，替换为变量
 	return re(x.replace(/不等于/g,'≠')
 		.replace(/〉/g,'>').replace(/〈/g,'<'))
 		.replace(/大于等于/g,'≥').replace(/小于等于/g,'≤')
+		.replace(/等于|＝/g,'=')
 
 },opreplace16=function(x){//关系符规范化预处理		集合关系
 	return x.replace(/不真包含于/g,'⊄')
@@ -1657,9 +1931,19 @@ $2v=function(str,A){/*将含$字符串，替换为变量
 			return
 		}
 		
-
-		if(fn||st){
-			$('.'+ZLR('Fns Sts')[[fn,st].indexOf(true)]+'[data-i="'+di+'"]').toggle();
+		if(fn){
+			$('.Fns[data-i="'+di+'"]').toggle();
+		}else if(st){
+			var divs=$('div.Sts[data-i="'+di+'"]');
+			if(divs.filter(':visible').length){
+				divs.add('.sbsTblPg, div.Sts[data-i]').hide()
+			}else{
+				divs.slice(0,3).show();
+				if(divs.length>3){
+					$('.sbsTblPg').show()
+				}
+			}
+			
 		}else{
 			$('.'+di).toggle();
 		}
@@ -1671,9 +1955,9 @@ $2v=function(str,A){/*将含$字符串，替换为变量
 	if(fn){//函数
 		if(iTyp=='LaTeX'){
 
-			var c=td.attr('title'),hassbl=/[^a-z].+/i.test(c),c0=c.replace(/[^a-z].+/i,'');
+			var c=td.attr('title'),hassbl=/[^a-z].+/i.test(c),c0=c.replace(/[^a-z].+/i,''), word=/^[a-z~]+$/.test(c);
 
-			t=(SLF.indexOf(c0)>-1?'\\'+c0:'\\text{'+c0+'}')+(hassbl?c.replace(/^[a-z]+/i,''):'');
+			t=(SLF.indexOf(c0)>-1?'\\'+c0:'\\text{'+(word?c:c0)+'}')+(hassbl && !word?c.replace(/^[a-z]+/i,''):'');
 
 		}else{
 			t=td.attr('title')
@@ -1688,7 +1972,7 @@ $2v=function(str,A){/*将含$字符串，替换为变量
 
 		if(iTyp=='LaTeX'){
 
-////consolelog(t);
+//console.log(t);
 			if(t){
 				if(t.indexOf('$')>-1){
 					if(!shft){
@@ -1704,27 +1988,14 @@ $2v=function(str,A){/*将含$字符串，替换为变量
 					t=tl.replace(/\$.+/,'')+t;
 					*/
 				}else{
+					if(/tag/.test(t)){
+		
+						t='\\'+t;
+					}
+					
 				//	t=(/^[\{\d\\]/.test(tl)?'':'\\')+tl;
 					//t=/^[a-z]/i.test(t)?t.replace(/^[a-z]+/ig,''):t;
 				}
-			}else if(t=='~'){
-				
-			}else if(/quad/.test(t)){
-				t='\\'+t.replace(/\d/g,'')
-
-			}else if(/thin|med|thick|break|en/.test(t)){
-				t='\\'+t.replace(/[^a-z]/ig,'')+'space'
-
-			}else if(/kern|skip|space|phantom|raisebox|smash|lap/.test(t)){
-				t='\\'+t;
-				
-			}else if(/^[,:;!]$/.test(t)){
-				t='\\'+t;
-				
-			}else if(/^.$/.test(t)){
-				t='\\'+SL[t];
-			}else{
-				
 			}
 		}else if(t.indexOf('$')>-1){
 			if(iTyp=='Markdown'){
@@ -1838,9 +2109,9 @@ sbsTbl=function(){
 
 		var s='<div class=Fns data-i="'+K+'">',n=A.length;
 		for(var i=0;i<n;i++){
-			var c=A[i],hassbl=/[^a-z].+/i.test(c),c0=c.replace(/[^a-z].+/i,'');
+			var c=A[i],hassbl=/[^a-z].+/i.test(c),c0=c.replace(/[^a-z].+/i,''), word=/^[a-z~]+$/.test(c);
 
-			s+=DCtv('Fns td" title="'+c, SCtv('symboln',zx((SLF.indexOf(c0)>-1?'\\'+c0:'\\text{'+c0+'}')+(hassbl?c.replace(/^[a-z]+/i,''):''))));
+			s+=DCtv('Fns td" title="'+c, SCtv('symboln',zx((SLF.indexOf(c0)>-1?'\\'+c0:'\\text{'+(word?c:c0)+'}')+(hassbl && !word?c.replace(/^[a-z]+/i,''):''))));
 		}
 		s+=DCtv('clear')+dc;
 		return s
@@ -1851,7 +2122,7 @@ sbsTbl=function(){
 		for(var j=0;j<S.length;j++){
 			var K=S[j],A=FUNCS[K];
 			str+=Arrf(function(x){return strK(K,ZLR(x))},A).join('');
-			str2+='<td class=Fns>'+SCtv('symboli" data-i="'+K, gM(K))+'</td>'
+			str2+='<td class=Fns>'+SCtv('symboli" data-i="'+K, gM(K.replace(/^Set$/,'Set.1')))+'</td>'
 
 		}
 		str2+='</tr>';
@@ -1861,7 +2132,8 @@ sbsTbl=function(){
 	$('#ifuncs').append(str2+'</table>');
 
 	//STRUC
-	var str='<div class=sbsTbl>',str2='<table class="sbsTbl sbsiTbl">';
+	var strPg=strbtn+'∧" class=sbsTblPg hidden />';
+	var str='<div class=sbsTbl>'+strPg,str2='<table class="sbsTbl sbsiTbl">';
 	var strK=function(K,A){
 	////consolelog(K,A);
 		var s='<div class=Sts data-i="'+K+'">',n=A.length;
@@ -1870,7 +2142,7 @@ sbsTbl=function(){
 			if(K=='Margin Value'){
 				c=c.split('{')[0].substr(1)+c
 			}
-
+//console.log(K,c);
 			s+=DCtv('Sts td" title="'+c.replace(/.backslash./,'')
 				.replace(/^[a-z]{4,}/g,'')
 				.replace('\\tilde~','~')
@@ -1899,7 +2171,7 @@ sbsTbl=function(){
 		str2+='</tr>'
 	}
 
-	$('#struc').append(str+dc);
+	$('#struc').append(str+strPg.replace('∧','∨')+dc);
 	$('#istruc').append(str2+'</table>');
 
 	$('.sbsTbl > tbody > tr, .sbsTbl > div').not('.Symboli:not(.Symboli_)').hide();	
@@ -1986,6 +2258,7 @@ var OverCanvas=function(t){
 
 
 }, preDisplay=function(){
+	$('.imgHTMLEditor').toggle($('#toggleHTMLEditor').is('.seled'));
 	try{
 		var iv=$('#input0Type').val(),ov=$('#output0Type').val();
 		if(!iv){
@@ -1999,17 +2272,77 @@ var OverCanvas=function(t){
 			w.add('#previewTool').hide();
 			
 		}else if(iv=='LaTeX' && o!='H'){
-			var x=v;
+			var x=v, kxx=kx(sub2n(v,1));
 
 			if(o=='P' && v){
-				katex.render(kx(sub2n(v,1)), w[0], {
+				katex.render(kxx, w[0], {
 					throwOnError: false,
-					displayMode: true
+					displayMode: true,
+					trust:true
 				});
 				x=XML.wrapE('code',XML.encode(w.find('.katex-mathml').html().replace(/math/,'math xmlns="'+xmml+'"')));
 				
 			}
+
+
+
 			w.html(x).add('#previewTool').show();
+
+			if(o=='S' && v && MathJax){
+				//console.log(w[0]);
+				w.empty();
+				var options = MathJax.getMetricsFor(w[0]);
+				options.display = $('#displayMode').is('.seled');
+
+				//MathJax.tex2svg 返回node  示例：MathJax.tex2svg('\\frac{1}{x^2-1}', {display: true});
+				MathJax.tex2svgPromise(kxx, options).then(function (node) {
+				  //
+				  //  The promise returns the typeset node, which we add to the output
+				  //  Then update the document to include the adjusted CSS for the
+				  //    content of the new equation.
+				  //
+				  //console.log(node);
+				  w[0].appendChild(node);
+				  /*
+				  MathJax.startup.document.clear();
+				  MathJax.startup.document.updateDocument();
+				  */
+				}).catch(function (err) {
+				  //
+				  //  If there was an error, put the message into the output instead
+				  //
+				  w[0].appendChild(document.createElement('pre')).appendChild(document.createTextNode(err.message));
+				}).then(function () {
+				  //
+				  //  Error or not
+				  //
+				  if(!$('#SVGLinkMode').is('.seled')){
+
+					/* https://www.jb51.net/article/166239.htm
+
+
+标签里的background的url()里，地址不能加引号，单引号双引号都不行，否则会被微信编辑器过滤掉。
+标签里不能有id属性
+不能有style script a标签
+
+涉及动画，需要给涉及到的元素的 <g> 设置style="outline:none"，包括 <g> 内的所有子 <g> 
+
+					*/
+					var MJ=$('#input0Preview .MathJax');
+					MJ.find('use').each(function(){
+						var id=$(this).attr('xlink:href');
+						$(this).replaceWith($(id)[0].outerHTML.replace(/id="[^"]+" /,''))
+					});
+					MJ.find('defs, style, script, a').remove();
+					MJ.find('svg').removeAttr('aria-hidden role focusable');
+					MJ.find('g').removeAttr('data-mml-node data-mjx-texclass');
+					MJ.find('[stroke="currentColor"]').removeAttr('stroke');
+					MJ.find('[fill="currentColor"]').removeAttr('fill');
+				  }
+				  
+				});
+				
+			}
 
 			
 		}else if(o=='H'){
@@ -2022,6 +2355,8 @@ var OverCanvas=function(t){
 				w.empty()
 			}
 		}
+		$('#input0Preview>.katex-display>.katex').css('text-align','left')
+
 	}catch(e){
 
 	}
@@ -2034,17 +2369,54 @@ $(function(){
 
 	'<div id=iText>'+
 		'<div id=iTextMain>'+
+			DCtv('pd10 resize" hidden contentEditable=true id="HTMLEditor')+
 			DCtv('pd10 resize" hidden contentEditable=true id="input0Preview')+
 			DCtv('resize','<textarea id=input0>'+(L.snippet1||'')+'</textarea>'+
 				'<div id=Snippets hidden>'+
+					
+
+					(isedi?'':itv('" id=send2textBox tip="copy2input','arrow_upward'))+
+
+					//itv('" id=navHide tip="Collapse','keyboard_arrow_up')+
+
+					'<select id=input0Type>'+optgrp(gM('Snippet Editor')+':',
+					OptGrps(jSon('[{"'+
+						gM('Math Formula')+
+						'":"LaTeX Ascii_Math Unicode_Math Content_MathML Presentation_MathML"},{"'+
+						gM('Webpage Editor')+
+						'":"Markdown HTML CSS"},{"'+
+						gM('Graphics')+
+						'":"Canvas SVG Echarts Zdog Lego Rough 2D 3D"},{"'+
+						gM('Show')+
+						'":"Slide VR AR"},{"'+
+				
+						gM('Calculator')+' | '+gM('Script')+
+						'":"JavaScript"},{"'+
+
+						gM('Translator')+
+						'":"I18N EN"},{"'+
+
+						gM('Data')+' | '+gM('Text')+
+						'":"TXT TSV CSV XML YAML JSON"}]')
+					)
+					)+'</select>'+
+					itvc('rotate180" id="tClear')+
+					//(isedi?'':itv('" id=zMatherHide tip="Collapse','keyboard_arrow_up'))+br+
+					br+
 
 					itv('" id=UploadSnippetFile tip="Import File','file_upload')+
 					itv('" id=DownloadSnippetFile tip="Download Snippet Text File','file_download')+
 
-					itv('Del" id=snippetDel tip="Delete Snippet','remove_circle_outline')+
+					itv('" id=linebreakEqual tip="Linebreak Equality','drag_handle')+
+					itv('" id=linebreak tip="Linebreak','subdirectory_arrow_left')+
+
+					itv('" id=input0Size tip="Font Size','format_size')+
+
+
+					itv('Del" id=snippetDel tip="Delete Snippet','remove_circle')+
 
 					
-					itvc('rotate180" id="tClear')+
+					
 					'<input type="file" id=inputSnippetFile hidden />'+
 
 
@@ -2055,39 +2427,10 @@ $(function(){
 					)
 				+dc
 			)+
-			DCtv('opac" id="input0Tool',
-				itvc('" id=iClear hotkey="Ctrl + E')+
-
-				(isedi?'':itv('" id=send2textBox tip="copy2input','arrow_upward'))+
-
-				//itv('" id=navHide tip="Collapse','keyboard_arrow_up')+
-
-				'<select id=input0Type>'+optgrp(gM('Snippet Editor')+':',
-				OptGrps(jSon('[{"'+
-					gM('Math Formula')+
-					'":"LaTeX Ascii_Math Unicode_Math Content_MathML Presentation_MathML"},{"'+
-					gM('Webpage Editor')+
-					'":"Markdown HTML CSS"},{"'+
-					gM('Graphics')+
-					'":"Canvas SVG Echarts Zdog 2D 3D"},{"'+
-					gM('Show')+
-					'":"Slide VR AR"},{"'+
-			
-					gM('Calculator')+' | '+gM('Script')+
-					'":"JavaScript"},{"'+
-
-					gM('Translator')+
-					'":"I18N EN"},{"'+
-
-					gM('Data')+' | '+gM('Text')+
-					'":"TXT TSV CSV XML YAML JSON"}]')
-				)
-				)+'</select>'+
-
-				(isedi?'':itv('" id=zMatherHide tip="Collapse','keyboard_arrow_up'))+
-				
+			DCtv('opac" hidden id="input0Tool',
 
 				'<div id=inputTools>'+
+					itvc('" id=iClear hotkey="Ctrl + E')+
 
 					strbtn+'⋮" id=Condon class=tool hidden />'+
 					SCtv('iTextLaTeXon',
@@ -2098,7 +2441,6 @@ $(function(){
 						strbtn+'∑" id=strucon tip=Structure class=tool />'+
 						strbtn+'?" id=randon tip=Random class=tool />'
 					)+
-					itv('" id=editorLaunch tip="Launch','launch')+
 					itvc('rotate180" id="tClear2')+
 					
 				dc+
@@ -2106,7 +2448,7 @@ $(function(){
 					DCtv('editTextBox',[
 						gM('By')+Arrf(function(x){return SCtv('hotk" data-v="'+x, gM({Comma:',',Semicolon:';'}[x]||x)) },
 							ZLR('Comma Semicolon Space Tab')).join(' '),
-						'<input type=text id=lineByChar />',
+							strtxt+'id=lineByChar />',
 						strbtn+gM('Merge Line.1')+'" id=lineMerge tip="Line.1 Merge" />'+
 						strbtn+gM('Split Line.1')+'" id=lineSplit tip="Line.1 Split" />'
 						]
@@ -2146,11 +2488,11 @@ $(function(){
 
 						gM('With')+Arrf(function(x){return SCtv('hotk" data-v="'+x, gM({Comma:',',Semicolon:';'}[x]||x)) },
 							ZLR('Comma Semicolon Space Tab')).join(' ')+br+
-						'<input type=text id=replaceWithChar />',
+							strtxt+'id=replaceWithChar />',
 
 						strbtn+gM('Replace')+'" id=Replace />'+Arrf(function(x){return SCtv('hotk" data-v="'+x, gM({Comma:',',Semicolon:';'}[x]||x)) },
 							ZLR('Comma Semicolon Space Tab')).join(' ')+br+
-						'<input type=text id=replaceByChar />',
+							strtxt+'id=replaceByChar />',
 
 						
 						XML.wrapE('label',strchkbx0+'id=replaceCaseSensitive />'+gM('Case Sensitive'))+
@@ -2193,7 +2535,7 @@ $(function(){
 						gM('From')+num(5)+gM('Choose')+num(2)+br+
 						strbtn+gM('Random Combination Index')+'" id=randCombinIndex tip="Random Combination Index" />'+gM('Quantity')+': '+num(5),
 
-						gM('From')+'<input type=text value="a,b,c,d,e" />'+br+
+						gM('From')+strtxt+'value="a,b,c,d,e" />'+br+
 						strbtn+gM('Random Choose')+'" id=randCombin tip="Random Combination" />'+num(2)+' '+gM('Quantity')+': '+num(5),
 
 						strbtn+gM('Random Permutation')+'" id=randPermut tip="Random Permutation" />',
@@ -2243,7 +2585,31 @@ $(function(){
 			
 
 			
-			'<div id=input0Tip>'+dc+
+			'<div id=input0Tip hidden>'+
+			'<select id=input0TipType>'+optgrp(gM('API Help')+':',
+			OptGrps(jSon('[{"'+
+				gM('Math Object')+
+				'":"Number Sequence Permutation Matrix Proposition Series Function Set Relation"},{"'+
+				
+
+				gM('Data')+' | '+gM('Script')+
+				'":"YAML JavaScript"},{"'+
+				
+				gM('Translator')+
+				'":"I18N EN"},{"'+
+
+				gM('Math Formula')+
+				'":"LaTeX"},{"'+
+				gM('Webpage Editor')+
+				'":"Markdown HTML"},{"'+
+				gM('Graphics')+
+				'":"Canvas SVG Echarts Zdog Lego Rough"},{"'+
+				gM('Show')+
+				'":"Slide VR AR"}]'
+				),1
+			)
+			)+'</select>'+
+			dc+
 			DCtv('clear')+
 
 		dc+
@@ -2260,7 +2626,7 @@ $(function(){
 		dc+
 
 		'<div id=iTextPreview>'+
-			'<span id=previewTool hidden>'+
+			'<span id=previewTool hidden class=opac>'+
 
 
 				/*
@@ -2269,7 +2635,23 @@ $(function(){
 */
 
 				'<select id=output0Type>'+optgrp(gM('Output Format')+':', Options(ZLR('HTML Ascii_Math Unicode_Math Presentation_MathML')))+'</select>'+
+
 				itv('" id=downloadPreview tip="Download HTML File','file_download')+
+
+
+				itv('" id=alignPreview tip="Center Align','format_align_center')+
+
+
+
+				itv('" id=toggleHTMLEditor tip="Toggle HTML Editor','chrome_reader_mode')+
+				SCtv('imgHTMLEditor',
+					itv('" id=zoomHTMLEditor tip="Zoom Image','loupe')+
+					itv('" id=rotateHTMLEditor tip="Rotate Image','rotate_90_degrees_ccw')+
+					itv('" id=invertHTMLEditor tip="Invert Image Color','invert_colors')+
+					itv('" id=removeHTMLEditor tip="Remove Image','remove_circle_outline')
+				)+
+
+				itv('" id=editorLaunch tip="Launch','launch')+
 			sc+
 
 		dc+
@@ -2288,11 +2670,13 @@ itv('tool seled" tip=Preview id="preview','remove_red_eye')+
 
 
 itv('tool" tip="More Snippet" id="Snippetson','subject')+
-itv('seled" id=input0Toolon tip="Toggle Editor Tool','functions')+
+itv('" id=input0Toolon tip="Toggle Editor Tool','functions')+
+itv('seled" id=input0Tipon tip="API Help','help_outline')+
 
 itv('tool" tip=Shift id="Shift','keyboard_capslock')+
 
 (ishome?itv('" id=go tip="Run" hotkey="Ctrl + Enter','play_circle_outline')+
+	itv('" id=refresh tip="Refresh','refresh')+
 	itv('" id=launch tip="Launch','launch')+
 	itv('" id=qrcode tip="Share','share')+
 	itv('" id=zMatherOn2 tip="Collapse','keyboard_arrow_up'):'')
@@ -2339,6 +2723,33 @@ itv('tool" tip=Shift id="Shift','keyboard_capslock')+
 		}
 		sbsTbltd(this,e,'input'+$('#input1.seled').length,p);
 
+	}).on('click', '.sbsTblPg',function(e){
+		var me=$(this),pa=me.parent(),pc=pa.children(), i=me.index(),
+		x=pc.filter('div:visible'), di=x.attr('data-i'),
+		ii=pc.filter('[data-i="'+di+'"]'),
+		d0=ii.first().index(), d1=ii.last().index(),
+		i0=x.first().index(), i1=x.last().index();
+		x.hide();
+
+		if(i){
+
+			if(d1>i1){
+
+				pc.slice(i1+1, Math.min(d1+1,i1+4)).show();
+			}else{
+				pc.slice(d0, Math.min(d1+1,d0+3)).show();
+			}
+		}else{
+
+			if(d0<i0){
+
+				pc.slice(Math.max(d0,i0-3), i0).show();
+			}else{
+				pc.slice(Math.max(d0,d1-2), d1+1).show();
+			}
+
+		}
+		
 	}).on('click', '.snippetName',function(){
 
 		var me=$(this),pa=me.parent(), t=pa.attr('data-type'), i=pa.index()+1;
@@ -2388,6 +2799,18 @@ itv('tool" tip=Shift id="Shift','keyboard_capslock')+
 			snippet.load(i>$('.snippet').length?1:i);
 		}
 
+	}).on('click','#input0Size',function(){
+		var me=$(this), a=+me.attr('data-size')||0.6,i=me.attr('data-sizeup')||'true';
+		
+		if(a>=2){
+			i='false'
+		}
+		if(a<=0.6){
+			i='true'
+		}
+		var b=(a+(i=='false'?-1:1)*0.2).toFixed(2);
+		me.attr({'data-sizeup':i, 'data-size':b});
+		$('#input0').css('font-size',b+'rem');
 
 	}).on('mouseover', '#TextLaTeXBox .sbsTbl td, #TextLaTeXBox .sbsTbl .td',function(e){
 
@@ -2462,7 +2885,7 @@ itv('tool" tip=Shift id="Shift','keyboard_capslock')+
 
 		$('.Symboli td:visible:not(:has(.symboli_)).seled').click();
 		$('.Symboli td.seled:visible').click();
-		var id=($('.iTextLaTeXon .tool.seled').attr('id')||'').replace(/on/,'');
+		var id=($('.iTextLaTeXon .tool.seled').attr('id')||'').replace(/on/,''), shifton=$('#Shift').is('.seled');
 		if(id=='editText'){
 			var tr=$('#editText .editTextBox'),
 			i=tr.filter(':visible').index();
@@ -2475,15 +2898,96 @@ itv('tool" tip=Shift id="Shift','keyboard_capslock')+
 		}
 
 		var tn=tr.hide().length;
-		if(i+3>tn-1){
-			i=0
-		}else if(i+3==tn-1){
-			i=tn-1
-		}else{
-			i+=3;
-		}
-		tr.slice(i,i+3).show();
+		if(shifton){
+			if(i-3<0){
+				i=tn-3
+			}else if(i-3==0){
+				i=0
+			}else{
+				i-=3;
+			}
 
+
+		}else{
+			if(i+3>tn-1){
+				i=0
+			}else if(i+3==tn-1){
+				i=tn-1
+			}else{
+				i+=3;
+			}
+
+		}
+
+		tr.slice(i,i+3).show();
+		
+
+
+		
+	}).on('click','#SVGLinkMode,#displayMode',function(e){
+		var me=$(this).toggleClass('seled');
+		preDisplay();
+
+	}).on('dblclick','#input0Preview',function(e){
+		var m=$(this).find('svg'), shft=e.shiftKey||$('#Shift').is('.seled'), ctrl=e.ctrlKey;
+		if(m.length){
+			copy2clipboard(m[0].outerHTML)
+		}
+
+
+	}).on('click','#toggleHTMLEditor',function(e){
+		var me=$(this).toggleClass('seled');
+		$('#HTMLEditor,.imgHTMLEditor').toggle(me.is('.seled'))
+
+	}).on('click','#HTMLEditor img',function(e){
+		$('#toggleHTMLEditor.seled').click()
+
+	}).on('click','#alignPreview',function(e){
+		var me=$(this),a=me.attr('data-align')||'left', A=ZLR('left center right'),
+			b=A[(A.indexOf(a)+1)%3];
+		me.attr('data-align',b);
+		$('#input0Preview>.katex-display>.katex').css('text-align',b)
+
+	}).on('click','#linebreak',function(e){
+		var p=$('#input0Type').val(), shifton=$('#Shift').is('.seled'), t=p=='LaTeX'?(shifton?kbr2:kbr):(p=='HTML'?br:'\n');
+		$('#input0').val(function(i,v){return Arrf(function(x){return x.lastIndexOf(t)==x.length-t.length?x:x+t},v.split(brn)).join(brn)+brn}).change();
+
+	}).on('click','#linebreakEqual',function(e){
+		var p=$('#input0Type').val(), shifton=$('#Shift').is('.seled'), t=p=='LaTeX'?(shifton?kbr2:kbr):(p=='HTML'?br:'\n');
+		$('#input0').val(function(i,v){return Arrf(function(x,i){return (i && x[0]!='='?'=':'')+(x.lastIndexOf(t)==x.length-t.length?x:x+t)},v.split(brn)).join(brn)+brn}).change();
+
+	}).on('click','#zoomHTMLEditor',function(e){
+		$('#HTMLEditor img').css('zoom',function(i,v){var x=+v||1, me=$(this),z=me.attr('data-zooming')||'out';
+			if(x<=0.2 || x==1 && z=='in'){
+				z='in';
+			}
+			if(x>=1.2){
+				z='out';
+			}
+	
+			var y=(z=='in'?x+0.2:x-0.2).toFixed(2);
+			me.attr({'data-zooming':z,'title':gM('Zooming')+' '+y});
+			return y
+		})
+	}).on('click','#invertHTMLEditor',function(e){
+		$('#HTMLEditor img').css('filter',function(i,v){var me=$(this),z=+me.attr('data-invert')||0;
+
+			me.attr({'data-invert':1-z});
+
+			return 'invert('+(1-z)+')'
+		})
+
+	}).on('click','#rotateHTMLEditor',function(e){
+		$('#HTMLEditor img').css('transform',function(i,v){var me=$(this),z=+me.attr('data-rotating')||0,
+			x=(z+1)%6, y=x<4?'rotate('+x*90+'deg)':'rotate'+'XY'[x-5]+'(180deg)';
+			me.attr({'data-rotating':x, 'title':y});
+
+			return y
+		})
+
+	}).on('click','#removeHTMLEditor',function(e){
+		$('#HTMLEditor img').remove()
+		
 
 	}).on('click','#downloadPreview',function(e){
 
@@ -2645,7 +3149,7 @@ itv('tool" tip=Shift id="Shift','keyboard_capslock')+
 		t0=$('#replaceByChar').val(), t1=$('#replaceWithChar').val(),
 		isreg=$('#replaceRegexp').prop('checked'),
 		iscase=$('#replaceCaseSensitive').prop('checked');
-
+//console.log(isreg?t0:regReg(t0), t1);
 		T.val(v.replace(new RegExp(isreg?t0:regReg(t0), 'g'+(iscase?'':'i')), t1))
 
 
@@ -2706,7 +3210,7 @@ itv('tool" tip=Shift id="Shift','keyboard_capslock')+
 		prop=me.prevAll(':checkbox').first(),
 		num1=me.prevAll(':number').first(),
 		txt=me.prevAll(':text').first(),
-		i=$('#input0'), iv=i.val(),t='';
+		i=$('#input0'), iv=i.val(),t='', shifton=$('#Shift').is('.seled');
 
 		if(prop.length<1){
 			prop=pap.find(':checkbox').last();
@@ -2765,6 +3269,11 @@ itv('tool" tip=Shift id="Shift','keyboard_capslock')+
 			}
 		}
 
+		if(shifton){
+			i.val('');
+			iv='';
+		}
+
 		var sS=i[0].selectionStart, sE=i[0].selectionEnd;
 		i.val(iv.substr(0,sS)+t+(sE==iv.length?'':iv.substr(sE)));
 		var s2=sS+t.length;
@@ -2815,10 +3324,178 @@ itv('tool" tip=Shift id="Shift','keyboard_capslock')+
 			preDisplay();
 		}
 
+	}).on('drop', '#input0', function (e) {
+		e.stopPropagation(); e.preventDefault(); $(this).removeClass('drop');
+
+		var f = e.originalEvent.dataTransfer.files[0];
+		if (!f || f.type.indexOf('image') < 0) { return }
+		//console.log(f); File {webkitRelativePath: "", lastModifiedDate: xxx, name: "VIP.png", type: "image/png", size: 10628}
+
+		var reader = new FileReader(), shft=e.shiftKey || $('#Shift').is('.seled');
+		reader.onload = function (event) {
+			var src = this.result;
+			//console.log(this);
+			var sne = picSrcNameExt(src), img0='<img src="'+src+'" />';
+			if(shft){
+				$('#HTMLEditor').append(img0);
+			}else{
+				$('#HTMLEditor').html(img0)
+			}
+			var qr = new QrcodeDecoder();
+
+			sTo(function(){
+				qr.decodeFromImage($('#HTMLEditor img').last()[0]).then((res) => {
+					//console.log(res);
+					if(res){
+
+						var u=res.data;
+						if(/^https?:.+/.test(u)){
+							$('#input0').val(function(i,v){return v+brn+u});
+	
+						}else if(/\.html/.test(u)){
+							window.open(u)
+		
+						}else if(u.length<100){
+							$('#input0').val(function(i,v){return v+brn+u});
+						}
+
+
+					}
+	
+				});
+			},500);
+
+
+			$('#toggleHTMLEditor').not('.seled').click();
+			$('#preview').not('.seled').click();
+		};
+		reader.readAsDataURL(f);
+
+	}).on('paste', '#input0', function (e) {
+		//console.log(e);
+		var ts = e.originalEvent.clipboardData.items, shft=e.shiftKey || $('#Shift').is('.seled');
+
+
+		if (ts.length) {
+			for (var i = 0; i < ts.length; i++) {
+				if (ts[i].kind == 'file') {
+	
+
+					var blob = ts[i].getAsFile(), reader = new FileReader();
+					//console.log(ts[i]);  DataTransferItem {type: "image/png", kind: "file"}
+					reader.onload = function (event) {
+						//console.log(event);
+						var src = event.target.result; //webkitURL.createObjectURL(blob);
+
+
+						var sne = picSrcNameExt(src), img0='<img src="'+src+'" />';
+						if(shft){
+							$('#HTMLEditor').append(img0);
+						}else{
+							$('#HTMLEditor').html(img0)
+						}
+						var qr = new QrcodeDecoder();
+
+						sTo(function(){
+							qr.decodeFromImage($('#HTMLEditor img').last()[0]).then((res) => {
+								//console.log(res);
+								if(res){
+
+									var u=res.data;
+									if(/^https?:.+/.test(u)){
+										$('#input0').val(function(i,v){return v+brn+u});
+				
+									}else if(/\.html/.test(u)){
+										window.open(u)
+					
+									}else if(u.length<100){
+										$('#input0').val(function(i,v){return v+brn+u});
+									}
+
+
+								}
+				
+							});
+						},500);
+
+						$('#toggleHTMLEditor').not('.seled').click();
+						$('#preview').not('.seled').click();
+						/*
+						var img = new Image();
+						img.onerror = function(){
+							$(this).remove()
+						};
+						img.onload = function () {
+							var w = this.width;
+							var h = this.height;
+						
+		
+						};
+						img.src = src;
+						*/
+
+					};
+					reader.readAsDataURL(blob);
+					break;
+				}
+			}
+		}
+
+
+
+
 	}).on('click','#input1',function(){
 
 		$('#input0').removeClass('seled');
 		$(this).addClass('seled');
+
+
+	}).on('change','#input0TipType', function(){
+
+		var v=$(this).val()||'JavaScript', it=$('#input0Tip > [data-tool="'+v+'"]'), tv=tooltip[v];
+		if(v=='Echarts'){
+			tv=tooltip.graphic['Statistics/Echarts']
+		}
+		if(v=='I18N' || v=='EN'){
+			tv=v;
+		}
+		var opti=$(this).find('option[value='+v+']').parent().index(),
+		width=Math.max($('#input0').width(),$('#input0Tool').width())||200,
+		height=Math.max($('#input0').height(),$('#input0Tool').height(),400),
+		strc='class="inputTip inputTypeTip" style="max-height:'+height+'px" data-tool="';
+
+		if(tv){
+			if(!opti){
+				tv+=tooltip[v+' Operation']||''
+			}
+			if(tv=='I18N'){
+				tv='';
+				$.each(i18n,function(i,j){
+					tv+=sceg2(i)+' → '+sceg2(j)+br
+				});
+			}
+			if(tv=='EN'){
+				tv='';
+				$.each(i18n,function(i,j){
+					tv+=sceg2(j)+' → '+sceg2(i)+br
+				});
+			}
+
+			if(v=='LaTeX'){
+				tv+=br;
+				$.each(SBS.Latex,function(i,j){
+					if(!/func/.test(i)){
+						tv+=sceg2(i)+' : '+sceg2('\\'+j+' ')+br
+					}
+				});
+			}
+
+
+
+			$('#input0Tip').append(detail((v!='LaTeX'&&v!='JavaScript'?gM(v):v)+itv('remove" tip="Remove','remove_circle'),tv,'',strc+v+'"'));
+
+		}
+		
 
 	}).on('change','#input0Type', function(){
 	
@@ -2836,8 +3513,8 @@ itv('tool" tip=Shift id="Shift','keyboard_capslock')+
 
 		$('.snippet.seled').attr('data-type',p);
 		var i=ZLR('LaTeX Ascii_Math Unicode_Math Presentation_MathML Content_MathML').indexOf(v);
-		$('#output0Type').html(optgrp(gM('Output Format')+':', Options(set.opr1('取',ZLR('HTML Ascii_Math Unicode_Math LaTeX Presentation_MathML Content_MathML'),
-			i<0?[[0]]:[[0,2,4],[0,2,3,4,5], [0,1,3,4,5], [0,2,3,5], [0,2,3,4]][i])
+		$('#output0Type').html(optgrp(gM('Output Format')+':', Options(set.opr1('取',ZLR('HTML Ascii_Math Unicode_Math LaTeX Presentation_MathML Content_MathML SVG'),
+			i<0?[[0]]:[[0,2,4,6],[0,2,3,4,5], [0,1,3,4,5], [0,2,3,5], [0,2,3,4]][i])
 		)));
 		$('.inputTypeTip').remove();
 
@@ -2872,7 +3549,7 @@ itv('tool" tip=Shift id="Shift','keyboard_capslock')+
 
 
 
-			$('#input0Tip').append(detail(v+itv('remove" tip="Remove','remove_circle'),tv,'',strc+v+'"'));
+			$('#input0Tip').prepend(detail(v+itv('remove" tip="Remove','remove_circle'),tv,'',strc+v+'"'));
 
 
 			$('.inputTip.inputTypeTip').last().prevAll().remove();
@@ -2884,10 +3561,17 @@ itv('tool" tip=Shift id="Shift','keyboard_capslock')+
 		}
 
 	}).on('change','#output0Type', function(){
-
+		var me=$(this), v=me.val(), isSVG=v=='SVG';
 		if($('#preview.seled').length){
 			preDisplay()
 		}
+		if(isSVG && $('#displayMode').length<1){
+			me.after(
+				itv('" id=displayMode tip="Display / Inline','wrap_text')+
+				itv('seled" id=SVGLinkMode tip="SVG Link','link')
+			)
+		}
+		$('#displayMode,#SVGLinkMode').toggle($(this).val()=='SVG')
 	
 	}).on('click','#send2textBox',function(){
 
@@ -2982,7 +3666,7 @@ itv('tool" tip=Shift id="Shift','keyboard_capslock')+
 		}else if($('#input0Tip > .inputTip').length>1){
 			$('#input0Tip > .inputTip').last().prevAll().remove()
 		}else{
-			$('#input0Tip').empty();
+			$('#input0Tip > .inputTip').remove();
 		}
 
 	}).on('click','#iTextFold',function(){
@@ -3006,6 +3690,14 @@ itv('tool" tip=Shift id="Shift','keyboard_capslock')+
 		var me=$(this), sel=me.toggleClass('seled').is('.seled');
 		$('#input0Tool').toggle(sel);
 
+	}).on('click','#input0Tipon',function(){
+		var me=$(this), sel=me.toggleClass('seled').is('.seled');
+		$('#input0Tip').toggle(sel);
+
+		if(sel && $('#input0Tip .inputTip').length<1){
+			$('#input0TipType').val($('#input0Type').val()).change();
+
+		}
 
 	}).on('click','#displayOverCanvas',function(){
 		
@@ -3038,7 +3730,9 @@ itv('tool" tip=Shift id="Shift','keyboard_capslock')+
 
 				me.siblings('.seled.tool').removeClass('seled').each(function(){
 					var tid=this.id.replace(/on$/,'');
+					$('#struc > .sbsTbl').children().hide();
 					$('#i'+tid+',#'+tid).hide();
+
 				});
 				$('#swap').remove();
 				if(se){
@@ -3046,6 +3740,10 @@ itv('tool" tip=Shift id="Shift','keyboard_capslock')+
 						me.after(itv('" tip=Swap id="swap','swap_vert'));
 					}
 			
+				}
+				if(/struc/.test(id)){
+					$('#istruc .Sts.seled').click();
+					$('#struc .sbsTbl > *').hide();
 				}
 
 			}
@@ -3202,7 +3900,7 @@ itv('tool" tip=Shift id="Shift','keyboard_capslock')+
 			}
 			if(shft){
 				if(k==13){
-					$('#preview').click();
+					//$('#preview').click();
 				}	
 			}
 		}
@@ -3220,4 +3918,5 @@ itv('tool" tip=Shift id="Shift','keyboard_capslock')+
 	
 
 	$('#input0Type').val(Meleo[L.snippetType1]||L.snippetType1).change();
+	sTo(function(){$('#input0Tipon').click()},300);
 });

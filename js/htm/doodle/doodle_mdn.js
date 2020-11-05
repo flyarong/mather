@@ -637,11 +637,11 @@ function changeTextCSS(){
 
 
 function toggleSvg(){
-	var s=$('#svgShape,#svgTool2').find('svg[id!=SVGshift][id!=Zdogon]');
+	var s=$('#svgShape,.svgTool2').find('svg').filter(function(){return !/^(SVGshift|Zdogon|D2on|Legoon|Roughon)$/.test(this.id)});
 	s.find('[stroke=yellow]').attr('stroke','white');
 	s.find('[fill=yellow]').attr('fill','white');
 
-	$('#svgTool ~ div svg').css('background-image','-webkit-linear-gradient(white, #ac0 20%, #ac0 80%, white)');
+	$('#svgTool + .svgTool2 ~ div svg').css('background-image','-webkit-linear-gradient(white, #ac0 20%, #ac0 80%, white)');
 	$('#'+L.drawShape).css('background','none').find('[stroke=white]').attr('stroke','yellow').end().find('[fill=white]').attr('fill','yellow');
 }
 
@@ -836,7 +836,7 @@ function tileToolCap(t, val){
 	
 	$('#svgTextN,#svgTextDetail').toggle(txt && isntP && $('#svgText').val()!='0');
 
-	$('#Angle').toggle(/Regulargon|Triangon|Trapegon|Line3YRight|lineangle|lineIso|Line3E/.test(shp+id));
+	$('#Angle').toggle(/Regulargon|Triangon|Trapegon|Line3YRight|lineangle|lineIso|Line3E|LfanNoteV/.test(shp+id));
 
 	$('#svgCssTransform').toggle(id && id!='Pointer');
 	$('#scrTool').toggle(id=='Pointer');
@@ -856,6 +856,7 @@ function tileToolCap(t, val){
 
 	$('#gridOpt').toggle(/Grid|Lattice|2tick|[DS]hv/.test(id) && !/Sq/.test(id));
 
+	$('#gridType').toggle(/Lattice/.test(id));
 
 	$('#MarginCopyOpt').toggle(/Dbl|Wav|Copy|tick|Grid|Lattice/.test(id));
 	$('#MarginCopyH').toggle(/2tick/.test(id));
@@ -936,10 +937,15 @@ function tileToolCap(t, val){
 	
 
 
-
+	$('#allEraserCanvas').toggle(id=='allEraser');
 	if(id=='allEraser'){
-		$('#TextBoxType').val('Canvas').attr('disabled','disabled')
+		$('#TextBoxType').val('Canvas').attr('disabled','disabled');
 
+		if($('#ToolOpt path').attr('stroke')!='yellow'){
+			$('#ToolOpt').click()
+		}
+
+		
 	}else{
 		$('#TextBoxType').removeAttr('disabled')
 	}
@@ -960,7 +966,6 @@ function tileToolCap(t, val){
 			}else{
 
 			}
-
 		}
 		if(txt){
 			$('#fontCSS span').each(function(){
@@ -1148,7 +1153,6 @@ function tileToolCap(t, val){
 			$('#skew ~ input').val(0);
 		}
 
-
 	}
 }
 
@@ -1157,7 +1161,10 @@ function tileToolCap(t, val){
 function tileToolCode(obj,returnValue){
 	var a=[],o=$(obj),t, nohid=$('#ignoreHiddenElement').prop('checked'), spath=$('#svg2path').prop('checked'),
 		jsf=$('#code_API').is('.seled'), nat=$('#code_Native').is('.seled'), user=$('#code_UserInput').is('.seled');
-	if(o.is('svg')){
+	if($('#code_Canvas').is('.seled')){
+		t=L.canvasCode+'\n// lego\n'+L.legoCode+'\n// rough\n'+L.roughCode
+		
+	}else if(o.is('svg')){
 
 		/*
 		jQuery bug 选择器 ':visible' 针对SVG中元素，无法区分是否可见（都认为是可见）
